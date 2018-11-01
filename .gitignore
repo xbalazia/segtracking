@@ -1,8 +1,2 @@
-sawyer/GroundTruth_Frames/
-sawyer/GroundTruth_Frames_FP/
-sawyer/HOF/models/model*
-*.pyc
-gt.*
-sawyer/gt.*
-*.ckpt
-sawyer/extractSegments/jsons/
+pull.sh
+push.sh
