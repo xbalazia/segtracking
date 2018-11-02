@@ -1,3 +1,4 @@
 pull.sh
 push.sh
 pull-and-push.bat
+data/*
