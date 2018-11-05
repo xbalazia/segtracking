@@ -12,10 +12,10 @@
 
 
 #include "IMG.h"
-#include "gsl_rng.h"
-#include "gsl_randist.h"
-#include "gsl_permutation.h"
-#include "gsl_cdf.h"
+#include "gsl/gsl_rng.h"
+#include "gsl/gsl_randist.h"
+#include "gsl/gsl_permutation.h"
+#include "gsl/gsl_cdf.h"
 
 //////////////////////////////////////////////////////////////////////
 // 1. Construction/Destruction
