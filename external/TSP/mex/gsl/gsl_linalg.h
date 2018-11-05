@@ -20,7 +20,7 @@
 #ifndef __GSL_LINALG_H__
 #define __GSL_LINALG_H__
 
-#include <stdlib.h>
+#include "stdlib.h"
 #include "gsl_mode.h"
 #include "gsl_permutation.h"
 #include "gsl_vector.h"
