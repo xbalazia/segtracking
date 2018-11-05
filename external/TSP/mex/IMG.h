@@ -10,7 +10,7 @@
 // == Written by Jason Chang and Donglai Wei 06-20-2013
 // =============================================================================
 
-zifndef _IMG_H_INCLUDED_
+#ifndef _IMG_H_INCLUDED_
 #define _IMG_H_INCLUDED_
 #include <iostream>
 #include <fstream>
