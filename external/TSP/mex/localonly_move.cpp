@@ -11,8 +11,8 @@
 // == Written by Jason Chang and Donglai Wei 06-20-2013
 // =============================================================================
 
-#include "mex.h"
-#include "IMG.h"
+//include "mex.h"
+//include "IMG.h"
 void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[] )
 {
    if (nrhs!=2) mexErrMsgTxt("Only the IMG structure and # of its expected");
@@ -21,7 +21,7 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[] )
    IMG sp_img;
    sp_img.mxReadIMG(prhs[0]);
 
-   int its = getInput<Double>(prhs[1]);
+   int its = getInput<double>(prhs[1]);
    bool converged = false;
    for (int i=0; i<its; i++)
    {
