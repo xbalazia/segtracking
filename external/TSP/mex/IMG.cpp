@@ -11,11 +11,11 @@
 // =============================================================================
 
 
-//include "IMG.h"
-//include "gsl/gsl_rng.h"
-//include "gsl/gsl_randist.h"
-//include "gsl/gsl_permutation.h"
-//include "gsl/gsl_cdf.h"
+#include "IMG.h"
+#include "gsl/gsl_rng.h"
+#include "gsl/gsl_randist.h"
+#include "gsl/gsl_permutation.h"
+#include "gsl/gsl_cdf.h"
 
 //////////////////////////////////////////////////////////////////////
 // 1. Construction/Destruction
