@@ -21,7 +21,7 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[] )
    IMG sp_img;
    sp_img.mxReadIMG(prhs[0]);
 
-   int its = getInput<double>(prhs[1]);
+   int its = getInput<Double>(prhs[1]);
    bool converged = false;
    for (int i=0; i<its; i++)
    {
