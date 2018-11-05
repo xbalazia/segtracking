@@ -12,7 +12,7 @@
 // =============================================================================
 
 //include "mex.h"
-include "IMG.h"
+//include "IMG.h"
 void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[] )
 {
    if (nrhs!=2) mexErrMsgTxt("Only the IMG structure and # of its expected");
