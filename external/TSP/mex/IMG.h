@@ -19,8 +19,8 @@
 #include "NormalD.h"
 #include "topology.h"
 #include "array.h"
-#include <gsl/gsl_linalg.h>
-#include <gsl/gsl_blas.h>
+#include "gsl/gsl_linalg.h"
+#include "gsl/gsl_blas.h"
 
 #include "helperMEX.h"
 
