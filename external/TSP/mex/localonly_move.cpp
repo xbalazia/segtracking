@@ -11,7 +11,7 @@
 // == Written by Jason Chang and Donglai Wei 06-20-2013
 // =============================================================================
 
-include "mex.h"
+//include "mex.h"
 include "IMG.h"
 void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[] )
 {
