@@ -11,22 +11,21 @@
 // =============================================================================
 
 
-#ifndef _SP_H_INCLUDED_
-#define _SP_H_INCLUDED_
-#include "linkedList.cpp"
-#include "array.h"
-#include "matrix.h"
-#include "mex.h"
-#include <math.h>
-#include "NormalD.h"
+//ifndef _SP_H_INCLUDED_
+//define _SP_H_INCLUDED_
+//include "linkedList.cpp"
+//include "array.h"
+//include "matrix.h"
+//include "mex.h"
+//include <math.h>
+//include "NormalD.h"
 
+//ifndef pi
+//define pi 3.14159265
+//endif
 
-#ifndef pi
-#define pi 3.14159265
-#endif
-
-#include "helperMEX.h"
-#include "gsl/gsl_sf_gamma.h"
+//include "helperMEX.h"
+//include "gsl/gsl_sf_gamma.h"
 
 double calc_log_label(double N, double alpha, double epsilon);
 std::pair<int, int> increment_neighbor_count(std::pair<int, int> n);
