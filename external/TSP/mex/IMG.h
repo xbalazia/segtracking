@@ -10,19 +10,19 @@
 // == Written by Jason Chang and Donglai Wei 06-20-2013
 // =============================================================================
 
-//ifndef _IMG_H_INCLUDED_
-//define _IMG_H_INCLUDED_
-//include <iostream>
-//include <fstream>
-//include "utils.h"
-//include "SP.h"
-//include "NormalD.h"
-//include "topology.h"
-//include "array.h"
-//include <gsl/gsl_linalg.h>
-//include <gsl/gsl_blas.h>
+zifndef _IMG_H_INCLUDED_
+#define _IMG_H_INCLUDED_
+#include <iostream>
+#include <fstream>
+#include "utils.h"
+#include "SP.h"
+#include "NormalD.h"
+#include "topology.h"
+#include "array.h"
+#include <gsl/gsl_linalg.h>
+#include <gsl/gsl_blas.h>
 
-//include "helperMEX.h"
+#include "helperMEX.h"
 
 using namespace std;
 
@@ -297,4 +297,4 @@ private:
 
 };
 
-//endif
+#endif

@@ -19,16 +19,16 @@
 // == Written by Jason Chang and Donglai Wei 06-20-2013
 // =============================================================================
 
-//ifndef LINEAR_ALGEBRA_H
-// define LINEAR_ALGEBRA_H
+#ifndef LINEAR_ALGEBRA_H
+#define LINEAR_ALGEBRA_H
 
-// include "helperMEX.h"
-// include <math.h>
-// include "gsl/gsl_sf_gamma.h"
+#include "helperMEX.h"
+#include <math.h>
+#include "gsl/gsl_sf_gamma.h"
 
-// ifndef pi
-//  define pi 3.14159265
-// endif
+#ifndef pi
+#define pi 3.14159265
+#endif
 
 inline double det(arr(double) mtx, int D)
 {
@@ -1059,4 +1059,6 @@ inline double logmgamma(double x, int D)
    return val;
 }*/
 
-//endif
+
+
+#endif
