@@ -27,5 +27,4 @@ end
 
 
 
-[stateInfo.X, stateInfo.Y, stateInfo]= ...
-    cleanState(stateInfo.X, stateInfo.Y,stateInfo);
+[stateInfo.X, stateInfo.Y, stateInfo]=cleanState(stateInfo.X, stateInfo.Y,stateInfo);
