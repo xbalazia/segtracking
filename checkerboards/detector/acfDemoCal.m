@@ -19,6 +19,7 @@
 
 
 %% set up environment
+sprintf('hi');
 clc;
 CodePath = '/';
 addpath(genpath(CodePath));
