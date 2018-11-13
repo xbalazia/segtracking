@@ -21,7 +21,7 @@
 %% set up environment
 sprintf('TEST MESSAGE');
 clc;
-CodePath = '/a';
+CodePath = '/';
 addpath(genpath(CodePath));
 versionstr = 'Checkerboards';
 
