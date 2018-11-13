@@ -1,5 +1,6 @@
 pull-and-push.bat
 data/
+datasets/
 tmp/
 TUD-Campus.zip
 X_LINUX.mat
