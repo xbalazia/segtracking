@@ -23,7 +23,7 @@ if( ispc ), optsOmp={'OPTIMFLAGS="$OPTIMFLAGS','/openmp"'}; else
   optsOmp={'CXXFLAGS="\$CXXFLAGS','-fopenmp"'};
   optsOmp=[optsOmp,'LDFLAGS="\$LDFLAGS','-fopenmp"'];
 end
-h
+
 % list of files (missing /private/ part of directory)
 fs={'channels/convConst.cpp',...
   'channels/rgbConvertMex.cpp', 'channels/imResampleMex.cpp',...
