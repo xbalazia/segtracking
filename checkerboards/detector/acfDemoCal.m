@@ -20,14 +20,14 @@
 
 %% set up environment
 clc;
-CodePath = '../';
+CodePath = '/BS/shanshan-projects/work/CheckerBoards_CVPR15_codebase';
 addpath(genpath(CodePath));
 versionstr = 'Checkerboards';
 
 %% set up parameters for training detector (see acfTrain_my)
-traindataDir = '../datasets/Caltech_Pedestrians/train_10Hz';
-testdataDir = '../datasets/Caltech_Pedestrians/test';
-testgtDir = '../datasets/Caltech_Pedestrians/test/annotations';
+traindataDir = '/BS/shanshan-projects/work/Datasets/Caltech_Pedestrians/train_10Hz';
+testdataDir = '/BS/shanshan-projects/work/Datasets/Caltech_Pedestrians/test';
+testgtDir = '/BS/shanshan-projects/work/Datasets/Caltech_Pedestrians/test/annotations';
 
 opts=acfTrain_my();
 opts.posGtDir=[traindataDir '/annotations'];
@@ -67,7 +67,7 @@ sprintf('time=\t'); fix(clock)
 sprintf('\n');
 
 %% test detector and evaluate (see acfTest_my)
-vbbDir='../datasets/Caltech_Pedestrians/';
+vbbDir='/BS/shanshan-projects/work/Datasets/Caltech_Pedestrians/';
 tstart = tic;[miss,~,gt,dt]=acfTest_my(1, vbbDir,'name',opts.name,'imgDir',testdataDir ,...
       'gtDir',testgtDir,'pLoad',[pLoad, 'hRng',[50 inf],...
       'vRng',[.65 1],'xRng',[5 635],'yRng',[5 475]],'show',2);telapsed = toc(tstart);
