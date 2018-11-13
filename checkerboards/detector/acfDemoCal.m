@@ -25,7 +25,7 @@ addpath(genpath(CodePath));
 versionstr = 'Checkerboards';
 
 %% set up parameters for training detector (see acfTrain_my)
-traindataDir = '../datasets/Caltech_Pedestrians/train_10Hz';
+traindataDir = '../datasets/Caltech_Pedestrians/train';
 testdataDir = '../datasets/Caltech_Pedestrians/test';
 testgtDir = '../datasets/Caltech_Pedestrians/test/annotations';
 
