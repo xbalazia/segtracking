@@ -29,7 +29,7 @@ traindataDir = '/BS/shanshan-projects/work/Datasets/Caltech_Pedestrians/train_10
 testdataDir = '/BS/shanshan-projects/work/Datasets/Caltech_Pedestrians/test';
 testgtDir = '/BS/shanshan-projects/work/Datasets/Caltech_Pedestrians/test/annotations';
 
-opts=acfTrain_my();
+%opts=acfTrain_my();
 opts.posGtDir=[traindataDir '/annotations'];
 opts.posImgDir=[traindataDir '/images'];
 opts.name=[CodePath '/models_Caltech/' versionstr '/Checkerboards'];
