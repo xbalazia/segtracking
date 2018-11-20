@@ -83,8 +83,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   /* extract arguments */
   A = mxGetPr(prhs[0]);
   wtMask = mxGetPr(prhs[1]);
-  //nBins = (int*) mxMalloc( nd * sizeof(int) );
-  nBins = (mwSize*) mxMalloc( nd * sizeof(int) );
+  nBins = (int*) mxMalloc( nd * sizeof(int) );
   for( i=0; i<nd; i++) nBins[i] = mxGetN(prhs[i+2])-1;
   edges = (double**) mxMalloc( nd * sizeof(double*) );
   for( i=0; i<nd; i++) edges[i] = mxGetPr(prhs[i+2]);
