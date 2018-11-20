@@ -207,11 +207,11 @@ dfs= { 'pPyramid',{}, 'modelDs',[100 41], 'modelDsPad',[128 64], ...
   'nPerNeg',25, 'nAccNeg',10000, 'pJitter',{}, 'winsSave',0 };
 opts = getPrmDflt(varargin,dfs,1);
 % fill in remaining parameters
-p=chnsPyramid_my([],opts.pPyramid); p=p.pPyramid;
+p=chnsPyramid([],opts.pPyramid); p=p.pPyramid;
 p.minDs=opts.modelDs; shrink=p.pChns.shrink;
 opts.modelDsPad=ceil(opts.modelDsPad/shrink)*shrink;
 p.pad=ceil((opts.modelDsPad-opts.modelDs)/shrink/2)*shrink;
-p=chnsPyramid_my([],p); p=p.pPyramid; p.complete=1;
+p=chnsPyramid([],p); p=p.pPyramid; p.complete=1;
 p.pChns.complete=1; opts.pPyramid=p;
 % initialize pNms, pBoost, pBoost.pTree, and pLoad
 dfs={ 'type','maxg', 'overlap',.65, 'ovrDnm','min' };
