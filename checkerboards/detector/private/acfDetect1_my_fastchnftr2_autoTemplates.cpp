@@ -18,6 +18,7 @@ typedef unsigned int uint32;
 typedef unsigned short ushort16;
 #define MAX 16
 
+int x;
 
 // unique haar struct
 typedef struct HAAR_UNIQ
