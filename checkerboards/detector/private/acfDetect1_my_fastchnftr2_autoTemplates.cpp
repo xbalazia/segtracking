@@ -16,6 +16,8 @@ using namespace std;
 
 typedef unsigned int uint32;
 typedef unsigned short ushort16;
+#define MAX 16
+
 
 // unique haar struct
 typedef struct HAAR_UNIQ
@@ -25,8 +27,6 @@ typedef struct HAAR_UNIQ
     char sign[MAX];
     float response[330][430][10];//float response[330][430][10] for INRIA;[170][250][10] for Caltech
 };
-
-#define MAX 16
 
 //6*6 cells
 const int nUniq = 39;
