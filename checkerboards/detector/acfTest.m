@@ -1,4 +1,4 @@
-function [miss,roc,gt,dt] = acfTest( varargin )
+function [miss,roc,gt,dt] = acfTest_my( varargin )
 % Test aggregate channel features object detector given ground truth.
 %
 % USAGE
@@ -10,7 +10,6 @@ function [miss,roc,gt,dt] = acfTest( varargin )
 %   .imgDir   - ['REQ'] dir containing test images
 %   .gtDir    - ['REQ'] dir containing test ground truth
 %   .pLoad    - [] params for bbGt>bbLoad for test data (see bbGt>bbLoad)
-%   .pModify  - [] params for acfModify for modifying detector
 %   .thr      - [.5] threshold on overlap area for comparing two bbs
 %   .mul      - [0] if true allow multiple matches to each gt
 %   .reapply  - [0] if true re-apply detector even if bbs already computed
@@ -26,17 +25,18 @@ function [miss,roc,gt,dt] = acfTest( varargin )
 %
 % EXAMPLE
 %
-% See also acfTrain, acfDetect, acfModify, acfDemoInria, bbGt
+% See also acfTrain, acfDetect, acfDemoInria, bbGt
 %
-% Piotr's Computer Vision Matlab Toolbox      Version 3.40
-% Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
+% Piotr's Image&Video Toolbox      Version 3.22
+% Copyright 2013 Piotr Dollar & Ron Appel.  [pdollar-at-caltech.edu]
+% Please email me if you find bugs, or have suggestions or questions!
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
 % get parameters
 dfs={ 'name','REQ', 'imgDir','REQ', 'gtDir','REQ', 'pLoad',[], ...
-  'pModify',[], 'thr',.5,'mul',0, 'reapply',0, 'ref',10.^(-2:.25:0), ...
+  'thr',.5,'mul',0, 'reapply',0, 'ref',10.^(-2:.25:0), ...
   'lims',[3.1e-3 1e1 .05 1], 'show',0 };
-[name,imgDir,gtDir,pLoad,pModify,thr,mul,reapply,ref,lims,show] = ...
+[name,imgDir,gtDir,pLoad,thr,mul,reapply,ref,lims,show] = ...
   getPrmDflt(varargin,dfs,1);
 
 % run detector on directory of images
@@ -45,9 +45,12 @@ if(reapply && exist(bbsNm,'file')), delete(bbsNm); end
 if(reapply || ~exist(bbsNm,'file'))
   detector = load([name 'Detector.mat']);
   detector = detector.detector;
-  if(~isempty(pModify)), detector=acfModify(detector,pModify); end
+  %%
+%   detector.opts.pPyramid.minDs = [50,20.5];
+% detector.opts.pPyramid.nOctUp = 1;
+  %%
   imgNms = bbGt('getFiles',{imgDir});
-  acfDetect( imgNms, detector, bbsNm );
+  acfDetect_my( imgNms, detector, bbsNm );
 end
 
 % run evaluation using bbGt
@@ -61,6 +64,6 @@ if( ~show ), return; end
 figure(show); plotRoc([fp tp],'logx',1,'logy',1,'xLbl','fppi',...
   'lims',lims,'color','g','smooth',1,'fpTarget',ref);
 title(sprintf('log-average miss rate = %.2f%%',miss*100));
-savefig([name 'Roc'],show,'png');
+% savefig([name 'Roc'],show,'png');
 
 end

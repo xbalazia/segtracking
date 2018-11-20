@@ -20,13 +20,13 @@ typedef unsigned short ushort16;
 
 
 // unique haar struct
-struct HAAR_UNIQ
+typedef struct HAAR_UNIQ
 { 
     char w;
     char h;
     char sign[MAX];
     float response[330][430][10];//float response[330][430][10] for INRIA;[170][250][10] for Caltech
-}; 
+};
 
 //6*6 cells
 const int nUniq = 39;
