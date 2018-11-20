@@ -16,7 +16,7 @@ using namespace std;
 
 typedef unsigned int uint32;
 typedef unsigned short ushort16;
-#define MAX 16;
+#define MAX 16
 
 
 // unique haar struct
