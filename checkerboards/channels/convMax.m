@@ -36,8 +36,9 @@ function J = convMax( I, r, nomex )
 %
 % See also conv2, convTri, convBox
 %
-% Piotr's Computer Vision Matlab Toolbox      Version 3.00
-% Copyright 2014 Piotr Dollar & Ron Appel.  [pdollar-at-gmail.com]
+% Piotr's Image&Video Toolbox      Version 3.00
+% Copyright 2012 Piotr Dollar & Ron Appel.  [pdollar-at-caltech.edu]
+% Please email me if you find bugs, or have suggestions or questions!
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
 assert( all(r>=0) );

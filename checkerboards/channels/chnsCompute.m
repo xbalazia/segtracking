@@ -71,7 +71,6 @@ function chns = chnsCompute( I, varargin )
 %     .colorChn     - [0] if>0 color channel to use for grad computation
 %     .normRad      - [5] normalization radius for gradient
 %     .normConst    - [.005] normalization constant for gradient
-%     .full         - [0] if true compute angles in [0,2*pi) else in [0,pi)
 %   .pGradHist    - parameters for gradient histograms:
 %     .enabled      - [1] if true enable gradient histogram channels
 %     .binSize      - [shrink] spatial bin size (defaults to shrink)
@@ -112,8 +111,9 @@ function chns = chnsCompute( I, varargin )
 %
 % See also rgbConvert, gradientMag, gradientHist, chnsPyramid
 %
-% Piotr's Computer Vision Matlab Toolbox      Version 3.23
-% Copyright 2014 Piotr Dollar & Ron Appel.  [pdollar-at-gmail.com]
+% Piotr's Image&Video Toolbox      Version 3.02
+% Copyright 2012 Piotr Dollar & Ron Appel.  [pdollar-at-caltech.edu]
+% Please email me if you find bugs, or have suggestions or questions!
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
 % get default parameters pChns
@@ -125,7 +125,7 @@ if( ~isfield(pChns,'complete') || pChns.complete~=1 || isempty(I) )
   pChns.pColor = getPrmDflt( pChns.pColor, {'enabled',1,...
     'smooth',1, 'colorSpace','luv'}, 1 );
   pChns.pGradMag = getPrmDflt( pChns.pGradMag, {'enabled',1,...
-    'colorChn',0,'normRad',5,'normConst',.005,'full',0}, 1 );
+    'colorChn',0,'normRad',5,'normConst',.005}, 1 );
   pChns.pGradHist = getPrmDflt( pChns.pGradHist, {'enabled',1,...
     'binSize',[],'nOrients',6,'softBin',0,'useHog',0,'clipHog',.2}, 1 );
   nc=length(pChns.pCustom); pc=cell(1,nc);
@@ -151,11 +151,10 @@ if(p.enabled), chns=addChn(chns,I,nm,p,'replicate',h,w); end
 
 % compute gradient magnitude channel
 p=pChns.pGradMag; nm='gradient magnitude';
-full=0; if(isfield(p,'full')), full=p.full; end
 if( pChns.pGradHist.enabled )
-  [M,O]=gradientMag(I,p.colorChn,p.normRad,p.normConst,full);
+  [M,O]=gradientMag(I,p.colorChn,p.normRad,p.normConst);
 elseif( p.enabled )
-  M=gradientMag(I,p.colorChn,p.normRad,p.normConst,full);
+  M=gradientMag(I,p.colorChn,p.normRad,p.normConst);
 end
 if(p.enabled), chns=addChn(chns,M,nm,p,0,h,w); end
 
@@ -163,7 +162,7 @@ if(p.enabled), chns=addChn(chns,M,nm,p,0,h,w); end
 p=pChns.pGradHist; nm='gradient histogram';
 if( p.enabled )
   binSize=p.binSize; if(isempty(binSize)), binSize=shrink; end
-  H=gradientHist(M,O,binSize,p.nOrients,p.softBin,p.useHog,p.clipHog,full);
+  H=gradientHist(M,O,binSize,p.nOrients,p.softBin,p.useHog,p.clipHog);
   chns=addChn(chns,H,nm,pChns.pGradHist,0,h,w);
 end
 

@@ -32,8 +32,9 @@ function J = imPad( I, pad, type )
 %
 % See also padarray
 %
-% Piotr's Computer Vision Matlab Toolbox      Version 3.00
-% Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
+% Piotr's Image&Video Toolbox      Version 3.00
+% Copyright 2012 Piotr Dollar.  [pdollar-at-caltech.edu]
+% Please email me if you find bugs, or have suggestions or questions!
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
 J = imPadMex( I, pad, type );
