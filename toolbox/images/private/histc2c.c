@@ -48,7 +48,7 @@ int *sub2ind_init( const int*siz, const int nd ) {
 }
 
 /* construct the nd dimensional histogram */
-void histcND( double* h, double* A, double* wtMask, int n, int nd, double**edges, int* nBins ) {
+void histcND( double* h, double* A, double* wtMask, int n, int nd, double**edges, mwSize* nBins ) {
   int i, j, k, inbounds; int *subMul, *sub, ind;
   sub = (int *) mxMalloc( nd * sizeof(int) );
   subMul = sub2ind_init( nBins, nd );
@@ -67,7 +67,9 @@ void histcND( double* h, double* A, double* wtMask, int n, int nd, double**edges
 }
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
-  mwSize i, n, nd, *nBins; double *A, *wtMask, **edges, *h;
+  mwSize *nBins
+  int i, n, nd;
+  double *A, *wtMask, **edges, *h;
   
   /* Error checking on arguments PRHS=[A1, wtMask, edges1, edges2, ...]; PLHS=[h] */
   if( nrhs < 3) mexErrMsgTxt("At least three input arguments required.");
