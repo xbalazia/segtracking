@@ -1,9 +1,8 @@
 /**************************************************************************
- * Piotr's Image&Video Toolbox      Version 2.2
- * Copyright 2012 Piotr Dollar.  [pdollar-at-caltech.edu]
- * Please email me if you find bugs, or have suggestions or questions!
- * Licensed under the Simplified BSD License [see external/bsd.txt]
- *************************************************************************/
+* Piotr's Computer Vision Matlab Toolbox      Version 2.2
+* Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
+* Licensed under the Simplified BSD License [see external/bsd.txt]
+**************************************************************************/
 #include "mex.h"
 #include "math.h"
 typedef unsigned char uchar;
@@ -24,8 +23,10 @@ void ktComputeW( double* w, uchar* B, double* q, double *p, int n, int nBits ) {
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   /* Declare variables. */
-  int n, nBits, dims[2];
-  uchar *B; double *q, *p, *w;
+  int n, nBits;
+  mwSize dims[2];
+  uchar *B;
+  double *q, *p, *w;
   
   /* PRHS=[B, q, p, nBits]; PLHS=[w] */
   if( nrhs != 4) mexErrMsgTxt("Four input arguments required.");

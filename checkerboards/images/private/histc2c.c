@@ -1,20 +1,19 @@
-/**************************************************************************
- * Piotr's Image&Video Toolbox      Version 2.2
- * Copyright 2012 Piotr Dollar.  [pdollar-at-caltech.edu]
- * Please email me if you find bugs, or have suggestions or questions!
- * Licensed under the Simplified BSD License [see external/bsd.txt]
- *************************************************************************/
+/*******************************************************************************
+* Piotr's Computer Vision Matlab Toolbox      Version 2.2
+* Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
+* Licensed under the Simplified BSD License [see external/bsd.txt]
+*******************************************************************************/
 #include "mex.h"
 
-/**************************************************************************
- * Return index of bin for x. The edges are determined by the (nBins+1)
- * element vector edges. Returns an integer value k in [0,nBins-1]
- * representing the bin x falls into, or k==nBins if x does not fall
- * into any bin. if edges[k] <= x < edges[k+1], then x falls
- * into bin k (k<nBins). Additionally, if x==edges[nBins], then x falls
- * into bin k=nBins-1. Eventually, all values where k==nBins should be ingored.
- * Adapted from \MATLAB6p5\toolbox\matlab\datafun\histc.c
- *************************************************************************/
+/*******************************************************************************
+* Return index of bin for x. The edges are determined by the (nBins+1)
+* element vector edges. Returns an integer value k in [0,nBins-1]
+* representing the bin x falls into, or k==nBins if x does not fall
+* into any bin. if edges[k] <= x < edges[k+1], then x falls
+* into bin k (k<nBins). Additionally, if x==edges[nBins], then x falls
+* into bin k=nBins-1. Eventually, all values where k==nBins should be ingored.
+* Adapted from \MATLAB6p5\toolbox\matlab\datafun\histc.c
+*******************************************************************************/
 int findBin( double x, double *edges, int nBins ) {
   int k = nBins; /* NOBIN */
   int k0 = 0; int k1 = nBins;
@@ -32,16 +31,16 @@ int findBin( double x, double *edges, int nBins ) {
   return k;
 }
 
-/**************************************************************************
- * Fast indexing into multidimensional arrays.
- * Call sub2ind_init once and store the result (siz contains the nd sizes):
- *  subMul = sub2ind_init( siz, nd );
- * Then, to index into an array A of size siz, given a subscript sub
- * (where sub is an nd int array of subscripts), you can get the index using:
- *  sub2ind(ind,sub,subMul,nd)
- *************************************************************************/
+/*******************************************************************************
+* Fast indexing into multidimensional arrays.
+* Call sub2ind_init once and store the result (siz contains the nd sizes):
+*  subMul = sub2ind_init( siz, nd );
+* Then, to index into an array A of size siz, given a subscript sub
+* (where sub is an nd int array of subscripts), you can get the index using:
+*  sub2ind(ind,sub,subMul,nd)
+*******************************************************************************/
 #define sub2ind(ind, sub, subMul, nd) ind=sub[0]; for(k=1;k<nd;k++) ind+=sub[k]*subMul[k];
-int *sub2ind_init( const int*siz, const int nd ) {
+int *sub2ind_init( const mwSize*siz, const int nd ) {
   int i, *subMul;
   subMul = (int*) mxCalloc( nd, sizeof(int));
   subMul[0] = 1; for(i=1; i<nd; i++ ) subMul[i]=subMul[i-1]*siz[i-1];
@@ -49,7 +48,7 @@ int *sub2ind_init( const int*siz, const int nd ) {
 }
 
 /* construct the nd dimensional histogram */
-void histcND( double* h, double* A, double* wtMask, int n, int nd, double**edges, int* nBins ) {
+void histcND( double* h, double* A, double* wtMask, int n, int nd, double**edges, mwSize* nBins ) {
   int i, j, k, inbounds; int *subMul, *sub, ind;
   sub = (int *) mxMalloc( nd * sizeof(int) );
   subMul = sub2ind_init( nBins, nd );
@@ -68,7 +67,9 @@ void histcND( double* h, double* A, double* wtMask, int n, int nd, double**edges
 }
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
-  int i, n, nd, *nBins; double *A, *wtMask, **edges, *h;
+  mwSize *nBins;
+  int i, n, nd;
+  double *A, *wtMask, **edges, *h;
   
   /* Error checking on arguments PRHS=[A1, wtMask, edges1, edges2, ...]; PLHS=[h] */
   if( nrhs < 3) mexErrMsgTxt("At least three input arguments required.");
@@ -84,7 +85,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   /* extract arguments */
   A = mxGetPr(prhs[0]);
   wtMask = mxGetPr(prhs[1]);
-  nBins = (int*) mxMalloc( nd * sizeof(int) );
+  nBins = mxMalloc( nd * sizeof(int) );
   for( i=0; i<nd; i++) nBins[i] = mxGetN(prhs[i+2])-1;
   edges = (double**) mxMalloc( nd * sizeof(double*) );
   for( i=0; i<nd; i++) edges[i] = mxGetPr(prhs[i+2]);

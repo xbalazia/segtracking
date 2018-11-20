@@ -1,10 +1,10 @@
 /*******************************************************************************
-* Piotr's Image&Video Toolbox      Version 2.62
-* Copyright 2012 Piotr Dollar.  [pdollar-at-caltech.edu]
-* Please email me if you find bugs, or have suggestions or questions!
+* Piotr's Computer Vision Matlab Toolbox      Version 3.30
+* Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
 * Licensed under the Simplified BSD License [see external/bsd.txt]
 *******************************************************************************/
 #include "mex.h"
+#include <string.h>
 
 /*******************************************************************************
 %% initialize test data
@@ -251,7 +251,8 @@ void homogToInds(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
 
 void applyTransform(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   /* J=applyTransform(I,rs,cs,is,flag); */
-  int flag, *nsI, nsJ[3], areaJ, areaI, nDims, i, k, id, *is;
+  mwSize nsJ[3];
+  int flag, *nsI, areaJ, areaI, nDims, i, k, id, *is;
   double *I, *J, *I1, *J1, *rs, *cs, wr, wc, wrc, r, c;
 
   /* extract inputs */
@@ -264,9 +265,9 @@ void applyTransform(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) 
   /* get dimensions */
   nDims = mxGetNumberOfDimensions(prhs[0]);
   nsI = (int*) mxGetDimensions(prhs[0]);
-  nsJ[0]=(int)mxGetM(prhs[1]); nsJ[1]=(int)mxGetN(prhs[1]);
-  nsJ[2]=(nDims==2) ? 1 : nsI[2];
-  areaJ=nsJ[0]*nsJ[1]; areaI=nsI[0]*nsI[1];
+  nsJ[0] = mxGetM(prhs[1]); nsJ[1]=(int)mxGetN(prhs[1]);
+  nsJ[2] = (mwSize) (nDims==2) ? 1 : nsI[2];
+  areaJ = nsJ[0]*nsJ[1]; areaI=nsI[0]*nsI[1];
 
   /* Perform interpolation */
   J = mxMalloc(sizeof(double)*areaJ*nsJ[2]);
