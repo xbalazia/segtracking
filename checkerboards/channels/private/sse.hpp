@@ -1,7 +1,6 @@
 /*******************************************************************************
-* Piotr's Image&Video Toolbox      Version 3.00
-* Copyright 2012 Piotr Dollar & Ron Appel.  [pdollar-at-caltech.edu]
-* Please email me if you find bugs, or have suggestions or questions!
+* Piotr's Computer Vision Matlab Toolbox      Version 3.23
+* Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
 * Licensed under the Simplified BSD License [see external/bsd.txt]
 *******************************************************************************/
 #ifndef _SSE_HPP_
@@ -50,7 +49,9 @@ RETf XOR( const __m128 x, const __m128 y ) { return _mm_xor_ps(x,y); }
 
 // comparison operators
 RETf CMPGT( const __m128 x, const __m128 y ) { return _mm_cmpgt_ps(x,y); }
+RETf CMPLT( const __m128 x, const __m128 y ) { return _mm_cmplt_ps(x,y); }
 RETi CMPGT( const __m128i x, const __m128i y ) { return _mm_cmpgt_epi32(x,y); }
+RETi CMPLT( const __m128i x, const __m128i y ) { return _mm_cmplt_epi32(x,y); }
 
 // conversion operators
 RETf CVT( const __m128i x ) { return _mm_cvtepi32_ps(x); }

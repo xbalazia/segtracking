@@ -9,7 +9,7 @@ function model = adaBoostTrain( X0, X1, varargin )
 %
 % For more information on how to quickly boost decision trees see:
 %   [1] R. Appel, T. Fuchs, P. Dollár, P. Perona; "Quickly Boosting
-%   Decision Trees ?Pruning Underachieving Features Early," ICML 2013.
+%   Decision Trees – Pruning Underachieving Features Early," ICML 2013.
 % The code here implements a simple brute-force strategy with the option to
 % sample features used for training each node for additional speedups.
 % Further gains using the ideas from the ICML paper are possible. If you
@@ -52,9 +52,8 @@ function model = adaBoostTrain( X0, X1, varargin )
 %
 % See also adaBoostApply, binaryTreeTrain, demoGenData
 %
-% Piotr's Image&Video Toolbox      Version 3.21
-% Copyright 2013 Piotr Dollar.  [pdollar-at-caltech.edu]
-% Please email me if you find bugs, or have suggestions or questions!
+% Piotr's Computer Vision Matlab Toolbox      Version 3.21
+% Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
 % get additional parameters
@@ -86,9 +85,7 @@ for i=1:nWeak
   if(i==1), trees=repmat(tree,nWeak,1); end
   trees(i)=tree; errs(i)=err; losses(i)=loss;
   msg=' i=%4i alpha=%.3f err=%.3f loss=%.2e\n';
-  if(mod(i,verbose)==0)
-	 fprintf(msg,i,alpha,err,loss);
- end
+  if(mod(i,verbose)==0), fprintf(msg,i,alpha,err,loss); end
   if(verbose && loss<1e-40), nWeak=i; disp(' stopping early'); break; end
 end
 

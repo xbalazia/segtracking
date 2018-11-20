@@ -1,7 +1,6 @@
 /*******************************************************************************
-* Piotr's Image&Video Toolbox      Version NEW
-* Copyright 2012 Piotr Dollar.  [pdollar-at-caltech.edu]
-* Please email me if you find bugs, or have suggestions or questions!
+* Piotr's Computer Vision Matlab Toolbox      Version 3.22
+* Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
 * Licensed under the Simplified BSD License [see external/bsd.txt]
 *******************************************************************************/
 #include "wrappers.hpp"
@@ -97,8 +96,8 @@ template<class iT> void rgb2luv_sse( iT *I, float *J, int n, float nrm ) {
       _cminu=SET(minu); _cminv=SET(minv);
       for( i1=i; i1<n1; i1+=4 ) {
         _l = *(_L++);
-        *(_U++) = SUB(MUL(_l,*_U),_cminu);
-        *(_V++) = SUB(MUL(_l,*_V),_cminv);
+        *_U = SUB(MUL(_l,*_U),_cminu); _U++;
+        *_V = SUB(MUL(_l,*_V),_cminv); _V++;
       }
     }
     i = n1;
@@ -176,7 +175,8 @@ void mexFunction(int nl, mxArray *pl[], int nr, const mxArray *pr[]) {
   if( nr!=3 ) mexErrMsgTxt("Three inputs expected.");
   if( nl>1 ) mexErrMsgTxt("One output expected.");
   dims = (const int*) mxGetDimensions(pr[0]); n=dims[0]*dims[1];
-  nDims = mxGetNumberOfDimensions(pr[0]); d=(nDims==2) ? 1 : dims[2];
+  nDims = mxGetNumberOfDimensions(pr[0]);
+  d = 1; for( int i=2; i<nDims; i++ ) d*=dims[i];
 
   // extract input arguments
   I = mxGetPr(pr[0]);

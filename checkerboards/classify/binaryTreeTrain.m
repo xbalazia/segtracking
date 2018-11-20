@@ -11,7 +11,7 @@ function [tree,data,err] = binaryTreeTrain( data, varargin )
 %
 % For more information on how to quickly boost decision trees see:
 %   [1] R. Appel, T. Fuchs, P. Dollár, P. Perona; "Quickly Boosting
-%   Decision Trees ?Pruning Underachieving Features Early," ICML 2013.
+%   Decision Trees – Pruning Underachieving Features Early," ICML 2013.
 % The code here implements a simple brute-force strategy with the option to
 % sample features used for training each node for additional speedups.
 % Further gains using the ideas from the ICML paper are possible. If you
@@ -39,7 +39,7 @@ function [tree,data,err] = binaryTreeTrain( data, varargin )
 %   .maxDepth   - [1] maximum depth of tree
 %   .minWeight  - [.01] minimum sample weigth to allow split
 %   .fracFtrs   - [1] fraction of features to sample for each node split
-%   .nThreads   - [inf] max number of computational threads to use
+%   .nThreads   - [16] max number of computational threads to use
 %
 % OUTPUTS
 %  tree       - learned decision tree model struct w the following fields
@@ -56,13 +56,12 @@ function [tree,data,err] = binaryTreeTrain( data, varargin )
 %
 % See also binaryTreeApply, adaBoostTrain, forestTrain
 %
-% Piotr's Image&Video Toolbox      Version 3.21
-% Copyright 2013 Piotr Dollar.  [pdollar-at-caltech.edu]
-% Please email me if you find bugs, or have suggestions or questions!
+% Piotr's Computer Vision Matlab Toolbox      Version 3.40
+% Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
 % get parameters
-dfs={'nBins',256,'maxDepth',1,'minWeight',.01,'fracFtrs',1,'nThreads',1e5};
+dfs={'nBins',256,'maxDepth',1,'minWeight',.01,'fracFtrs',1,'nThreads',16};
 [nBins,maxDepth,minWeight,fracFtrs,nThreads]=getPrmDflt(varargin,dfs,1);
 assert(nBins<=256);
 
@@ -103,7 +102,7 @@ while( k < K )
   if( prior<1e-3||prior>1-1e-3||depth(k)>=maxDepth||w<minWeight )
     k=k+1; continue; end
   % train best stump
-  fidsSt=1:F; if(fracFtrs<1), fidsSt=randSample(F,floor(F*fracFtrs)); end
+  fidsSt=1:F; if(fracFtrs<1), fidsSt=randperm(F,floor(F*fracFtrs)); end
   [errsSt,thrsSt] = binaryTreeTrain1(X0,X1,single(wts0/w),...
     single(wts1/w),nBins,prior,uint32(fidsSt-1),nThreads);
   [~,fid]=min(errsSt); thr=single(thrsSt(fid))+.5; fid=fidsSt(fid);
