@@ -20,7 +20,7 @@
 
 %% set up environment
 clc;
-CodePath = '';
+CodePath = '/BS/shanshan-projects/work/CheckerBoards_CVPR15_codebase';
 addpath(genpath(CodePath));
 versionstr = 'Checkerboards';
 
