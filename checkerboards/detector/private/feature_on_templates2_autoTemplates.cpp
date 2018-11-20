@@ -14,7 +14,7 @@ typedef unsigned int uint32;
 #define MAX 16
 
 // haar struct
-typedef struct HAAR
+struct HAAR
 { 
     char w;
     char h;

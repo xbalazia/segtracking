@@ -20,7 +20,7 @@ typedef unsigned short ushort16;
 
 
 // unique haar struct
-typedef struct HAAR_UNIQ
+struct HAAR_UNIQ
 { 
     char w;
     char h;

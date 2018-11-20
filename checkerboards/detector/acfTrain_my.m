@@ -2,7 +2,7 @@ function detector = acfTrain_my( varargin )
 % Train aggregate channel features object detector.
 %
 % Train aggregate channel features (ACF) object detector:
-%  P. Doll�r, Z. Tu, P. Perona and S. Belongie
+%  P. Dollar, Z. Tu, P. Perona and S. Belongie
 %  "Integral Channel Features", BMVC 2009.
 % The exact details of the algorithm below differ substantially from the
 % BMVC09 paper, a more up-to-date method writeup is not yet available.
