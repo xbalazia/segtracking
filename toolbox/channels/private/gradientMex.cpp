@@ -333,7 +333,7 @@ mxArray* mxCreateMatrix3( mwSize h, mwSize w, mwSize d, mxClassID id, bool c, vo
 void checkArgs( int nl, mxArray *pl[], int nr, const mxArray *pr[], int nl0,
   int nl1, int nr0, int nr1, int *h, int *w, int *d, mxClassID id, void **I )
 {
-  const int *dims; int nDims;
+  const mwSize *dims; mwSize nDims;
   if( nl<nl0 || nl>nl1 ) mexErrMsgTxt("Incorrect number of outputs.");
   if( nr<nr0 || nr>nr1 ) mexErrMsgTxt("Incorrect number of inputs.");
   nDims = mxGetNumberOfDimensions(pr[0]); dims = mxGetDimensions(pr[0]);
