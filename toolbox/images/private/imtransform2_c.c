@@ -251,8 +251,8 @@ void homogToInds(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
 
 void applyTransform(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   /* J=applyTransform(I,rs,cs,is,flag); */
-  mwSize nsI, nsJ[3];
-  int flag, areaJ, areaI, nDims, i, k, id, *is;
+  mwSize nsJ[3];
+  int flag, *nsI, areaJ, areaI, nDims, i, k, id, *is;
   double *I, *J, *I1, *J1, *rs, *cs, wr, wc, wrc, r, c;
 
   /* extract inputs */
@@ -264,9 +264,9 @@ void applyTransform(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) 
 
   /* get dimensions */
   nDims = mxGetNumberOfDimensions(prhs[0]);
-  nsI = (mwSize*) mxGetDimensions(prhs[0]);
+  nsI = (int*) mxGetDimensions(prhs[0]);
   nsJ[0] = mxGetM(prhs[1]); nsJ[1]=(int)mxGetN(prhs[1]);
-  nsJ[2] = (nDims==2) ? 1 : nsI[2];
+  nsJ[2] = (mwSize) (nDims==2) ? 1 : nsI[2];
   areaJ = nsJ[0]*nsJ[1]; areaI=nsI[0]*nsI[1];
 
   /* Perform interpolation */
