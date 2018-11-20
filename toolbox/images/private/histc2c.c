@@ -67,7 +67,7 @@ void histcND( double* h, double* A, double* wtMask, int n, int nd, double**edges
 }
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
-  mwSize *nBins
+  mwSize *nBins;
   int i, n, nd;
   double *A, *wtMask, **edges, *h;
   
