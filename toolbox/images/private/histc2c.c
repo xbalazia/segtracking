@@ -67,7 +67,7 @@ void histcND( double* h, double* A, double* wtMask, int n, int nd, double**edges
 }
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
-  int i, n, nd, *nBins; double *A, *wtMask, **edges, *h;
+  mwSize i, n, nd, *nBins; double *A, *wtMask, **edges, *h;
   
   /* Error checking on arguments PRHS=[A1, wtMask, edges1, edges2, ...]; PLHS=[h] */
   if( nrhs < 3) mexErrMsgTxt("At least three input arguments required.");
@@ -83,7 +83,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   /* extract arguments */
   A = mxGetPr(prhs[0]);
   wtMask = mxGetPr(prhs[1]);
-  nBins = (int*) mxMalloc( nd * sizeof(int) );
+  nBins = mxMalloc( nd * sizeof(int) );
   for( i=0; i<nd; i++) nBins[i] = mxGetN(prhs[i+2])-1;
   edges = (double**) mxMalloc( nd * sizeof(double*) );
   for( i=0; i<nd; i++) edges[i] = mxGetPr(prhs[i+2]);
