@@ -20,7 +20,7 @@
 
 %% set up environment
 clc;
-CodePath = '';
+CodePath = '/home/balazia/pedtrack/checkerboards';
 addpath(genpath(CodePath));
 versionstr = 'Checkerboards';
 
