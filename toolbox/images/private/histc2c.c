@@ -40,7 +40,7 @@ int findBin( double x, double *edges, int nBins ) {
 *  sub2ind(ind,sub,subMul,nd)
 *******************************************************************************/
 #define sub2ind(ind, sub, subMul, nd) ind=sub[0]; for(k=1;k<nd;k++) ind+=sub[k]*subMul[k];
-int *sub2ind_init( const int*siz, const int nd ) {
+int *sub2ind_init( const mwSize*siz, const int nd ) {
   int i, *subMul;
   subMul = (int*) mxCalloc( nd, sizeof(int));
   subMul[0] = 1; for(i=1; i<nd; i++ ) subMul[i]=subMul[i-1]*siz[i-1];
