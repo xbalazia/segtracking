@@ -25,7 +25,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   /* Declare variables. */
   int n, nBits;
   mwSize dims[2];
-  uchar *B; double *q, *p, *w;
+  uchar *B;
+  double *q, *p, *w;
   
   /* PRHS=[B, q, p, nBits]; PLHS=[w] */
   if( nrhs != 4) mexErrMsgTxt("Four input arguments required.");
