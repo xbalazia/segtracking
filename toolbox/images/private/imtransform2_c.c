@@ -252,7 +252,7 @@ void homogToInds(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
 void applyTransform(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   /* J=applyTransform(I,rs,cs,is,flag); */
   mwSize *nsI, nsJ[3];
-  int flag, *nsI, areaJ, areaI, nDims, i, k, id, *is;
+  int flag, areaJ, areaI, nDims, i, k, id, *is;
   double *I, *J, *I1, *J1, *rs, *cs, wr, wc, wrc, r, c;
 
   /* extract inputs */
