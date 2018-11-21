@@ -220,8 +220,8 @@ if( format==0 )
   fId=fopen(fName);
   if(fId==-1), error(['unable to open file: ' fName]); end; v=0;
   try v=textscan(fId,'%% bbGt version=%d'); v=v{1}; catch, end %#ok<CTCH>
-  if(isempty(v)), v=0; disp(fName); end
-  disp('not empty');
+  if(isempty(v)), v=0; end
+  disp(fId);
   % read in annotation (m is number of fields for given version v)
   if(all(v~=[0 1 2 3])), error('Unknown version %i.',v); end
   frmt='%s %d %d %d %d %d %d %d %d %d %d %d';
