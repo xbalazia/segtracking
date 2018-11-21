@@ -11,8 +11,8 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 	//Get the Input data
 	//The image data
 	double*	ubuff = mxGetPr(prhs[0]);
-    int	ncellh = mxGetScalar(prhs[1]);
-    int	ncellw = mxGetScalar(prhs[2]);
+    mwSize	ncellh = mxGetScalar(prhs[1]);
+    mwSize	ncellw = mxGetScalar(prhs[2]);
     mwSize nch = mxGetScalar(prhs[3]);
     int	shrink = mxGetScalar(prhs[4]);
 
