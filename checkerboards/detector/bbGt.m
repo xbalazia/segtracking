@@ -225,7 +225,7 @@ if( format==0 )
   if(all(v~=[0 1 2 3])), error('Unknown version %i.',v); end
   frmt='%s %d %d %d %d %d %d %d %d %d %d %d';
   ms=[10 10 11 12]; m=ms(v+1); frmt=frmt(1:2+(m-1)*3);
-  in=textscan(fId,frmt,'HeaderLines',2);
+  in=textscan(fId,frmt,'HeaderLines',1);
   disp(in);
   
   %t=char(9);
