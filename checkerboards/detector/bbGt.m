@@ -221,11 +221,11 @@ if( format==0 )
   if(fId==-1), error(['unable to open file: ' fName]); end; v=0;
   try v=textscan(fId,'%% bbGt version=%d'); v=v{1}; catch, end %#ok<CTCH>
   if(isempty(v)), v=0; end
-  disp(fId);
   % read in annotation (m is number of fields for given version v)
   if(all(v~=[0 1 2 3])), error('Unknown version %i.',v); end
   frmt='%s %d %d %d %d %d %d %d %d %d %d %d';
   ms=[10 10 11 12]; m=ms(v+1); frmt=frmt(1:2+(m-1)*3);
+  disp(fId, frmt);
   in=textscan(fId,frmt); for i=2:m, in{i}=double(in{i}); end; fclose(fId);
   % create objs struct from read in fields
   n=length(in{1}); objs=create(n);
