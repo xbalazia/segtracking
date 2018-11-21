@@ -226,7 +226,7 @@ if( format==0 )
   frmt='%s %d %d %d %d %d %d %d %d %d %d %d';
   ms=[10 10 11 12]; m=ms(v+1); frmt=frmt(1:2+(m-1)*3);
   in=textscan(fId,frmt,'HeaderLines',2);
-  disp(in{1});
+  disp(in);
   
   %t=char(9);
   %l=['2014/02/20' t '12:00' t '4.80' t 'NaN' t  t '8.81' t  '21.28' t  t '0.78' t t];
