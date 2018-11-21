@@ -27,7 +27,7 @@ versionstr = 'Checkerboards';
 %% set up parameters for training detector (see acfTrain_my)
 traindataDir = '/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/train';
 testdataDir = '/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/test';
-testgtDir = '/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/test/annotations';
+testgtDir = '/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/annotations';
 
 opts=acfTrain_my();
 opts.posGtDir=[traindataDir '/annotations'];
