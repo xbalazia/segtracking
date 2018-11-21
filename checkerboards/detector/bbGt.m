@@ -223,10 +223,10 @@ if( format==0 )
   if(isempty(v)), v=0; end
   % read in annotation (m is number of fields for given version v)
   if(all(v~=[0 1 2 3])), error('Unknown version %i.',v); end
-  frmt='%s %s %s %s %s %s %s %s %s %s %s %s';
+  frmt='%s %d %d %d %d %d %d %d %d %d %d %d';
   ms=[10 10 11 12]; m=ms(v+1); frmt=frmt(1:2+(m-1)*3);
   in=textscan(fId,frmt);
-  disp(in);
+  disp(in{2});
   for i=2:m, in{i}=double(in{i}); end
   fclose(fId);
   % create objs struct from read in fields
