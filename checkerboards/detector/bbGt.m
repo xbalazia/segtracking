@@ -218,6 +218,7 @@ df={'format',0,'ellipse',1,'squarify',[],'lbls',[],'ilbls',[],'hRng',[],...
 if( format==0 )
   % load objs stored in default format
   fId=fopen(fName);
+  disp(fName);
   if(fId==-1), error(['unable to open file: ' fName]); end; v=0;
   try v=textscan(fId,'%% bbGt version=%d'); v=v{1}; catch, end %#ok<CTCH>
   if(isempty(v)), v=0; end
@@ -226,7 +227,6 @@ if( format==0 )
   frmt='%s %d %d %d %d %d %d %d %d %d %d %d';
   ms=[10 10 11 12]; m=ms(v+1); frmt=frmt(1:2+(m-1)*3);
   in=textscan(fId,frmt); for i=2:m, in{i}=double(in{i}); end; fclose(fId);
-  disp(in);
   % create objs struct from read in fields
   n=length(in{1}); objs=create(n);
   for i=1:n, objs(i).lbl=in{1}{i}; objs(i).occ=in{6}(i); end
