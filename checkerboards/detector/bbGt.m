@@ -225,9 +225,8 @@ if( format==0 )
   if(all(v~=[0 1 2 3])), error('Unknown version %i.',v); end
   frmt='%s %d %d %d %d %d %d %d %d %d %d %d';
   ms=[10 10 11 12]; m=ms(v+1); frmt=frmt(1:2+(m-1)*3);
-  disp(fId);
-  disp(frmt);
   in=textscan(fId,frmt); for i=2:m, in{i}=double(in{i}); end; fclose(fId);
+  disp(in);
   % create objs struct from read in fields
   n=length(in{1}); objs=create(n);
   for i=1:n, objs(i).lbl=in{1}{i}; objs(i).occ=in{6}(i); end
