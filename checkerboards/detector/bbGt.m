@@ -228,8 +228,7 @@ if( format==0 )
   in=textscan(fId,frmt); for i=2:m, in{i}=double(in{i}); end; fclose(fId);
   % create objs struct from read in fields
   n=length(in{1}); objs=create(n);
-  disp(n);
-  disp(length(objs));
+  disp(length(in));
   for i=1:n, objs(i).lbl=in{1}{i}; objs(i).occ=in{6}(i); end
   bb=[in{2} in{3} in{4} in{5}]; bbv=[in{7} in{8} in{9} in{10}];
   for i=1:n, objs(i).bb=bb(i,:); objs(i).bbv=bbv(i,:); end
