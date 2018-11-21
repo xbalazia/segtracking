@@ -228,6 +228,7 @@ if( format==0 )
   in=textscan(fId,frmt);
   %disp(in{2});
   
+  t=char(9);
   l=['2014/02/20' t '12:00' t '4.80' t 'NaN' t  t '8.81' t  '21.28' t  t '0.78' t t];
   nNumberCols = 8;
   formatX = ['%s %s' repmat('%f', [1 nNumberCols])];
