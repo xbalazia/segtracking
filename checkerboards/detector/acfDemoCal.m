@@ -67,7 +67,7 @@ sprintf('time=\t'); fix(clock)
 sprintf('\n');
 
 %% test detector and evaluate (see acfTest_my)
-if(0)
+if(1)
     vbbDir='/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/';
     tstart = tic;[miss,~,gt,dt]=acfTest_my(1, vbbDir,'name',opts.name,'imgDir',testdataDir ,...
       'gtDir',testgtDir,'pLoad',[pLoad, 'hRng',[50 inf],...
@@ -84,7 +84,7 @@ if(0)
     close;
 end
 %% run detector on a set of images without evaluation
-if(1)
+if(0)
     imgNms=bbGt('getFiles',{[dataDir 'test/images']});
     tic, bbs=acfDetect_my(imgNms,detector); toc
     % visualize detection results on one single image
@@ -92,5 +92,5 @@ if(1)
     figure(1); im(I); bbApply('draw',bbs{1862}); pause(.1);
 end
 %% optionally show top false positives ('type' can be 'fp','fn','tp','dt')
-if( 0 ), bbGt('cropRes',gt,dt,imgNms,'type','fn','n',50,...
+if(0), bbGt('cropRes',gt,dt,imgNms,'type','fn','n',50,...
     'show',3,'dims',opts.modelDs([2 1])); end
