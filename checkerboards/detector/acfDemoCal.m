@@ -19,7 +19,7 @@
 
 
 %% set up environment
-sprintf('begin')
+sprintf('begin');
 clc;
 CodePath = '/home/balazia/pedtrack/checkerboards';
 addpath(genpath(CodePath));
