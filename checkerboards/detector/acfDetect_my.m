@@ -1,5 +1,4 @@
 function bbs = acfDetect_my( I, detector, fileName )
-fileName
 % Run aggregate channel features object detector on given image(s).
 %
 % The input 'I' can either be a single image (or filename) or a cell array
@@ -38,6 +37,7 @@ fileName
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
 % run detector on every image
+fileName
 if(nargin<3), fileName=''; end; multiple=iscell(I);
 if(~isempty(fileName) && exist(fileName,'file')), bbs=1; return; end
 if(~multiple), bbs=acfDetectImg_my(I,detector); else
