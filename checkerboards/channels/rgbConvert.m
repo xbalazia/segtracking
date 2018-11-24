@@ -72,10 +72,12 @@ function J = rgbConvert( I, colorSpace, useSingle )
 
 if(nargin<3 || isempty(useSingle)), useSingle=true; end
 flag = find(strcmpi(colorSpace,{'gray','rgb','luv','hsv','orig'}))-1;
-colorSpace
 if(isempty(flag)), error('unknown colorSpace: %s',colorSpace); end
 if(useSingle), outClass='single'; else outClass='double'; end
 if(isempty(I) && flag>0 && flag~=4), I=I(:,:,[1 1 1]); end
 d=size(I,3); if(flag==4), flag=1; end; norm=(d==1 && flag==0) || flag==1;
 if( norm && isa(I,outClass) ), J=I; return; end
+I
+flag
+useSingle
 J=rgbConvertMex(I,flag,useSingle);
