@@ -67,23 +67,24 @@ sprintf('time=\t'); fix(clock)
 sprintf('\n');
 
 %% test detector and evaluate (see acfTest_my)
-vbbDir='/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/';
-tstart = tic;[miss,~,gt,dt]=acfTest_my(1, vbbDir,'name',opts.name,'imgDir',testdataDir ,...
+if(0)
+    vbbDir='/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/';
+    tstart = tic;[miss,~,gt,dt]=acfTest_my(1, vbbDir,'name',opts.name,'imgDir',testdataDir ,...
       'gtDir',testgtDir,'pLoad',[pLoad, 'hRng',[50 inf],...
       'vRng',[.65 1],'xRng',[5 635],'yRng',[5 475]],'show',2);telapsed = toc(tstart);
 
 
-fid = fopen([CodePath '/models_Caltech/' versionstr '/AcfCaltechLog.txt'],'a'); 
-fprintf(fid,'\n test time=%f seconds = %f hours\n',telapsed, telapsed/3600);
-fclose(fid);
+    fid = fopen([CodePath '/models_Caltech/' versionstr '/AcfCaltechLog.txt'],'a'); 
+    fprintf(fid,'\n test time=%f seconds = %f hours\n',telapsed, telapsed/3600);
+    fclose(fid);
 
-sprintf('time=\t'); fix(clock)
-sprintf('\n');
-savefig([CodePath '/models_Caltech/' versionstr '/curve'],'pdf');
-close;
-
+    sprintf('time=\t'); fix(clock)
+    sprintf('\n');
+    savefig([CodePath '/models_Caltech/' versionstr '/curve'],'pdf');
+    close;
+end
 %% run detector on a set of images without evaluation
-if(0)
+if(1)
     imgNms=bbGt('getFiles',{[dataDir 'test/images']});
     tic, bbs=acfDetect_my(imgNms,detector); toc
     % visualize detection results on one single image
