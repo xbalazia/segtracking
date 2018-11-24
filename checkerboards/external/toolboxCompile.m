@@ -52,7 +52,7 @@ for i=1:n
   try %#ok<ALIGN>
     [d,f1,e]=fileparts(fs{i}); f=[rd '/' d '/private/' f1];
     if(useOmp(i)), optsi=[optsOmp opts]; else optsi=opts; end
-    fprintf(' -> %s\n',[f e]); mex([f e],optsi{:},[f '.' mexext]);
+    fprintf(' -> %s\n',[f e]); mex([f e], optsi{:},[f '.' mexext]);
   catch err, fprintf(errmsg,[f1 e],err.message); end
 end
 try %#ok<ALIGN>
