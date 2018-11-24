@@ -86,7 +86,7 @@ if(0)
 end
 %% run detector on a set of images without evaluation
 if(1)
-    imgNms=bbGt('getFiles',{[testdataDir 'test/images']});
+    imgNms=bbGt('getFiles',{[infdataDir]});
     tic, bbs=acfDetect_my(imgNms,detector); toc
     % visualize detection results on one single image
     I=imread(imgNms{1862}); 
