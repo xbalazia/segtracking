@@ -186,7 +186,7 @@ void mexFunction(int nl, mxArray *pl[], int nr, const mxArray *pr[]) {
 
   // call rgbConvert() based on type of input and output array
   if(!((d==1 && flag==0) || flag==1 || (d/3)*3==d))
-    mexErrMsgTxt(d + '_' + flag + ' ' "I must have third dimension d==1 or (d/3)*3==d.");
+    mexErrMsgTxt(d + '_' + flag + ' ' + "I must have third dimension d==1 or (d/3)*3==d.");
   if( idIn == mxSINGLE_CLASS && !single )
     J = (void*) rgbConvert( (float*) I, n, d, flag, 1.0 );
   else if( idIn == mxSINGLE_CLASS && single )
