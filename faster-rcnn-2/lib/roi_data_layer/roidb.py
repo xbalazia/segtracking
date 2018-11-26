@@ -3,15 +3,15 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import sys
+egg_path = '__MODULE_PATH__/datasets-0.0.9/datasets-0.0.9-py3.5.egg'
+sys.path.append(egg_path)
 import datasets
 import numpy as np
 from model.utils.config import cfg
 from datasets.factory import get_imdb
 import PIL
 import pdb
-
-import sys  
-sys.path.append(r"models-master/official/datasets"); import dataset_utils
 
 def prepare_roidb(imdb):
   """Enrich the imdb's roidb by adding some derived quantities that
