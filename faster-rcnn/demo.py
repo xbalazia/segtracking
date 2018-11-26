@@ -173,7 +173,7 @@ if __name__ == '__main__':
                        'sheep', 'sofa', 'train', 'tvmonitor'])
 
   # initilize the network here.
-  if args.net == 'vgg16_caffe':
+  if args.net == 'vgg16':
     fasterRCNN = vgg16(pascal_classes, pretrained=False, class_agnostic=args.class_agnostic)
   elif args.net == 'res101':
     fasterRCNN = resnet(pascal_classes, 101, pretrained=False, class_agnostic=args.class_agnostic)
