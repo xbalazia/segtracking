@@ -192,7 +192,7 @@ if __name__ == '__main__':
     checkpoint = torch.load(load_name)
   else:
     checkpoint = torch.load(load_name, map_location=(lambda storage, loc: storage))
-  print(checkpoint)
+  print(checkpoint.keys())
   fasterRCNN.load_state_dict(checkpoint['model'])
   if 'pooling_mode' in checkpoint.keys():
     cfg.POOLING_MODE = checkpoint['pooling_mode']
