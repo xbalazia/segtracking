@@ -10,6 +10,9 @@ from datasets.factory import get_imdb
 import PIL
 import pdb
 
+import sys  
+sys.path.append(r"models-master/official/datasets"); import dataset_utils
+
 def prepare_roidb(imdb):
   """Enrich the imdb's roidb by adding some derived quantities that
   are useful for training. This function precomputes the maximum
