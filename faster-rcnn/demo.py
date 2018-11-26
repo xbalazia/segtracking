@@ -159,11 +159,11 @@ if __name__ == '__main__':
   # -- Note: Use validation set and disable the flipped to enable faster loading.
 
   #input_dir = args.load_dir + "/" + args.net + "/" + args.dataset
-  load_name = args.load_dir + "/" + args.net + "_caffe.pth"
-  if not os.path.exists(load_name): #input_dir
-    raise Exception('There is no input directory for loading network from ' + load_name) #input_dir
-  #load_name = os.path.join(input_dir,
-    #'faster_rcnn_{}_{}_{}.pth'.format(args.checksession, args.checkepoch, args.checkpoint))
+  input_dir = args.load_dir + "/" + args.net
+  if not os.path.exists(input_dir):
+    raise Exception('There is no input directory for loading network from ' + input_dir)
+  load_name = os.path.join(input_dir,
+    'faster_rcnn_{}_{}_{}.pth'.format(args.checksession, args.checkepoch, args.checkpoint))
 
   pascal_classes = np.asarray(['__background__',
                        'aeroplane', 'bicycle', 'bird', 'boat',
