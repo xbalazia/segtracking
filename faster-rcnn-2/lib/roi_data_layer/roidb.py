@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import print_function
 
 import sys
-egg_path = '__MODULE_PATH__/datasets/datasets-0.0.9-py3.5.egg'
+egg_path = '__MODULE_PATH__/lib/datasets/datasets-0.0.9-py3.5.egg'
 sys.path.append(egg_path)
 import datasets
 import numpy as np
