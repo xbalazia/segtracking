@@ -218,8 +218,6 @@ df={'format',0,'ellipse',1,'squarify',[],'lbls',[],'ilbls',[],'hRng',[],...
 if( format==0 )
   % load objs stored in default format
   fId=fopen(fName);
-  disp(fId)
-  disp(fName)
   if(fId==-1), error(['unable to open file: ' fName]); end; v=0;
   try v=textscan(fId,'%% bbGt version=%d'); v=v{1}; catch, end %#ok<CTCH>
   if(isempty(v)), v=0; end
