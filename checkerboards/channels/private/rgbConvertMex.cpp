@@ -183,8 +183,8 @@ void mexFunction(int nl, mxArray *pl[], int nr, const mxArray *pr[]) {
   flag = (int) mxGetScalar(pr[1]);
   single = (bool) (mxGetScalar(pr[2])>0);
   idIn = mxGetClassID(pr[0]);
-  
-  mexErrMsgTxt(to_string(d));
+
+  mexErrMsgTxt(d);
 
   // call rgbConvert() based on type of input and output array
   if(!((d==1 && flag==0) || flag==1 || (d/3)*3==d))
