@@ -25,7 +25,7 @@ function dbExtract( tDir, flatten, skip )
 
 addpath('videos');
 addpath('detector');
-skip=3;
+skip = 3;
 
 [pth,setIds,vidIds] = dbInfo;
 if(nargin<1 || isempty(tDir)), tDir=pth; end
