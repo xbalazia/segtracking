@@ -7,6 +7,7 @@
 #include <cmath>
 #include <typeinfo>
 #include "sse.hpp"
+#include <iostream>
 
 // Constants for rgb2luv conversion and lookup table for y-> l conversion
 template<class oT> oT* rgb2luv_setup( oT z, oT *mr, oT *mg, oT *mb,
@@ -184,7 +185,7 @@ void mexFunction(int nl, mxArray *pl[], int nr, const mxArray *pr[]) {
   single = (bool) (mxGetScalar(pr[2])>0);
   idIn = mxGetClassID(pr[0]);
 
-  sprintf(d);
+  printf('%s\n',d.c_str());
 
   // call rgbConvert() based on type of input and output array
   if(!((d==1 && flag==0) || flag==1 || (d/3)*3==d))
