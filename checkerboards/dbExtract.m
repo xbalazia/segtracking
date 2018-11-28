@@ -27,7 +27,7 @@ addpath('videos');
 addpath('detector');
 skip=3;
 
-[pth,setIds,vidIds] = dbInfo;
+[pth,setIds,vidIds] = dbInfo('usa');
 if(nargin<1 || isempty(tDir)), tDir=pth; end
 if(nargin<2 || isempty(flatten)), flatten=0; end
 if(nargin<3 || isempty(skip)), [~,~,~,skip]=dbInfo; end
