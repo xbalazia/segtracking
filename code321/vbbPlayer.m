@@ -26,8 +26,6 @@ function vbbPlayer( s, v )
 % Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
-addpath(genpath('D:\PostDoc\IMPLEMENTATION\pedtrack\checkerboards\matlab'));
-
 [pth,setIds,vidIds] = dbInfo;
 
 if(nargin<1 ||isempty(s)), s=randint2(1,1,[1 length(setIds)]); end
