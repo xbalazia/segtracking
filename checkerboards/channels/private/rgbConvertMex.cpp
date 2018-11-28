@@ -7,7 +7,7 @@
 #include <cmath>
 #include <typeinfo>
 #include "sse.hpp"
-#include <stdio.h>
+#include <iostream>
 
 // Constants for rgb2luv conversion and lookup table for y-> l conversion
 template<class oT> oT* rgb2luv_setup( oT z, oT *mr, oT *mg, oT *mb,
