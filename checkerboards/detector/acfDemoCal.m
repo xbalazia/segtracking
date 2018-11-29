@@ -87,7 +87,7 @@ end
 %% run detector on a set of images without evaluation
 if(1)
     imgNms=bbGt('getFiles',{['/home/balazia/pedtrack/checkerboards/data-USA/images/test']});
-    tic, bbs=acfDetect_my(imgNms,detector); toc
+    tic, bbs=acfDetect_my(imgNms,detector,'filename.txt'); toc
     % visualize detection results on one single image
     I=imread(imgNms{1});
     figure(1); im(I); bbApply('draw',bbs{1}); pause(.1);
