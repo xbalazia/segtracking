@@ -58,9 +58,8 @@ function varargout = bbApply( action, varargin )
 % bbApply>union bbApply>resize bbApply>squarify bbApply>draw bbApply>crop
 % bbApply>convert bbApply>random bbApply>frMask bbApply>toMask
 %
-% Piotr's Image&Video Toolbox      Version 2.65
-% Copyright 2012 Piotr Dollar.  [pdollar-at-caltech.edu]
-% Please email me if you find bugs, or have suggestions or questions!
+% Piotr's Computer Vision Matlab Toolbox      Version 3.30
+% Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
 %#ok<*DEFNU>
@@ -254,9 +253,73 @@ function bbr = squarify( bb, flag, ar )
 if(nargin<3 || isempty(ar)), ar=1; end; bbr=bb;
 if(flag==4), bbr=resize(bb,0,0,ar); return; end
 for i=1:size(bb,1), p=bb(i,1:4);
-  usew = (flag==0 && p(3)>p(4)*ar) || (flag==1 && p(3)<p(4)*ar) || flag==2;
+  %usew = ((flag==0) && (p(3)>p(4)*ar)) || ((flag==1) && (p(3)<p(4)*ar)) || (flag==2);
+  usew = ((flag==0) && (p(3)>p(4)*ar));
+  usew = usew || ((flag==1) && (p(3)<p(4)*ar));
+  usew = usew ||  (flag==2);
   if(usew), p=resize(p,0,1,ar); else p=resize(p,1,0,ar); end; bbr(i,1:4)=p;
 end
+end
+
+function hs = drawMulticlass( bb, col, lw, ls, prop, ids, showScore, showClass )
+% Draw single or multiple bbs to image (calls rectangle()).
+%
+% To draw bbs aligned with pixel boundaries, subtract .5 from the x and y
+% coordinates (since pixel centers are located at integer locations).
+%
+% USAGE
+%  hs = bbApply( 'drawMulticlass', bb, [col], [lw], [ls], [prop], [ids] )
+%
+% INPUTS
+%  bb     - [nx4] standard bbs or [nx5] weighted bbs or [nx6] with subclass.
+%  col    - ['g'] color or [kx1] array of colors
+%  lw     - [2] LineWidth for rectangle
+%  ls     - ['-'] LineStyle for rectangle
+%  prop   - [] other properties for rectangle
+%  ids    - [ones(1,n)] id in [1,k] for each bb into colors array
+%  showScore - [1]
+%  showClass - [1]
+%
+% OUTPUT
+%  hs     - [nx1] handles to drawn rectangles (and labels)
+%
+% EXAMPLE
+%  im(rand(3)); bbApply('draw',[1.5 1.5 1 1 .5],'g');
+%
+% See also bbApply, bbApply>embed, rectangle
+[n,m]=size(bb); if(n==0), hs=[]; return; end
+if(nargin<2 || isempty(col)), col=[]; end
+if(nargin<3 || isempty(lw)), lw=2; end
+if(nargin<4 || isempty(ls)), ls='-'; end
+if(nargin<5 || isempty(prop)), prop={}; end
+if(nargin<6 || isempty(ids)), ids=ones(1,n); end
+if(nargin<7 || isempty(showScore)), showScore = 1; end
+if(nargin<8 || isempty(showClass)), showClass = 1; end
+% prepare display properties
+prop=['LineWidth' lw 'LineStyle' ls prop 'EdgeColor'];
+tProp={'FontSize',12,'color','y','FontWeight','bold',...
+  'VerticalAlignment','bottom'}; k=max(ids);
+if(isempty(col)), if(k==1), col='g'; else col=hsv(k); end; end
+if(size(col,1)<k), ids=ones(1,n); end; hs=zeros(1,n);
+% draw rectangles and optionally labels
+for b=1:n, hs(b)=rectangle('Position',bb(b,1:4),prop{:},col(ids(b),:)); end
+if(m==4), return; end; hs=[hs zeros(1,n)];
+if (showScore)
+  for b=1:n
+    hs(b+n)=text(bb(b,1),bb(b,2),num2str(bb(b,5),2),tProp{:});  
+  end
+end
+tProp={'FontSize',12,'color','y','FontWeight','bold',...
+  'VerticalAlignment','top'}; k=max(ids);
+if (showClass)
+  for b=1:n
+    if size(bb,2)>=7
+      hs(b+2*n)=text(bb(b,1),bb(b,2)+bb(b,4),num2str(bb(b,7)),tProp{:}); 
+    elseif size(bb,2)==6
+      hs(b+2*n)=text(bb(b,1),bb(b,2)+bb(b,4),num2str(bb(b,6)),tProp{:}); 
+    end;
+  end;
+end;
 end
 
 function hs = draw( bb, col, lw, ls, prop, ids )
@@ -297,7 +360,7 @@ if(isempty(col)), if(k==1), col='g'; else col=hsv(k); end; end
 if(size(col,1)<k), ids=ones(1,n); end; hs=zeros(1,n);
 % draw rectangles and optionally labels
 for b=1:n, hs(b)=rectangle('Position',bb(b,1:4),prop{:},col(ids(b),:)); end
-if(m==4), return; end; hs=[hs zeros(1,n)];
+if(m==4), return; end; hs=[hs zeros(1,n)]; bb=double(bb);
 for b=1:n, hs(b+n)=text(bb(b,1),bb(b,2),num2str(bb(b,5),4),tProp{:}); end
 end
 
@@ -337,7 +400,7 @@ if( ismatrix(I) ), I=I(:,:,[1 1 1]); end
 x0=bb(:,1); x1=x0+bb(:,3)-1; y0=bb(:,2); y1=y0+bb(:,4)-1;
 j0=floor((lw-1)/2); j1=ceil((lw-1)/2); h=size(I,1); w=size(I,2);
 x00=max(1,x0-j0); x01=min(x0+j1,w); x10=max(1,x1-j0); x11=min(x1+j1,w);
-y00=max(1,y0-j0); y01=min(y0+j1,h); y10=max(1,y1-j0); y11=min(y1+j1,w);
+y00=max(1,y0-j0); y01=min(y0+j1,h); y10=max(1,y1-j0); y11=min(y1+j1,h);
 for b=1:n
   for c=1:3, I([y00(b):y01(b) y10(b):y11(b)],x00(b):x11(b),c)=col(b,c); end
   for c=1:3, I(y00(b):y11(b),[x00(b):x01(b) x10(b):x11(b)],c)=col(b,c); end
@@ -348,7 +411,7 @@ bb(:,1:4)=intersect(bb(:,1:4),[1 1 w h]);
 for b=1:n
   M=char2img(sprintf('%.4g',bb(b,5)),fh); M=M{1}==0; [h,w]=size(M);
   y0=bb(b,2); y1=y0+h-1; x0=bb(b,1); x1=x0+w-1;
-  if( x0>=1 && y0>=1 && x1<=size(I,2) && y1<=size(I,2))
+  if( x0>=1 && y0>=1 && x1<=size(I,2) && y1<=size(I,1))
     Ir=I(y0:y1,x0:x1,1); Ig=I(y0:y1,x0:x1,2); Ib=I(y0:y1,x0:x1,3);
     Ir(M)=fcol(b,1); Ig(M)=fcol(b,2); Ib(M)=fcol(b,3);
     I(y0:y1,x0:x1,:)=cat(3,Ir,Ig,Ib);
@@ -419,7 +482,8 @@ for i=1:n, [patches{i},bbs(i,1:4)]=crop1(bbs(i,1:4)); end
       patch = I(lcsS(1):lcsE(1),lcsS(2):lcsE(2),:);
     end
     bb = [lcsS([2 1]) lcsE([2 1])-lcsS([2 1])+1];
-    if(~isempty(dims)), patch=imResample(patch,[dims(2),dims(1)]); end
+%    if(~isempty(dims)), patch=imResample(patch,[dims(2),dims(1)]); end
+    if(~isempty(dims)), patch=imresize(patch,[dims(2),dims(1)]); end
   end
 end
 

@@ -4,7 +4,7 @@ function acfSweeps
 % Running the parameter sweeps requires altering internal flags.
 % The sweeps are not well documented, use at your own discretion.
 %
-% Piotr's Computer Vision Matlab Toolbox      Version 3.50
+% Piotr's Computer Vision Matlab Toolbox      Version NEW
 % Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
