@@ -1,5 +1,6 @@
 pull-and-push.bat
-data-*
+data/
+data-USA/
 tmp/
 X_LINUX.mat
 *.mexa64
