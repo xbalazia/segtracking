@@ -28,7 +28,7 @@ versionstr = 'Checkerboards';
 traindataDir = '/home/balazia/pedtrack/checkerboards/UNDEFINED';
 testdataDir = '/home/balazia/pedtrack/checkerboards/UNDEFINED';
 testgtDir = '/home/balazia/pedtrack/checkerboards/UNDEFINED';
-infdataDir = '/home/balazia/pedtrack/checkerboards/data-USA/images/set00/V000';
+infdataDir = '/home/balazia/pedtrack/checkerboards/data-USA/virat';
 
 opts=acfTrain_my();
 opts.posGtDir=[traindataDir '/annotations'];
