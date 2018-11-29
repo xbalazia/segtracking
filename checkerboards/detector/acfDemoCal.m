@@ -27,8 +27,8 @@ versionstr = 'Checkerboards';
 %% set up parameters for training detector (see acfTrain_my)
 opts=acfTrain_my();
 traindataDir = '/home/balazia/pedtrack/checkerboards/data-USA';
-opts.posGtDir=[traindataDir '/annotations'];
-opts.posImgDir=[traindataDir '/images'];
+opts.posGtDir=[traindataDir '/annotations/set00/V000'];
+opts.posImgDir=[traindataDir '/images/set00/V000'];
 opts.name=[CodePath '/models_Caltech/' versionstr '/Checkerboards'];
 
 opts.modelDs=[96 36]; opts.modelDsPad=[120 60];
