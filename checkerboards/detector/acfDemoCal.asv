@@ -69,7 +69,7 @@ sprintf('\n');
 
 %% test detector and evaluate (see acfTest_my)
 if(0)
-    vbbDir='/home/balazia/pedtrack/checkerboards/data-USA/';
+    vbbDir='/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/';
     tstart = tic;[miss,~,gt,dt]=acfTest_my(1, vbbDir,'name',opts.name,'imgDir',testdataDir ,...
       'gtDir',testgtDir,'pLoad',[pLoad, 'hRng',[50 inf],...
       'vRng',[.65 1],'xRng',[5 635],'yRng',[5 475]],'show',2);telapsed = toc(tstart);
