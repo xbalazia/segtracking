@@ -1,7 +1,6 @@
 pull-and-push.bat
-data/
-data-USA/
-tmp/
+checkerboards/data-USA/
+faster-rcnn/data/
 X_LINUX.mat
 *.mexa64
 *.mexw64
