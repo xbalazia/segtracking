@@ -89,8 +89,6 @@ if(1)
     imgNms=bbGt('getFiles',{['/home/balazia/pedtrack/checkerboards/data-USA/images/test']});
     tic, bbs=acfDetect_my(imgNms,detector,'filename.txt'); toc
     % visualize detection results on one single image
-    imgNms
-    bbs
     I=imread(imgNms{1});
     figure(1); im(I); bbApply('draw',bbs); pause(.1);%bbs{1}
 end

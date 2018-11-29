@@ -52,7 +52,7 @@ if( multiple ) % add image index to each bb and flatten result
   bbs=cell2mat(bbs);
 end
 dlmwrite(fileName,bbs); bbs=1;
-
+fileName
 end
 
 function bbs = acfDetectImg_my( I, detector )
