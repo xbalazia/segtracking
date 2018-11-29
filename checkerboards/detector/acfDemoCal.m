@@ -28,7 +28,7 @@ versionstr = 'Checkerboards';
 traindataDir = '/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/train';
 testdataDir = '/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/test';
 testgtDir = '/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/annotations';
-infdataDir = '/home/balazia/pedtrack/checkerboards/data-USA/images/set00/V000';
+infdataDir = '/home/balazia/pedtrack/checkerboards/data-USA/images/virat';
 
 opts=acfTrain_my();
 opts.posGtDir=[traindataDir '/annotations'];
