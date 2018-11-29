@@ -185,7 +185,9 @@ void mexFunction(int nl, mxArray *pl[], int nr, const mxArray *pr[]) {
   single = (bool) (mxGetScalar(pr[2])>0);
   idIn = mxGetClassID(pr[0]);
 
-  printf("dddd=%d\n",d);
+  printf("d=%d\n",d);
+  printf("flag=%d\n",flag);
+  //d = 1;
 
   // call rgbConvert() based on type of input and output array
   if(!((d==1 && flag==0) || flag==1 || (d/3)*3==d))
