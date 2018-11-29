@@ -2,6 +2,7 @@ pull-and-push.bat
 checkerboards/data-USA/
 faster-rcnn/data/
 X_LINUX.mat
+*.asv
 *.mexa64
 *.mexw64
 *.rar
