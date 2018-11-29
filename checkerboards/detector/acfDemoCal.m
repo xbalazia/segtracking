@@ -52,7 +52,9 @@ opts.pBoost.pTree.maxDepth =4;
 opts.pBoost.discrete=0;
 
 %% train detector (see acfTrain)
-detector = acfTrain_my( opts );
+if(0)
+    detector = acfTrain_my( opts );
+end
 
 %% modify detector (see acfModify)
 detector = acfModify_my(detector,'cascThr',-1,'cascCal',0.1);
