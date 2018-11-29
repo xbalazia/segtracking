@@ -25,13 +25,10 @@ addpath(genpath(CodePath));
 versionstr = 'Checkerboards';
 
 %% set up parameters for training detector (see acfTrain_my)
-traindataDir = '/home/balazia/pedtrack/checkerboards/UNDEFINED';
-testdataDir = ;
-testgtDir = '/home/balazia/pedtrack/checkerboards/UNDEFINED';
-
 opts=acfTrain_my();
-opts.posGtDir=[traindataDir '/annotations'];
-opts.posImgDir=[traindataDir '/images'];
+traindataDir = '/home/balazia/pedtrack/checkerboards/data-USA';
+opts.posGtDir=[traindataDir '/annotations/set00/V000'];
+opts.posImgDir=[traindataDir '/images/set00/V000'];
 opts.name=[CodePath '/models_Caltech/' versionstr '/Checkerboards'];
 
 opts.modelDs=[96 36]; opts.modelDsPad=[120 60];
@@ -55,7 +52,9 @@ opts.pBoost.pTree.maxDepth =4;
 opts.pBoost.discrete=0;
 
 %% train detector (see acfTrain)
-detector = acfTrain_my( opts );
+if(0)
+    detector = acfTrain_my( opts );
+end
 
 %% modify detector (see acfModify)
 detector = acfModify_my(detector,'cascThr',-1,'cascCal',0.1);
@@ -68,13 +67,13 @@ sprintf('\n');
 
 %% test detector and evaluate (see acfTest_my)
 if(0)
-    vbbDir='/home/balazia/pedtrack/checkerboards/UNDEFINED';
+    vbbDir='/home/balazia/pedtrack/checkerboards';
     tstart = tic;[miss,~,gt,dt]=acfTest_my(1, vbbDir, ...
       'name', opts.name, ...
-      'imgDir', testdataDir , ...
-      'gtDir',testgtDir,'pLoad',[pLoad, 'hRng',[50 inf],...
-      'vRng',[.65 1],'xRng',[5 635],'yRng',[5 475]],'show',2);telapsed = toc(tstart);
-
+      'imgDir', '/home/balazia/pedtrack/checkerboards/data-USA/images' , ...
+      'gtDir', '/home/balazia/pedtrack/checkerboards/data-USA/annotations', ...
+      'pLoad', [pLoad, 'hRng',[50 inf], 'vRng', [.65 1], 'xRng', [5 635], 'yRng',[5 475]], 'show',2);
+    telapsed = toc(tstart);
 
     fid = fopen([CodePath '/models_Caltech/' versionstr '/AcfCaltechLog.txt'],'a'); 
     fprintf(fid,'\n test time=%f seconds = %f hours\n',telapsed, telapsed/3600);
@@ -87,12 +86,11 @@ if(0)
 end
 %% run detector on a set of images without evaluation
 if(1)
-    imgNms=bbGt('getFiles',{['/home/balazia/pedtrack/checkerboards/data-USA/images/set00/V000']});
-    tic, bbs=acfDetect_my(imgNms,detector); toc
+    imgNms=bbGt('getFiles',{['/home/balazia/pedtrack/checkerboards/data-USA/images/test']});
+    tic, bbs=acfDetect_my(imgNms,detector,'filename.txt'); toc
     % visualize detection results on one single image
     I=imread(imgNms{1}); 
     figure(1); im(I); bbApply('draw',bbs{1}); pause(.1);
-    'FINISHED SUCCESSFULLY'
 end
 %% optionally show top false positives ('type' can be 'fp','fn','tp','dt')
 if(0), bbGt('cropRes',gt,dt,imgNms,'type','fn','n',50,...

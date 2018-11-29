@@ -86,11 +86,11 @@ if(0)
 end
 %% run detector on a set of images without evaluation
 if(1)
-    imgNms=bbGt('getFiles',{['/home/balazia/pedtrack/checkerboards/data-USA/images/set00/V000']});
+    imgNms=bbGt('getFiles',{['/home/balazia/pedtrack/checkerboards/data-USA/images/test']});
     tic, bbs=acfDetect_my(imgNms,detector,'filename.txt'); toc
     % visualize detection results on one single image
-    I=imread(imgNms{1}); 
-    figure(1); im(I); bbApply('draw',bbs{1}); pause(.1);
+    I=imread(imgNms[1]); 
+    figure(1); im(I); bbApply('draw',bbs[1]); pause(.1);
 end
 %% optionally show top false positives ('type' can be 'fp','fn','tp','dt')
 if(0), bbGt('cropRes',gt,dt,imgNms,'type','fn','n',50,...
