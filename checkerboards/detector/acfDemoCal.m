@@ -28,7 +28,6 @@ versionstr = 'Checkerboards';
 traindataDir = '/home/balazia/pedtrack/checkerboards/UNDEFINED';
 testdataDir = '/home/balazia/pedtrack/checkerboards/UNDEFINED';
 testgtDir = '/home/balazia/pedtrack/checkerboards/UNDEFINED';
-infdataDir = '/home/balazia/pedtrack/checkerboards/data-USA/images/test';
 
 opts=acfTrain_my();
 opts.posGtDir=[traindataDir '/annotations'];
@@ -86,7 +85,7 @@ if(0)
 end
 %% run detector on a set of images without evaluation
 if(1)
-    imgNms=bbGt('getFiles',{[infdataDir]});
+    imgNms=bbGt('getFiles',{['/home/balazia/pedtrack/checkerboards/data-USA/images/set00/V000']});
     tic, bbs=acfDetect_my(imgNms,detector); toc
     % visualize detection results on one single image
     I=imread(imgNms{1}); 
