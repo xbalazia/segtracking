@@ -25,10 +25,10 @@ addpath(genpath(CodePath));
 versionstr = 'Checkerboards';
 
 %% set up parameters for training detector (see acfTrain_my)
-traindataDir = '/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/train';
-testdataDir = '/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/test';
-testgtDir = '/home/balazia/pedtrack/checkerboards/datasets/Caltech_Pedestrians/annotations';
-infdataDir = '/home/balazia/pedtrack/checkerboards/data-USA/images/virat';
+traindataDir = '/home/balazia/pedtrack/checkerboards/UNDEFINED';
+testdataDir = '/home/balazia/pedtrack/checkerboards/UNDEFINED';
+testgtDir = '/home/balazia/pedtrack/checkerboards/UNDEFINED';
+infdataDir = '/home/balazia/pedtrack/checkerboards/data-USA/images/set00/V000';
 
 opts=acfTrain_my();
 opts.posGtDir=[traindataDir '/annotations'];
@@ -69,7 +69,7 @@ sprintf('\n');
 
 %% test detector and evaluate (see acfTest_my)
 if(0)
-    vbbDir='/home/balazia/pedtrack/checkerboards/data-USA/';
+    vbbDir='/home/balazia/pedtrack/checkerboards/UNDEFINED';
     tstart = tic;[miss,~,gt,dt]=acfTest_my(1, vbbDir,'name',opts.name,'imgDir',testdataDir ,...
       'gtDir',testgtDir,'pLoad',[pLoad, 'hRng',[50 inf],...
       'vRng',[.65 1],'xRng',[5 635],'yRng',[5 475]],'show',2);telapsed = toc(tstart);
@@ -87,7 +87,7 @@ end
 %% run detector on a set of images without evaluation
 if(1)
     imgNms=bbGt('getFiles',{[infdataDir]});
-    tic, bbs=acfDetect_my(imgNms,detector); toc
+    tic, bbs=acfDetect(imgNms,detector); toc
     % visualize detection results on one single image
     I=imread(imgNms{1862}); 
     figure(1); im(I); bbApply('draw',bbs{1862}); pause(.1);
