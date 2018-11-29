@@ -26,7 +26,7 @@ versionstr = 'Checkerboards';
 
 %% set up parameters for training detector (see acfTrain_my)
 opts=acfTrain_my();
-traindataDir = '/home/balazia/pedtrack/checkerboards/UNDEFINED';
+traindataDir = '/home/balazia/pedtrack/checkerboards/data-USA';
 opts.posGtDir=[traindataDir '/annotations'];
 opts.posImgDir=[traindataDir '/images'];
 opts.name=[CodePath '/models_Caltech/' versionstr '/Checkerboards'];
@@ -65,11 +65,11 @@ sprintf('\n');
 
 %% test detector and evaluate (see acfTest_my)
 if(0)
-    vbbDir='/home/balazia/pedtrack/checkerboards/UNDEFINED';
+    vbbDir='/home/balazia/pedtrack/checkerboards';
     tstart = tic;[miss,~,gt,dt]=acfTest_my(1, vbbDir, ...
       'name', opts.name, ...
-      'imgDir', '/home/balazia/pedtrack/checkerboards/UNDEFINED' , ...
-      'gtDir', '/home/balazia/pedtrack/checkerboards/UNDEFINED', ...
+      'imgDir', '/home/balazia/pedtrack/checkerboards/data-USA/images' , ...
+      'gtDir', '/home/balazia/pedtrack/checkerboards/data-USA/annotations', ...
       'pLoad', [pLoad, 'hRng',[50 inf], 'vRng', [.65 1], 'xRng', [5 635], 'yRng',[5 475]], 'show',2);
     telapsed = toc(tstart);
 
