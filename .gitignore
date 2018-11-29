@@ -1,8 +1,6 @@
 pull-and-push.bat
 data-*
-images/
 tmp/
-TUD-Campus.zip
 X_LINUX.mat
 *.mexa64
 *.mexw64
