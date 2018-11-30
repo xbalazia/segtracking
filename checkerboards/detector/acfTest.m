@@ -41,16 +41,17 @@ dfs={ 'name','REQ', 'imgDir','REQ', 'gtDir','REQ', 'pLoad',[], ...
   getPrmDflt(varargin,dfs,1);
 
 % run detector on directory of images
-bbsNm=[name 'Dets.txt'];
+bbsNm=[name 'detections.txt'];
 if(reapply && exist(bbsNm,'file')), delete(bbsNm); end
 if(reapply || ~exist(bbsNm,'file'))
-  'BEFORE'
   detector = load([name 'detector.mat']);
   detector = detector.detector;
-  'AFTER'
+  'AFTER 1'
   if(~isempty(pModify)), detector=acfModify(detector,pModify); end
   imgNms = bbGt('getFiles',{imgDir});
-  acfDetect( imgNms, detector, bbsNm );
+  'AFTER 2'
+  acfDetect_my( imgNms, detector, bbsNm );
+  'AFTER 3'
 end
 
 % run evaluation using bbGt
