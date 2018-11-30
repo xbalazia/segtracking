@@ -638,7 +638,9 @@ end
 
 end
 
-function [gt,dt] = evalRes( gt0, dt0, thr, mul, isMulticlass)
+function [gt,dt] = evalRes( gt, dt, thr, mul, isMulticlass)
+gt0 = gt{2};
+dt0 = dt{2};
 % Evaluates detections against ground truth data.
 %
 % Uses modified Pascal criteria that allows for "ignore" regions. The
@@ -712,8 +714,8 @@ end
 if ~isMulticlass
   if(isempty(gt0)), gt0=zeros(0,5); end
   if(isempty(dt0)), dt0=zeros(0,5); end
-  assert(size(dt0,2)==5); 
-  if(size(gt0,2)==6) 
+  assert(size(dt0,2)==5);
+  if(size(gt0,2)==6)
     gt0 = gt0(:,1:5);
   end
   assert(size(gt0,2)==5);

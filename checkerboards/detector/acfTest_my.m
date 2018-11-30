@@ -76,8 +76,6 @@ else
 end
 % %load gt from vbb files
 gt = loadGt(vbbDir, setIds, vidIds, 30, pLoad, aspectRatio, [5 5 635 475]);
-size(gt)
-size(dt)
 
 [gt,dt] = bbGt('evalRes',gt,dt,thr,mul);
 [fp,tp,score,miss] = bbGt('compRoc',gt,dt,1,ref);
