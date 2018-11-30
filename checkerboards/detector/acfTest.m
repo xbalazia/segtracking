@@ -40,6 +40,8 @@ dfs={ 'name','REQ', 'imgDir','REQ', 'gtDir','REQ', 'pLoad',[], ...
 [name,imgDir,gtDir,pLoad,pModify,thr,mul,reapply,ref,lims,show] = ...
   getPrmDflt(varargin,dfs,1);
 
+'START TEST'
+
 % run detector on directory of images
 bbsNm=[name 'Dets.txt'];
 if(reapply && exist(bbsNm,'file')), delete(bbsNm); end
