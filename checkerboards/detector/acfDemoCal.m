@@ -93,9 +93,10 @@ if(1)
     imgNms=bbGt('getFiles',{[DataPath '/images/set01/V000']});
     tic, bbs=acfDetect_my(imgNms,detector,[ModelPath '/detections.txt']); toc
     % visualize detection results on one single image
-    k=48
+    k=48;
+    bbsk=bbs{k};
     I=imread(imgNms{k});
-    figure(1); im(I); bbApply('draw',bbs{k}); pause(.1);%bbs{1}
+    figure(1); im(I); bbApply('draw',bbsk); pause(.1);
 end
 %% optionally show top false positives ('type' can be 'fp','fn','tp','dt')
 if(0), bbGt('cropRes',gt,dt,imgNms,'type','fn','n',50,...
