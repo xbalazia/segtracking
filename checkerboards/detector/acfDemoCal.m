@@ -60,13 +60,15 @@ if(0)
 end
 
 %% modify detector (see acfModify)
-detector = acfModify_my(detector,'cascThr',-1,'cascCal',0.1);
-detector.opts.pPyramid.nPerOct = 10;
+if(0)
+    detector = acfModify_my(detector,'cascThr',-1,'cascCal',0.1);
+    detector.opts.pPyramid.nPerOct = 10;
 
-save([opts.name 'Detector.mat'],'detector');
+    save([opts.name 'Detector.mat'],'detector');
 
-sprintf('time=\t'); fix(clock)
-newline;
+    sprintf('time=\t'); fix(clock)
+    newline;
+end
 
 %% test detector and evaluate (see acfTest_my)
 if(0)
