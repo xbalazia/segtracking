@@ -94,6 +94,7 @@ if(1)
     tic, bbs=acfDetect_my(imgNms,detector,[ModelPath '/detections.txt']); toc
     % visualize detection results on one single image
     k=48;
+    bbs
     bbsk=bbs{k};
     I=imread(imgNms{k});
     figure(1); im(I); bbApply('draw',bbsk); pause(.1);
