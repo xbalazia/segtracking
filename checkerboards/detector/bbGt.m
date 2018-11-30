@@ -699,7 +699,8 @@ if(nargin<4 || isempty(mul)), mul=0; end
 if(nargin<5 || isempty(isMulticlass)), isMulticlass=0; end
 
 % if gt0 and dt0 are cell arrays run on each element in turn
-if(iscell(gt0) && iscell(dt0))
+if(0)
+%if(iscell(gt0) && iscell(dt0))
   length(gt0)
   length(dt0)
   n=length(gt0);
