@@ -37,12 +37,12 @@ function bbs = acfDetect_my( I, detector, fileName )
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
 % run detector on every image
-%delete(fileName); %
+if(exist(fileName,'file')), delete(fileName); end %
 if(nargin<3), fileName=''; end; multiple=iscell(I);
 if(~isempty(fileName) && exist(fileName,'file')), bbs=1; return; end
 if(~multiple), bbs=acfDetectImg_my(I,detector); else
   n=length(I); bbs=cell(n,1);
-  parfor i=1:n, disp(I{i}); bbs{i}=acfDetectImg_my(I{i},detector);end %parfor i=1:n, bbs{i}=acfDetectImg_my(I{i},detector);end
+  parfor i=1:n, disp(I{i}); bbs{i}=acfDetectImg_my(I{i},detector); end %parfor i=1:n, bbs{i}=acfDetectImg_my(I{i},detector);end
 end
 
 % write results to disk if fileName specified
