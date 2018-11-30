@@ -68,9 +68,11 @@ end
 for f=1:n, bb=dt{f}; dt{f}=bb(bb(:,4)>=40,:); end %shanshan: detection filtering the same as code3.2.1
 
 if(test)
-    setIds=6:10;vidIds={0:18 0:11 0:10 0:11 0:11};
+    setIds=6:10;
+    vidIds={0:18 0:11 0:10 0:11 0:11};
 else
-     setIds=5;vidIds={0:12};
+    setIds=5;
+    vidIds={0:12};
 end
 % %load gt from vbb files
 gt = loadGt(vbbDir, setIds, vidIds, 30, pLoad, aspectRatio, [5 5 635 475]);

@@ -71,7 +71,7 @@ end
 
 %% test detector and evaluate (see acfTest_my)
 if(1)
-    tstart = tic; [miss,~,gt,dt] = acfTest_my(1, DataPath, ...
+    tstart = tic; [miss,~,gt,dt] = acfTest_my(0, DataPath, ...
       'name', opts.name, ...
       'imgDir', [DataPath '/images/set01/V000'] , ...
       'gtDir', [DataPath '/annotations/set01/V000'], ...
@@ -79,7 +79,7 @@ if(1)
     telapsed = toc(tstart);
 
     fid = fopen([ModelPath '/AcfCaltechLog.txt'],'a'); 
-    fprintf(fid,'\n test time=%f seconds = %f hours\n', telapsed, telapsed/3600);
+    fprintf(fid,'\n test time = %f seconds = %f hours\n', telapsed, telapsed/3600);
     fclose(fid);
 
     sprintf('time=\t'); fix(clock)
