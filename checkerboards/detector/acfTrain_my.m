@@ -120,7 +120,7 @@ nm=[opts.name 'detector.mat']; t=exist(nm,'file');
 if(t), if(nargout), t=load(nm); detector=t.detector; end; return; end
 t=fileparts(nm); if(~isempty(t) && ~exist(t,'dir')), mkdir(t); end
 detector = struct( 'opts',opts, 'clf',[], 'info',[] );
-startTrain=clock; nm=[opts.name 'Log.txt'];
+startTrain=clock; nm=[opts.name 'log.txt'];
 if(exist(nm,'file')), diary(nm); diary('off'); delete(nm); end 
 diary(nm);
 RandStream.setGlobalStream(RandStream('mrg32k3a','Seed',opts.seed));
@@ -184,7 +184,7 @@ for stage = 0:numel(opts.nWeak)-1
 end
 
 % save detector
-save([opts.name 'Detector.mat'],'detector');
+save([opts.name 'detector.mat'],'detector');
 
 % finalize logging
 diary('on'); fprintf([repmat('-',[1 75]) '\n']);
