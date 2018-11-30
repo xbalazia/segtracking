@@ -184,7 +184,7 @@ for stage = 0:numel(opts.nWeak)-1
 end
 
 % save detector
-save([opts.name 'Detector_original.mat'],'detector');
+save([opts.name 'Detector.mat'],'detector');
 
 % finalize logging
 diary('on'); fprintf([repmat('-',[1 75]) '\n']);
