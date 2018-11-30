@@ -116,7 +116,7 @@ opts = initializeOpts( varargin{:} );
 if(nargin==0), detector=opts; return; end
 
 % load or initialize detector and begin logging
-nm=[opts.name 'Detector.mat']; t=exist(nm,'file');
+nm=[opts.name 'detector.mat']; t=exist(nm,'file');
 if(t), if(nargout), t=load(nm); detector=t.detector; end; return; end
 t=fileparts(nm); if(~isempty(t) && ~exist(t,'dir')), mkdir(t); end
 detector = struct( 'opts',opts, 'clf',[], 'info',[] );

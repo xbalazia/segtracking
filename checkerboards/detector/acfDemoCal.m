@@ -64,7 +64,7 @@ if(0)
     detector = acfModify_my(detector,'cascThr',-1,'cascCal',0.1);
     detector.opts.pPyramid.nPerOct = 10;
 
-    save([opts.name 'Detector.mat'],'detector');
+    save([opts.name 'detector.mat'],'detector');
 
     sprintf('time=\t'); fix(clock)
     newline;
@@ -91,7 +91,7 @@ end
 %% run detector on a set of images without evaluation
 if(1)
     imgNms=bbGt('getFiles',{[DataPath '/images/set01/V000']});
-    tic, bbs=acfDetect_my(imgNms,detector,[ModelPath '/Detections.txt']); toc
+    tic, bbs=acfDetect_my(imgNms,detector,[ModelPath '/detections.txt']); toc
     % visualize detection results on one single image
     %I=imread(imgNms{1});
     %figure(1); im(I); bbApply('draw',bbs{1}); pause(.1);%bbs{1}
