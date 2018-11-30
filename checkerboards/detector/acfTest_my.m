@@ -73,7 +73,7 @@ else
      setIds=5;vidIds={0:12};
 end
 % %load gt from vbb files
-gt = loadGt( vbbDir,setIds,vidIds,30,pLoad, aspectRatio, [5 5 635 475] );
+gt = loadGt(vbbDir, setIds, vidIds, 30, pLoad, aspectRatio, [5 5 635 475]);
 
 [gt,dt] = bbGt('evalRes',gt,dt,thr,mul);
 [fp,tp,score,miss] = bbGt('compRoc',gt,dt,1,ref);
