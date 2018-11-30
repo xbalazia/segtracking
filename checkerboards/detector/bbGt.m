@@ -700,7 +700,7 @@ if(nargin<5 || isempty(isMulticlass)), isMulticlass=0; end
 
 % if gt0 and dt0 are cell arrays run on each element in turn
 if( iscell(gt0) && iscell(dt0) ), n=length(gt0);
-  assert(length(dt0)==n);
+  %assert(length(dt0)==n);
   gt=cell(1,n);
   dt=gt;
   for i=1:n, [gt{i},dt{i}] = evalRes(gt0{i},dt0{i},thr,mul,isMulticlass); end; return;
