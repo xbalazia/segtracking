@@ -62,10 +62,10 @@ n=size(dt,2);
 aspectRatio=0.41;
 for i=1:n
 bb = dt{i};bb=bbApply('resize',bb,1,0,aspectRatio); dt{i}=bb;
-% bb = gt{i};bb=bbApply('resize',bb,1,0,aspectRatio); gt{i}=bb;
+%bb = gt{i};bb=bbApply('resize',bb,1,0,aspectRatio); gt{i}=bb;
 end
 
-for f=1:n, bb=dt{f}; dt{f}=bb(bb(:,4)>=40,:); end%shanshan: detection filtering the same as code3.2.1
+for f=1:n, bb=dt{f}; dt{f}=bb(bb(:,4)>=40,:); end %shanshan: detection filtering the same as code3.2.1
 
 if(test)
     setIds=6:10;vidIds={0:18 0:11 0:10 0:11 0:11};
