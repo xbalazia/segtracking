@@ -84,6 +84,7 @@ function varargout = bbGt( action, varargin )
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
 %#ok<*DEFNU>
+varargin
 varargout = cell(1,max(1,nargout));
 [varargout{:}] = feval(action,varargin{:});
 end
@@ -613,7 +614,7 @@ persistent keyPrv gtPrv; key={gtDir,pLoad}; n=length(gtFs);
 if(isequal(key,keyPrv)), gt0=gtPrv; else gt0=cell(1,n);
   for i=1:n 
     [objs,gt0{i}]=bbLoad(gtFs{i},pLoad); 
-    if isMulticlass && (length(objs)>0)
+    if isMulticlass && (~isempty(objs))
       gt0{i}(:,size(gt0{i},2)+1) =[objs(:).subclass]';
     end
   end
@@ -626,7 +627,7 @@ if isMulticlass
   dimMax = 6;
 else
   dimMax = 5; 
-end;
+end
 if(iscell(dtFs)), dt0=cell(1,n);
   for i=1:n, dt1=load(dtFs{i},'-ascii');
     if(numel(dt1)==0), dt1=zeros(0,5); end; dt0{i}=dt1(:,1:dimMax); end
@@ -744,7 +745,7 @@ for d=1:nd
   bstOa=thr; bstg=0; bstm=0; % info about best match so far
   if isMulticlass
     bstSubclass=0;
-  end;
+  end
   for g=1:ng
     % if this gt already matched, continue to next gt
     m=gt(g,5); if( m==1 && ~mul ), continue; end
@@ -819,8 +820,8 @@ if( evShow )
          hs{k}=bbApply('drawMulticlass',gt(i,1:4),cols(gt(i,5)+2),lw,gtLs, [], [], showScore, showClass);
       else
          hs{k}=bbApply('draw',gt(i,1:4),cols(gt(i,5)+2),lw,gtLs); 
-      end; 
-    end; 
+      end
+    end
   end
   if(dtShow) 
      for i=1:size(dt,1) 
@@ -829,9 +830,9 @@ if( evShow )
         hs{k}=bbApply('drawMulticlass',dt(i,:),cols(dt(i,6)+2),lw,dtLs, [], [], showScore, showClass); 
       else
         hs{k}=bbApply('draw',dt(i,1:5),cols(dt(i,6)+2),lw,dtLs); 
-      end;
-     end; 
-  end;
+      end
+     end
+  end
 else
   if isMulticlass
     if(gtShow), k=k+1; hs{k}=bbApply('drawMulticlass',gt(:,1:4),cols(3),lw,gtLs, [], [], showScore, showClass); end
@@ -943,7 +944,7 @@ if(~strcmp(type,'fn')), [~,ord]=sort(bbs(:,5),'descend'); else
   if(size(bbs,1)<n), ord=randperm(size(bbs,1)); else ord=1:n; end; end
 bbs=bbs(ord(1:n),:); ids=ids(ord(1:n));
 % extract patches from each image
-if(n==0), Is=[]; scores=[]; imgIds=[]; return; end;
+if(n==0), Is=[]; scores=[]; imgIds=[]; return; end
 Is=cell(1,n); scores=zeros(1,n); imgIds=zeros(1,n);
 if(any(pad>0)), dims1=dims.*(1+pad); rs=dims1./dims; dims=dims1; end
 if(any(pad>0)), bbs=bbApply('resize',bbs,rs(1),rs(2)); end
@@ -956,7 +957,7 @@ for i=1:N
     I=bbApply('embed',I,bbs1(bbs1(:,5)==1,1:4),'col',[0 255 0]);
   end
   Is1=bbApply('crop',I,bbs(locs,1:4),'replicate',dims);
-  for j=1:length(locs), Is{locs(j)}=Is1{j}; end;
+  for j=1:length(locs), Is{locs(j)}=Is1{j}; end
   scores(locs)=bbs(locs,5); imgIds(locs)=i;
 end; Is=cell2array(Is);
 % optionally display
