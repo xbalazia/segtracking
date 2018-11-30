@@ -694,7 +694,7 @@ function [gt,dt] = evalRes( gt0, dt0, thr, mul, isMulticlass)
 % See also bbGt, bbGt>compOas, bbGt>loadAll
 
 % get parameters
-dt0
+disp(dt0);
 if(nargin<3 || isempty(thr)), thr=.5; end
 if(nargin<4 || isempty(mul)), mul=0; end
 if(nargin<5 || isempty(isMulticlass)), isMulticlass=0; end
