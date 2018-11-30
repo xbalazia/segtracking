@@ -84,7 +84,6 @@ function varargout = bbGt( action, varargin )
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
 %#ok<*DEFNU>
-varargin
 varargout = cell(1,max(1,nargout));
 [varargout{:}] = feval(action,varargin{:});
 end
