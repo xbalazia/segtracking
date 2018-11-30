@@ -625,7 +625,7 @@ if(isempty(dtDir) || nargout<=1), dt0=cell(0); return; end
 if isMulticlass
   dimMax = 6;
 else
-  dimMax = 5; 
+  dimMax = 5;
 end
 if(iscell(dtFs)), dt0=cell(1,n);
   for i=1:n, dt1=load(dtFs{i},'-ascii');
@@ -701,7 +701,7 @@ if(nargin<5 || isempty(isMulticlass)), isMulticlass=0; end
 % if gt0 and dt0 are cell arrays run on each element in turn
 if(iscell(gt0) && iscell(dt0))
   n=length(gt0);
-  assert(n==length(dt0));
+  %assert(n==length(dt0));
   gt=cell(1,n);
   dt=gt;
   for i=1:n, [gt{i},dt{i}] = evalRes(gt0{i},dt0{i},thr,mul,isMulticlass); end; return;
@@ -711,16 +711,16 @@ end
 if ~isMulticlass
   if(isempty(gt0)), gt0=zeros(0,5); end
   if(isempty(dt0)), dt0=zeros(0,5); end
-  assert( size(dt0,2)==5 ); 
+  assert(size(dt0,2)==5); 
   if(size(gt0,2)==6) 
     gt0 = gt0(:,1:5);
   end
-  assert( size(gt0,2)==5 );
+  assert(size(gt0,2)==5);
 else
   if(isempty(gt0)), gt0=zeros(0,6); end
   if(isempty(dt0)), dt0=zeros(0,6); end
-  assert( size(dt0,2)==6 ); 
-  assert( size(gt0,2)==6 );     
+  assert(size(dt0,2)==6); 
+  assert(size(gt0,2)==6);     
 end
 nd=size(dt0,1);
 ng=size(gt0,1);
