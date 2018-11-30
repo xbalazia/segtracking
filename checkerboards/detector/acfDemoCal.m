@@ -56,7 +56,7 @@ opts.pBoost.discrete=0;
 
 %% train detector (see acfTrain)
 if(1)
-    detector = acfTrain_my( opts );
+    detector = acfTrain_my(opts);
 end
 
 %% modify detector (see acfModify)
@@ -92,7 +92,7 @@ end
 %% run detector on a set of images without evaluation
 if(1)
     imgNms=bbGt('getFiles',{[DataPath '/images/set00/V000']});
-    tic, bbs=acfDetect_my(imgNms,detector,'detections.txt'); toc
+    tic, bbs=acfDetect_my(imgNms,detector,[ModelPath 'detections.txt']); toc
     % visualize detection results on one single image
     %I=imread(imgNms{1});
     %figure(1); im(I); bbApply('draw',bbs{1}); pause(.1);%bbs{1}
