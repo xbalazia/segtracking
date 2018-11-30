@@ -641,6 +641,8 @@ end
 function [gt,dt] = evalRes( gt, dt, thr, mul, isMulticlass)
 gt0 = gt{2};
 dt0 = dt{2};
+size(gt0)
+size(dt0)
 % Evaluates detections against ground truth data.
 %
 % Uses modified Pascal criteria that allows for "ignore" regions. The
