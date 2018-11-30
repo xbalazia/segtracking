@@ -640,7 +640,7 @@ end
 
 function [gt,dt] = evalRes( gt, dt, thr, mul, isMulticlass)
 gt0 = gt(1);
-dt0 = dt[1]};
+dt0 = dt(1);
 size(gt0)
 size(dt0)
 % Evaluates detections against ground truth data.
