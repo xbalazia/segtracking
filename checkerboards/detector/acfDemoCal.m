@@ -23,13 +23,16 @@ clc;
 CodePath = '/home/balazia/pedtrack/checkerboards';
 addpath(genpath(CodePath));
 versionstr = 'Checkerboards';
+modelstr = 'models_Caltech';
+ModelPath = [CodePath '/' modelstr '/' versionstr];
+datastr = 'data-USA';
+DataPath = [CodePath '/' datastr];
 
 %% set up parameters for training detector (see acfTrain_my)
-opts=acfTrain_my();
-traindataDir = '/home/balazia/pedtrack/checkerboards/data-USA';
-opts.posGtDir=[traindataDir '/annotations/set00/V000'];
-opts.posImgDir=[traindataDir '/images/set00/V000'];
-opts.name=[CodePath '/models_Caltech/' versionstr '/Checkerboards'];
+opts = acfTrain_my();
+opts.posGtDir = [DataPath '/annotations/set00/V000'];
+opts.posImgDir = [DataPath '/images/set00/V000'];
+opts.name = ModelPath;
 
 opts.modelDs=[96 36]; opts.modelDsPad=[120 60];
 opts.pPyramid.smooth=0; opts.pPyramid.pChns.pColor.smooth=0; 
@@ -63,31 +66,31 @@ detector.opts.pPyramid.nPerOct = 10;
 save([opts.name 'Detector.mat'],'detector');
 
 sprintf('time=\t'); fix(clock)
-sprintf('\n');
+newline;
 
 %% test detector and evaluate (see acfTest_my)
 if(0)
-    vbbDir='/home/balazia/pedtrack/checkerboards';
+    vbbDir = CodePath;
     tstart = tic;[miss,~,gt,dt]=acfTest_my(1, vbbDir, ...
       'name', opts.name, ...
-      'imgDir', '/home/balazia/pedtrack/checkerboards/data-USA/images' , ...
-      'gtDir', '/home/balazia/pedtrack/checkerboards/data-USA/annotations', ...
+      'imgDir', [DataPath '/images'] , ...
+      'gtDir', [DataPath '/annotations'], ...
       'pLoad', [pLoad, 'hRng',[50 inf], 'vRng', [.65 1], 'xRng', [5 635], 'yRng',[5 475]], 'show',2);
     telapsed = toc(tstart);
 
-    fid = fopen([CodePath '/models_Caltech/' versionstr '/AcfCaltechLog.txt'],'a'); 
+    fid = fopen([ModelPath '/AcfCaltechLog.txt'],'a'); 
     fprintf(fid,'\n test time=%f seconds = %f hours\n',telapsed, telapsed/3600);
     fclose(fid);
 
     sprintf('time=\t'); fix(clock)
     sprintf('\n');
-    savefig([CodePath '/models_Caltech/' versionstr '/curve'],'pdf');
+    savefig([ModelPath '/curve'],'pdf');
     close;
 end
 %% run detector on a set of images without evaluation
 if(1)
-    imgNms=bbGt('getFiles',{['/home/balazia/pedtrack/checkerboards/data-USA/images/set00/V000']});
-    tic, bbs=acfDetect_my(imgNms,detector,'detections.txt'); toc
+    imgNms=bbGt('getFiles',{[DataPath '/images/set00/V000']});
+    tic, bbs=acfDetect_my(imgNms,detector,ModelPath); toc
     % visualize detection results on one single image
     %I=imread(imgNms{1});
     %figure(1); im(I); bbApply('draw',bbs{1}); pause(.1);%bbs{1}
