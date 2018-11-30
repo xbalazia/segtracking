@@ -38,23 +38,15 @@ function bbs = acfDetect_my( I, detector, fileName )
 
 % run detector on every image
 if(nargin<3), fileName=''; end
-%if(~isempty(fileName) && exist(fileName,'file')), bbs=1; return; end
-%multiple=iscell(I);
-%if(~multiple)
-  %bbs=acfDetectImg_my(I,detector);
-%else
-  n=length(I); bbs=cell(n,1);
-  parfor i=1:n, disp(I{i}); bbs{i}=acfDetectImg_my(I{i},detector); end %parfor i=1:n, bbs{i}=acfDetectImg_my(I{i},detector);end
-%end
+n=length(I);
+bbs=cell(n,1);
+parfor i=1:n, disp(I{i}); bbs{i}=acfDetectImg_my(I{i},detector); end
 
 % write results to disk if fileName specified
 if(isempty(fileName)), return; end
 d=fileparts(fileName); if(~isempty(d)&&~exist(d,'dir')), mkdir(d); end
-%if(multiple) % add image index to each bb and flatten result
-  for i=1:n, bbs{i}=[ones(size(bbs{i},1),1)*i bbs{i}]; end
-  bbsMat=cell2mat(bbs); %bbs=cell2mat(bbs);
-%end
-dlmwrite(fileName,bbsMat); %dlmwrite(fileName,bbs); bbs=1;
+for i=1:n, bbs{i}=[ones(size(bbs{i},1),1)*i bbs{i}]; end
+dlmwrite(fileName,cell2mat(bbs));
 end
 
 function bbs = acfDetectImg_my( I, detector )

@@ -70,11 +70,11 @@ if(0)
 end
 
 %% test detector and evaluate (see acfTest_my)
-if(0)
+if(1)
     tstart = tic;[miss,~,gt,dt]=acfTest_my(1, CodePath, ...
       'name', opts.name, ...
-      'imgDir', [DataPath '/images'] , ...
-      'gtDir', [DataPath '/annotations'], ...
+      'imgDir', [DataPath '/images/set01/V000'] , ...
+      'gtDir', [DataPath '/annotations/set01/V000'], ...
       'pLoad', [pLoad, 'hRng',[50 inf], 'vRng', [.65 1], 'xRng', [5 635], 'yRng',[5 475]], 'show',2);
     telapsed = toc(tstart);
 
@@ -83,19 +83,19 @@ if(0)
     fclose(fid);
 
     sprintf('time=\t'); fix(clock)
-    sprintf('\n');
+    newline;
     savefig([ModelPath '/curve'],'pdf');
     close;
 end
 
 %% run detector on a set of images without evaluation
-if(1)
-    imgNms=bbGt('getFiles',{[DataPath '/images/set01/V000']});
-    tic, bbs=acfDetect_my(imgNms,detector,[ModelPath '/detections.txt']); toc
+if(0)
+    imgNms = bbGt('getFiles',{[DataPath '/images/set01/V000']});
+    tic, bbs = acfDetect_my(imgNms,detector,[ModelPath '/detections.txt']); toc
     % visualize detection results on one single image
-    k=48;
-    I=imread(imgNms{k});
-    figure(1); im(I); bbApply('draw',bbs{k}); pause(.1);
+    %k=48;
+    %I=imread(imgNms{k});
+    %figure(1); im(I); bbApply('draw',bbs{k}); pause(.1);
 end
 
 %% optionally show top false positives ('type' can be 'fp','fn','tp','dt')
