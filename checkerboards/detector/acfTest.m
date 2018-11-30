@@ -46,12 +46,9 @@ if(reapply && exist(bbsNm,'file')), delete(bbsNm); end
 if(reapply || ~exist(bbsNm,'file'))
   detector = load([name 'detector.mat']);
   detector = detector.detector;
-  'AFTER 1'
   if(~isempty(pModify)), detector=acfModify(detector,pModify); end
   imgNms = bbGt('getFiles',{imgDir});
-  'AFTER 2'
   acfDetect_my( imgNms, detector, bbsNm );
-  'AFTER 3'
 end
 
 % run evaluation using bbGt
@@ -65,6 +62,6 @@ if( ~show ), return; end
 figure(show); plotRoc([fp tp],'logx',1,'logy',1,'xLbl','fppi',...
   'lims',lims,'color','g','smooth',1,'fpTarget',ref);
 title(sprintf('log-average miss rate = %.2f%%',miss*100));
-savefig([name 'Roc'],show,'png');
+savefig([name 'roc'],show,'png');
 
 end
