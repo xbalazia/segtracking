@@ -30,9 +30,9 @@ DataPath = [CodePath '/' datastr];
 
 %% set up parameters for training detector (see acfTrain_my)
 opts = acfTrain_my();
-opts.posGtDir = [DataPath '/annotations/set00/V000'];
-opts.posImgDir = [DataPath '/images/set00/V000'];
-opts.name = ModelPath;
+opts.posGtDir = [DataPath '/annotations/set01/V000'];
+opts.posImgDir = [DataPath '/images/set01/V000'];
+opts.name = [ModelPath '/'];
 
 opts.modelDs=[96 36]; opts.modelDsPad=[120 60];
 opts.pPyramid.smooth=0; opts.pPyramid.pChns.pColor.smooth=0; 
@@ -50,7 +50,7 @@ opts.pPyramid.pChns.pGradHist.clipHog = Inf;
 opts.nNeg=10000;opts.nAccNeg = 50000; opts.nPerNeg = 25;
 opts.pPyramid.pChns.pGradHist.binSize=opts.pPyramid.pChns.shrink;
 opts.pPyramid.pChns.NNRadius= 1;
-opts.pPyramid.nOctUp = 1; 
+opts.pPyramid.nOctUp = 1;
 opts.pBoost.pTree.maxDepth =4;
 opts.pBoost.discrete=0;
 
@@ -72,8 +72,7 @@ end
 
 %% test detector and evaluate (see acfTest_my)
 if(0)
-    vbbDir = CodePath;
-    tstart = tic;[miss,~,gt,dt]=acfTest_my(1, vbbDir, ...
+    tstart = tic;[miss,~,gt,dt]=acfTest_my(1, CodePath, ...
       'name', opts.name, ...
       'imgDir', [DataPath '/images'] , ...
       'gtDir', [DataPath '/annotations'], ...
@@ -91,8 +90,8 @@ if(0)
 end
 %% run detector on a set of images without evaluation
 if(1)
-    imgNms=bbGt('getFiles',{[DataPath '/images/set00/V000']});
-    tic, bbs=acfDetect_my(imgNms,detector,[ModelPath 'detections.txt']); toc
+    imgNms=bbGt('getFiles',{[DataPath '/images/set01/V000']});
+    tic, bbs=acfDetect_my(imgNms,detector,[ModelPath '/Detections.txt']); toc
     % visualize detection results on one single image
     %I=imread(imgNms{1});
     %figure(1); im(I); bbApply('draw',bbs{1}); pause(.1);%bbs{1}

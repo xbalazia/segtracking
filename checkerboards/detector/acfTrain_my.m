@@ -121,11 +121,7 @@ if(t), if(nargout), t=load(nm); detector=t.detector; end; return; end
 t=fileparts(nm); if(~isempty(t) && ~exist(t,'dir')), mkdir(t); end
 detector = struct( 'opts',opts, 'clf',[], 'info',[] );
 startTrain=clock; nm=[opts.name 'Log.txt'];
-if(exist(nm,'file')), 
-    diary(nm);
-    diary('off'); 
-    delete(nm); 
-end; 
+if(exist(nm,'file')), diary(nm); diary('off'); delete(nm); end 
 diary(nm);
 RandStream.setGlobalStream(RandStream('mrg32k3a','Seed',opts.seed));
 

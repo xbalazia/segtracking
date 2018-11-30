@@ -22,14 +22,16 @@
 clc;
 CodePath = '/home/balazia/pedtrack/checkerboards';
 addpath(genpath(CodePath));
-versionstr = 'Checkerboards';
-modelstr = models_Caltech
-ModelPath = [CodePath '//' versionstr];
+versionstr = 'Checkerboards_my';
+modelstr = 'models_Caltech';
+ModelPath = [CodePath '/' modelstr '/' versionstr '/'];
+datastr = 'data-USA';
+DataPath = [CodePath '/' datastr];
 
 %% set up parameters for training detector (see acfTrain_my)
 opts = acfTrain_my();
-opts.posGtDir = [CodePath '/data-USA/annotations/set00/V000'];
-opts.posImgDir = [CodePath '/data-USA/images/set00/V000'];
+opts.posGtDir = [DataPath 'annotations/set01/V000'];
+opts.posImgDir = [DataPath 'images/set01/V000'];
 opts.name = ModelPath;
 
 opts.modelDs=[96 36]; opts.modelDsPad=[120 60];
@@ -53,42 +55,43 @@ opts.pBoost.pTree.maxDepth =4;
 opts.pBoost.discrete=0;
 
 %% train detector (see acfTrain)
-if(0)
-    detector = acfTrain_my( opts );
+if(1)
+    detector = acfTrain_my(opts);
 end
 
 %% modify detector (see acfModify)
-detector = acfModify_my(detector,'cascThr',-1,'cascCal',0.1);
-detector.opts.pPyramid.nPerOct = 10;
+if(0)
+    detector = acfModify_my(detector,'cascThr',-1,'cascCal',0.1);
+    detector.opts.pPyramid.nPerOct = 10;
 
-save([opts.name 'Detector.mat'],'detector');
+    save([opts.name 'Detector.mat'],'detector');
 
-sprintf('time=\t'); fix(clock)
-newline;
+    sprintf('time=\t'); fix(clock)
+    newline;
+end
 
 %% test detector and evaluate (see acfTest_my)
 if(0)
-    vbbDir='/home/balazia/pedtrack/checkerboards';
-    tstart = tic;[miss,~,gt,dt]=acfTest_my(1, vbbDir, ...
+    tstart = tic;[miss,~,gt,dt]=acfTest_my(1, CodePath, ...
       'name', opts.name, ...
-      'imgDir', [CodePath '/data-USA/images'] , ...
-      'gtDir', [CodePath '/data-USA/annotations'], ...
+      'imgDir', [DataPath '/images'] , ...
+      'gtDir', [DataPath '/annotations'], ...
       'pLoad', [pLoad, 'hRng',[50 inf], 'vRng', [.65 1], 'xRng', [5 635], 'yRng',[5 475]], 'show',2);
     telapsed = toc(tstart);
 
-    fid = fopen([CodePath '/models_Caltech/' versionstr '/AcfCaltechLog.txt'],'a'); 
+    fid = fopen([ModelPath '/AcfCaltechLog.txt'],'a'); 
     fprintf(fid,'\n test time=%f seconds = %f hours\n',telapsed, telapsed/3600);
     fclose(fid);
 
     sprintf('time=\t'); fix(clock)
     sprintf('\n');
-    savefig([CodePath '/models_Caltech/' versionstr '/curve'],'pdf');
+    savefig([ModelPath '/curve'],'pdf');
     close;
 end
 %% run detector on a set of images without evaluation
 if(1)
-    imgNms=bbGt('getFiles',{['/home/balazia/pedtrack/checkerboards/data-USA/images/set00/V000']});
-    tic, bbs=acfDetect_my(imgNms,detector,ModelPath); toc
+    imgNms=bbGt('getFiles',{[DataPath '/images/set00/V000']});
+    tic, bbs=acfDetect_my(imgNms,detector,[ModelPath 'Detections.txt']); toc
     % visualize detection results on one single image
     %I=imread(imgNms{1});
     %figure(1); im(I); bbApply('draw',bbs{1}); pause(.1);%bbs{1}
