@@ -17,7 +17,6 @@
 % Please email me if you find bugs, or have suggestions or questions!
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
-
 %% set up environment
 clc;
 CodePath = '/home/balazia/pedtrack/checkerboards';
@@ -88,6 +87,7 @@ if(0)
     savefig([ModelPath '/curve'],'pdf');
     close;
 end
+
 %% run detector on a set of images without evaluation
 if(1)
     imgNms=bbGt('getFiles',{[DataPath '/images/set01/V000']});
@@ -100,6 +100,8 @@ if(1)
     I=imread(imgNms{k});
     figure(1); im(I); bbApply('draw',bbsk); pause(.1);
 end
+
 %% optionally show top false positives ('type' can be 'fp','fn','tp','dt')
 if(0), bbGt('cropRes',gt,dt,imgNms,'type','fn','n',50,...
-    'show',3,'dims',opts.modelDs([2 1])); end
+    'show',3,'dims',opts.modelDs([2 1]));
+end
