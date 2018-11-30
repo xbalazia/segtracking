@@ -701,8 +701,8 @@ if(nargin<5 || isempty(isMulticlass)), isMulticlass=0; end
 % if gt0 and dt0 are cell arrays run on each element in turn
 %if(0)
 if(iscell(gt0) && iscell(dt0))
-  size(gt0)
-  size(dt0)
+  %size(gt0)
+  %size(dt0)
   n=length(gt0);
   assert(n==length(dt0));
   gt=cell(1,n);
