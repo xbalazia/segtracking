@@ -1,4 +1,4 @@
-function [miss,roc,gt,dt] = acfTest_my(test, vbbDir, varargin )
+function [miss,roc,gt,dt] = acfTest_my(test, vbbDir, dataDir, varargin )
 % Test aggregate channel features object detector given ground truth.
 %
 % USAGE
@@ -73,7 +73,7 @@ else
      setIds=5;vidIds={0:12};
 end
 % %load gt from vbb files
-gt = loadGt(vbbDir, setIds, vidIds, 30, pLoad, aspectRatio, [5 5 635 475]);
+gt = loadGt(vbbDir, dataDir, setIds, vidIds, 30, pLoad, aspectRatio, [5 5 635 475]);
 
 [gt,dt] = bbGt('evalRes',gt,dt,thr,mul);
 [fp,tp,score,miss] = bbGt('compRoc',gt,dt,1,ref);
@@ -88,12 +88,12 @@ title(sprintf('log-average miss rate = %.2f%%',miss*100));
 
 end
 
-function gt = loadGt( pth, setIds, vidIds, skip, pLoad, aspectRatio, bnds )
+function gt = loadGt( vbbDir, dataDir, setIds, vidIds, skip, pLoad, aspectRatio, bnds )
 % Load ground truth of all experiments for all frames.
 hr=[50 Inf]; vr=[0.65 Inf];ar=0;
 gt=cell(1,100000); k=0; lbls={'person','person?','people','ignore'};
 filterGt = @(lbl,bb,bbv) filterGtFun(lbl,bb,bbv,hr,vr,ar,bnds,aspectRatio);
-fName=@(s,v) sprintf('%s/annotations/set%02i/V%03i',pth,s,v);
+fName=@(s,v) sprintf('%s/annotations/set%02i/V%03i',dataDir,s,v);
 for s=1:length(setIds)
 for v=1:length(vidIds{s})  
   A=vbb('vbbLoad',fName(setIds(s),vidIds{s}(v)));
