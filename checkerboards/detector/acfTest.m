@@ -40,7 +40,7 @@ dfs={ 'name','REQ', 'imgDir','REQ', 'gtDir','REQ', 'pLoad',[], ...
 [name,imgDir,gtDir,pLoad,pModify,thr,mul,reapply,ref,lims,show] = ...
   getPrmDflt(varargin,dfs,1);
 
-'START TEST'
+'START TEST 1'
 
 % run detector on directory of images
 bbsNm=[name 'Dets.txt'];
@@ -53,11 +53,15 @@ if(reapply || ~exist(bbsNm,'file'))
   acfDetect( imgNms, detector, bbsNm );
 end
 
+'MID TEST 1'
+
 % run evaluation using bbGt
 [gt,dt] = bbGt('loadAll',gtDir,bbsNm,pLoad);
 [gt,dt] = bbGt('evalRes',gt,dt,thr,mul);
 [fp,tp,score,miss] = bbGt('compRoc',gt,dt,1,ref);
 miss=exp(mean(log(max(1e-10,1-miss)))); roc=[score fp tp];
+
+'END TEST 1'
 
 % optionally plot roc
 if( ~show ), return; end
