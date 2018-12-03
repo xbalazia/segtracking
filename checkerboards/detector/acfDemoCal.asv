@@ -17,21 +17,20 @@
 % Please email me if you find bugs, or have suggestions or questions!
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
-
 %% set up environment
 clc;
 CodePath = '/home/balazia/pedtrack/checkerboards';
 addpath(genpath(CodePath));
 modelstr = 'models_Caltech';
-versionstr = 'Checkerboards-my';
+versionstr = 'Checkerboards';
 ModelPath = [CodePath '/' modelstr '/' versionstr];
 datastr = 'data-USA';
 DataPath = [CodePath '/' datastr];
 
 %% set up parameters for training detector (see acfTrain_my)
 opts = acfTrain_my();
-opts.posGtDir = [DataPath '/annotations/set01/V000'];
-opts.posImgDir = [DataPath '/images/set01/V000'];
+opts.posGtDir = [DataPath '/annotations'];
+opts.posImgDir = [DataPath '/images'];
 opts.name = [ModelPath '/'];
 
 opts.modelDs=[96 36]; opts.modelDsPad=[120 60];
@@ -71,8 +70,8 @@ if(0)
 end
 
 %% test detector and evaluate (see acfTest_my)
-if(0)
-    tstart = tic;[miss,~,gt,dt]=acfTest_my(1, CodePath, ...
+if(1)
+    tstart = tic; [miss,~,gt,dt] = acfTest_my(...
       'name', opts.name, ...
       'imgDir', [DataPath '/images'] , ...
       'gtDir', [DataPath '/annotations'], ...
@@ -80,28 +79,26 @@ if(0)
     telapsed = toc(tstart);
 
     fid = fopen([ModelPath '/AcfCaltechLog.txt'],'a'); 
-    fprintf(fid,'\n test time=%f seconds = %f hours\n',telapsed, telapsed/3600);
+    fprintf(fid,'\n test time = %f seconds = %f hours\n', telapsed, telapsed/3600);
     fclose(fid);
 
     sprintf('time=\t'); fix(clock)
-    sprintf('\n');
+    newline;
     savefig([ModelPath '/curve'],'pdf');
     close;
 end
 
 %% run detector on a set of images without evaluation
-if(1)
-    imgNms=bbGt('getFiles',{[DataPath '/images/set01/V000']});
-    tic, bbs=acfDetect_my(imgNms,detector,[ModelPath '/detections.txt']); toc
+if(0)
+    imgNms = bbGt('getFiles',{[DataPath '/images']});
+    tic, bbs = acfDetect_my(imgNms,detector,[ModelPath '/detections.txt']); toc
     % visualize detection results on one single image
-    k=48;
-    imgNms{k}
-    bbs
-    bbsk=bbs{k};
-    I=imread(imgNms{k});
-    figure(1); im(I); bbApply('draw',bbsk); pause(.1);
+    %k=48;
+    %I=imread(imgNms{k});
+    %figure(1); im(I); bbApply('draw',bbs{k}); pause(.1);
 end
 
 %% optionally show top false positives ('type' can be 'fp','fn','tp','dt')
 if(0), bbGt('cropRes',gt,dt,imgNms,'type','fn','n',50,...
-    'show',3,'dims',opts.modelDs([2 1])); end
+    'show',3,'dims',opts.modelDs([2 1]));
+end
