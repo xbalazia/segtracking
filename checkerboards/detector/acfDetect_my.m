@@ -41,7 +41,7 @@ if(nargin<3), fileName=''; end
 n = length(I);
 bbs = cell(n,1);
 parfor i=1:n
-    disp([i '/' n ': ' I{i}]); %
+    disp(i+'/'+n+': '+I{i}); %
     bbs{i} = acfDetectImg_my(I{i},detector);
 end
 
