@@ -40,7 +40,7 @@ dfs={ 'name','REQ', 'imgDir','REQ', 'gtDir','REQ', 'pLoad',[], ...
   getPrmDflt(varargin,dfs,1);
 
 % run detector on directory of images
-bbsNm=[name 'Dets.txt'];
+bbsNm=[name 'detections.txt'];
 if(reapply && exist(bbsNm,'file')), delete(bbsNm); end
 if(reapply || ~exist(bbsNm,'file'))
   detector = load([name 'detector.mat']);
