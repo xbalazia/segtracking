@@ -22,7 +22,7 @@ clc;
 CodePath = '/home/balazia/pedtrack/checkerboards';
 addpath(genpath(CodePath));
 modelstr = 'models_Caltech';
-versionstr = 'Checkerboards-my2'; % 'Checkerboards-original' 'Checkerboards-my'
+versionstr = 'Checkerboards-my3'; % 'Checkerboards-original' 'Checkerboards-my'
 ModelPath = [CodePath '/' modelstr '/' versionstr];
 datastr = 'data-USA';
 DataPath = [CodePath '/' datastr];
