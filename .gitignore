@@ -1,5 +1,6 @@
 pull-and-push.bat
 checkerboards/data-USA/
+checkerboards/models/
 faster-rcnn/data/
 X_LINUX.mat
 *.asv
