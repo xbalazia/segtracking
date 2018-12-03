@@ -22,15 +22,15 @@ clc;
 CodePath = '/home/balazia/pedtrack/checkerboards';
 addpath(genpath(CodePath));
 modelstr = 'models_Caltech';
-versionstr = 'Checkerboards-my'; % 'Checkerboards-original' 'Checkerboards-my'
+versionstr = 'Checkerboards-my1'; % 'Checkerboards-original' 'Checkerboards-my'
 ModelPath = [CodePath '/' modelstr '/' versionstr];
 datastr = 'data-USA';
 DataPath = [CodePath '/' datastr];
 
 %% set up parameters for training detector (see acfTrain_my)
 opts = acfTrain_my();
-opts.posGtDir = [DataPath '/annotations'];
-opts.posImgDir = [DataPath '/images/set00/V000'];
+opts.posGtDir = [DataPath '/annotations-x'];
+opts.posImgDir = [DataPath '/images-x'];
 opts.name = [ModelPath '/'];
 
 opts.modelDs=[96 36]; opts.modelDsPad=[120 60];
@@ -73,8 +73,8 @@ end
 if(1)
     tstart = tic; [miss,~,gt,dt] = acfTest_my(...
       'name', opts.name, ...
-      'imgDir', [DataPath '/images/set00/V000'] , ...
-      'gtDir', [DataPath '/annotations'], ...
+      'imgDir', [DataPath '/images-x'] , ...
+      'gtDir', [DataPath '/annotations-x'], ...
       'pLoad', [pLoad, 'hRng',[50 inf], 'vRng', [.65 1], 'xRng', [5 635], 'yRng',[5 475]], 'show',2);
     telapsed = toc(tstart);
 
@@ -90,7 +90,7 @@ end
 
 %% run detector on a set of images without evaluation
 if(0)
-    imgNms = bbGt('getFiles',{[DataPath '/images/set00/V000']});
+    imgNms = bbGt('getFiles',{[DataPath '/images-x']});
     tic, bbs = acfDetect_my(imgNms,detector,[ModelPath '/detections.txt']); toc
     % visualize detection results on one single image
     %k=48;
