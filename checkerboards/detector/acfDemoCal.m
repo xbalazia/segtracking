@@ -22,15 +22,15 @@ clc;
 CodePath = '/home/balazia/pedtrack/checkerboards';
 addpath(genpath(CodePath));
 modelstr = 'models_Caltech';
-versionstr = 'Checkerboards-my';
+versionstr = 'Checkerboards';
 ModelPath = [CodePath '/' modelstr '/' versionstr];
 datastr = 'data-USA';
 DataPath = [CodePath '/' datastr];
 
 %% set up parameters for training detector (see acfTrain_my)
 opts = acfTrain_my();
-opts.posGtDir = [DataPath '/annotations/set01/V000'];
-opts.posImgDir = [DataPath '/images/set01/V000'];
+opts.posGtDir = [DataPath '/annotations'];
+opts.posImgDir = [DataPath '/images'];
 opts.name = [ModelPath '/'];
 
 opts.modelDs=[96 36]; opts.modelDsPad=[120 60];
@@ -73,8 +73,8 @@ end
 if(1)
     tstart = tic; [miss,~,gt,dt] = acfTest_my(...
       'name', opts.name, ...
-      'imgDir', [DataPath '/images/set01/V000'] , ...
-      'gtDir', [DataPath '/annotations/set01/V000'], ...
+      'imgDir', [DataPath '/images'] , ...
+      'gtDir', [DataPath '/annotations'], ...
       'pLoad', [pLoad, 'hRng',[50 inf], 'vRng', [.65 1], 'xRng', [5 635], 'yRng',[5 475]], 'show',2);
     telapsed = toc(tstart);
 
