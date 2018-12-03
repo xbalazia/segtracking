@@ -22,7 +22,7 @@ clc;
 CodePath = '/home/balazia/pedtrack/checkerboards';
 addpath(genpath(CodePath));
 modelstr = 'models';
-versionstr = 'Checkerboards-1'; % 'Checkerboards-original' 'Checkerboards-my'
+versionstr = 'Checkerboards-1';
 ModelPath = [CodePath '/' modelstr '/' versionstr];
 datastr = 'data-USA';
 DataPath = [CodePath '/' datastr];
@@ -38,7 +38,7 @@ opts.pPyramid.smooth=0; opts.pPyramid.pChns.pColor.smooth=0;
 
 opts.pJitter=struct('flip',1);
 opts.pBoost.pTree.fracFtrs=1;
-opts.nWeak=[32 512]; %opts.nWeak=[32 512 1024 2048 4096];
+opts.nWeak=[32 512 1024 2048 4096]; %opts.nWeak=[32 512 1024 2048 4096];
 pLoad={'lbls',{'person'},'ilbls',{'people'},'squarify',{3,.41}};
 opts.pLoad = [pLoad 'hRng',[50 inf], 'vRng',[1 1] ];
 
