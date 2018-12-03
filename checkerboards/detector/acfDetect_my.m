@@ -38,9 +38,12 @@ function bbs = acfDetect_my( I, detector, fileName )
 
 % run detector on every image
 if(nargin<3), fileName=''; end
-n=length(I);
-bbs=cell(n,1);
-parfor i=1:n, disp(I{i}); bbs{i}=acfDetectImg_my(I{i},detector); end
+n = length(I);
+bbs = cell(n,1);
+parfor i=1:n
+    disp([i '/' n ': ' I{i}]); %
+    bbs{i} = acfDetectImg_my(I{i},detector);
+end
 
 % write results to disk if fileName specified
 if(isempty(fileName)), return; end
