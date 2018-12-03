@@ -2,7 +2,7 @@ function detector = acfTrain( varargin )
 % Train aggregate channel features object detector.
 %
 % Train aggregate channel features (ACF) object detector as described in:
-%  P. Dollï¿½r, R. Appel, S. Belongie and P. Perona
+%  P. Dollár, R. Appel, S. Belongie and P. Perona
 %   "Fast Feature Pyramids for Object Detection", PAMI 2014.
 % The ACF detector is fast (30 fps on a single core) and achieves top
 % accuracy on rigid object detection. Please see acfReadme.m for details.
@@ -109,7 +109,7 @@ function detector = acfTrain( varargin )
 % See also acfReadme, acfDetect, acfDemoInria, acfModify, acfTest,
 % chnsCompute, chnsPyramid, adaBoostTrain, bbGt, bbNms, jitterImage
 %
-% Piotr's Computer Vision Matlab Toolbox      Version NEW
+% Piotr's Computer Vision Matlab Toolbox      Version 3.50
 % Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
@@ -219,9 +219,7 @@ opts.pBoost=getPrmDflt(opts.pBoost,dfs,1);
 dfs={'nBins',256,'maxDepth',2,'minWeight',.01,'fracFtrs',1,'nThreads',16};
 opts.pBoost.pTree=getPrmDflt(opts.pBoost.pTree,dfs,1);
 opts.pLoad=getPrmDflt(opts.pLoad,{'squarify',{0,1}},-1);
-% JMBUENA: Removed as done in SubCat 0.2 (actTrain_subcat.m
-% http://cvwee.ucsd.edu/eshed)
-% opts.pLoad.squarify{2}=opts.modelDs(2)/opts.modelDs(1);
+opts.pLoad.squarify{2}=opts.modelDs(2)/opts.modelDs(1);
 end
 
 function [Is,IsOrig] = sampleWins( detector, stage, positive )
@@ -299,9 +297,7 @@ if( positive ), bbs=gt; bbs=bbs(bbs(:,5)==0,:); else
 end
 % grow bbs to a large padded size and finally crop windows
 modelDsBig=max(8*shrink,modelDsPad)+max(2,ceil(64/shrink))*shrink;
-% JMBUENA: Removed as done in SubCat 0.2 (acfTrain_subcat.m
-% http://cverr.ucsd.edu/eshed).
-%r=modelDs(2)/modelDs(1); assert(all(abs(bbs(:,3)./bbs(:,4)-r)<1e-5));
+r=modelDs(2)/modelDs(1); assert(all(abs(bbs(:,3)./bbs(:,4)-r)<1e-5));
 r=modelDsBig./modelDs; bbs=bbApply('resize',bbs,r(1),r(2));
 Is=bbApply('crop',I,bbs,'replicate',modelDsBig([2 1]));
 end

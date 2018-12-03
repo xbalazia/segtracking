@@ -79,8 +79,9 @@ function varargout = bbGt( action, varargin )
 % bbGt>loadAll, bbGt>evalRes, bbGt>showRes,  bbGt>compRoc, bbGt>cropRes,
 % bbGt>compOas, bbGt>compOa
 %
-% Piotr's Computer Vision Matlab Toolbox      Version 3.26
-% Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
+% Piotr's Image&Video Toolbox      Version 3.20
+% Copyright 2013 Piotr Dollar.  [pdollar-at-caltech.edu]
+% Please email me if you find bugs, or have suggestions or questions!
 % Licensed under the Simplified BSD License [see external/bsd.txt]
 
 %#ok<*DEFNU>
@@ -126,7 +127,7 @@ function objs = bbSave( objs, fName )
 % EXAMPLE
 %
 % See also bbGt, bbGt>bbLoad
-vers=4; fid=fopen(fName,'w'); assert(fid>0);
+vers=3; fid=fopen(fName,'w'); assert(fid>0);
 fprintf(fid,'%% bbGt version=%i\n',vers);
 objs=set(objs,'bb',round(get(objs,'bb')));
 objs=set(objs,'bbv',round(get(objs,'bbv')));
@@ -134,7 +135,7 @@ objs=set(objs,'ang',round(get(objs,'ang')));
 for i=1:length(objs)
   o=objs(i); bb=o.bb; bbv=o.bbv;
   fprintf(fid,['%s' repmat(' %i',1,11) '\n'],o.lbl,...
-    bb,o.occ,bbv,o.ign,o.ang,o.subclass);
+    bb,o.occ,bbv,o.ign,o.ang);
 end
 fclose(fid);
 end
@@ -149,8 +150,7 @@ function [objs,bbs] = bbLoad( fName, varargin )
 % the PASCAL VOC: http://pascallin.ecs.soton.ac.uk/challenges/VOC/. Objects
 % labeled as either 'truncated' or 'occluded' using the PASCAL definitions
 % have the 'occ' flag set to true. Objects labeled as 'difficult' have the
-% 'ign' flag set to true. 'class' is used for 'lbl'. format=2 is the
-% ImageNet detection format and requires the ImageNet Dev Kit.
+% 'ign' flag set to true. 'class' is used for 'lbl'.
 %
 % FILTERING: After loading, the objects can be filtered. First, only
 % objects with lbl in lbls or ilbls or returned. For each object, obj.ign
@@ -186,11 +186,7 @@ function [objs,bbs] = bbLoad( fName, varargin )
 % INPUTS
 %  fName    - name of text file
 %  pLoad    - parameters (struct or name/value pairs)
-%   .format   - [0] gt format 0:default, 1:PASCAL, 2:ImageNet
-%   .nOrient  - [20] Number of object orientations with KITTI format (38)
-%   .hMin     - [0] For KITTI format (38)
-%   .occlMax  - [1] For KITTI format (38)
-%   .truncMax - [.3] For KITTI format (38)
+%   .format   - [0] gt format 0:default, 1:PASCAL
 %   .ellipse  - [1] controls how oriented bb is converted to regular bb
 %   .squarify - [] controls optional reshaping of bbs to fixed aspect ratio
 %   .lbls     - [] return objs with these labels (or [] to return all)
@@ -213,16 +209,10 @@ function [objs,bbs] = bbLoad( fName, varargin )
 % See also bbGt, bbGt>bbSave
 
 % get parameters
-df={'format',0,'nOrient',20,'hMin',0,'occlMax',1,'truncMax',3e-1,...
-    'ellipse',1,'squarify',[],'lbls',[],'ilbls',[],'hRng',[],...
+df={'format',0,'ellipse',1,'squarify',[],'lbls',[],'ilbls',[],'hRng',[],...
   'wRng',[],'aRng',[],'arRng',[],'oRng',[],'xRng',[],'yRng',[],'vRng',[]};
-[format,nOrient,hMin,occlMax,truncMax,ellipse,sqr,lbls,ilbls,hRng,wRng,aRng,arRng,oRng,xRng,yRng,vRng]...
+[format,ellipse,sqr,lbls,ilbls,hRng,wRng,aRng,arRng,oRng,xRng,yRng,vRng]...
   = getPrmDflt(varargin,df,1);
-
-% if (~isempty(sqr))
-%   varargin{1}
-%   disp(sqr);
-% end
 
 % load objs
 if( format==0 )
@@ -232,12 +222,12 @@ if( format==0 )
   try v=textscan(fId,'%% bbGt version=%d'); v=v{1}; catch, end %#ok<CTCH>
   if(isempty(v)), v=0; end
   % read in annotation (m is number of fields for given version v)
-  if(all(v~=[0 1 2 3 4])), error('Unknown version %i.',v); end
-  frmt='%s %d %d %d %d %d %d %d %d %d %d %d %d';
-  ms=[10 10 11 12 13]; 
-  m=ms(v+1); 
-  frmt=frmt(1:2+(m-1)*3);
-  in=textscan(fId,frmt); for i=2:m, in{i}=double(in{i}); end; fclose(fId);
+  if(all(v~=[0 1 2 3])), error('Unknown version %i.',v); end
+  frmt='%s %d %d %d %d %d %d %d %d %d %d %d';
+  ms=[10 10 11 12]; m=ms(v+1); frmt=frmt(1:2+(m-1)*3);
+  in=textscan(fId,frmt);
+  for i=2:m, in{i}=double(in{i}); end
+  fclose(fId);
   % create objs struct from read in fields
   n=length(in{1}); objs=create(n);
   for i=1:n, objs(i).lbl=in{1}{i}; objs(i).occ=in{6}(i); end
@@ -245,83 +235,18 @@ if( format==0 )
   for i=1:n, objs(i).bb=bb(i,:); objs(i).bbv=bbv(i,:); end
   if(m>=11), for i=1:n, objs(i).ign=in{11}(i); end; end
   if(m>=12), for i=1:n, objs(i).ang=in{12}(i); end; end
-  for i=1:n, objs(i).subclass = 1; end;
-  if(m>=13), for i=1:n, objs(i).subclass=in{13}(i); end; end
 elseif( format==1 )
   % load objs stored in PASCAL VOC format
-  
   if(exist('PASreadrecord.m','file')~=2)
     error('bbLoad() requires the PASCAL VOC code.'); end
   os=PASreadrecord(fName); os=os.objects;
   n=length(os); objs=create(n);
-  if(~isfield(os,'occluded')), for i=1:n, os(i).occluded=0; end; end
   for i=1:n
     bb=os(i).bbox; bb(3)=bb(3)-bb(1); bb(4)=bb(4)-bb(2); objs(i).bb=bb;
     objs(i).lbl=os(i).class; objs(i).ign=os(i).difficult;
     objs(i).occ=os(i).occluded || os(i).truncated;
     if(objs(i).occ), objs(i).bbv=bb; end
   end
-  objs(i).subclass = 1;
-elseif( format==2 )
-  if(exist('VOCreadxml.m','file')~=2)
-    error('bbLoad() requires the ImageNet dev code.'); end
-  os=VOCreadxml(fName); os=os.annotation;
-  if(isfield(os,'object')), os=os.object; else os=[]; end
-  n=length(os); objs=create(n);
-  for i=1:n
-    bb=os(i).bndbox; bb=str2double({bb.xmin bb.ymin bb.xmax bb.ymax});
-    bb(3)=bb(3)-bb(1); bb(4)=bb(4)-bb(2); objs(i).bb=bb;
-    objs(i).lbl=os(i).name;
-  end
-  objs(i).subclass = 1;
-elseif( format==38 ) % KITTI database.
-  % KITTI database, quantized orientation, for cars/pedestrian/bycicles 
-  if(exist('readKITTILabels.m','file')~=2)
-    error('bbLoad() requires the jmbuena''s KITTI scripts.'); end
-  os = readKITTILabels(fName);
-  if(exist('quantize_KITTI_alpha_angle.m','file')~=2)
-    error('bbLoad() requires the jmbuena''s KITTI scripts.'); end
-
-  DEBUG = 0;
-  if DEBUG
-    SAVE_PATH = 'SUBCLASSES';
-    % DEBUG: Save image files to the especific class folder:
-    parts = strsplit(fName, '/');
-    [path, name, ext] = fileparts(fName);
-    image_path = fullfile(path(1:end-length(parts{end-1})), 'image_2', [name '.png']);
-    Idebug = imread(image_path);
-  end;
-
-  n=length(os); objs=create(n);
-  for i=1:n
-    objs(i).lbl=os(i).type;    
-    bb=[os(i).x1 os(i).y1 (os(i).x2-os(i).x1+1) (os(i).y2-os(i).y1+1)];  
-    objs(i).bb=bb;
-    objs(i).lbl=os(i).type; 
-    % FIXME!!! Add truncMax ... it is not working :-(.
-    objs(i).ign=strcmp(os(i).type, 'DontCare') || (os(i).occlusion>occlMax) ...
-                                               || (os(i).truncation>truncMax) ...
-                                               || ((os(i).y2-os(i).y1+1) < hMin);
-    objs(i).occ=(os(i).truncation>0.3) || (os(i).occlusion > occlMax);
-    if(objs(i).occ), objs(i).bbv=bb; end    
-    objs(i).subclass = quantize_KITTI_alpha_angle(os(i).alpha, nOrient);
-    
-    if DEBUG && ~objs(i).ign 
-      full_path = fullfile(SAVE_PATH, sprintf('%d', objs(i).subclass));
-      if ~exist(full_path, 'dir')
-        mkdir(full_path);  
-      end
-      y1_ = max(0, round(os(i).y1)+1);
-      y2_ = min(round(os(i).y2)+1, size(Idebug,1));
-      x1_ = max(0, round(os(i).x1)+1);
-      x2_ = min(round(os(i).x2)+1, size(Idebug,2));
-      %if strcmp(os(i).type,'Car') | strcmp(os(i).type,'Van') | strcmp(os(i).type,'Truck') | strcmp(os(i).type,'Tram')
-      I2 = Idebug(y1_:y2_, x1_:x2_, :);
-      if ~isempty(I2)
-        imwrite(I2, fullfile(full_path, sprintf('%s_%d_t_%3.3f_o_%d.png',name,i, os(i).truncation, os(i).occlusion)));
-      end
-    end
-  end     
 else error('bbLoad() unknown format: %i',format);
 end
 
@@ -432,7 +357,7 @@ nObj=length(objs);
 switch name
   case 'lbl', for i=1:nObj, objs(i).lbl=vals{i}; end
   case 'bb',  for i=1:nObj, objs(i).bb=vals(i,:); end
-  case 'occ', for i=1:nObj, objs(i).occ=vals(i); end
+  case 'occ', for i=1:nObj, objs(i).ooc=vals(i); end
   case 'bbv', for i=1:nObj, objs(i).bbv=vals(i,:); end
   case 'ign', for i=1:nObj, objs(i).ign=vals(i); end
   case 'ang', for i=1:nObj, objs(i).ang=vals(i); end
@@ -564,7 +489,7 @@ for d=1:m
 end
 end
 
-function [gt0,dt0] = loadAll( gtDir, dtDir, pLoad, isMulticlass )
+function [gt0,dt0] = loadAll( gtDir, dtDir, pLoad )
 % Load all ground truth and detection bbs in given directories.
 %
 % Loads each ground truth (gt) annotation in gtDir and the corresponding
@@ -581,13 +506,12 @@ function [gt0,dt0] = loadAll( gtDir, dtDir, pLoad, isMulticlass )
 % The output of this function can be used in bbGt>evalRes().
 %
 % USAGE
-%  [gt0,dt0] = bbGt( 'loadAll', gtDir, [dtDir], [pLoad], [isMulticlass])
+%  [gt0,dt0] = bbGt( 'loadAll', gtDir, [dtDir], [pLoad] )
 %
 % INPUTS
 %  gtDir      - location of ground truth
 %  dtDir      - [] optional location of detections
 %  pLoad      - {} params for bbGt>bbLoad() (determine format/filtering)
-%  isMulticlass - [0]
 %
 % OUTPUTS
 %  gt0        - {1xn} loaded ground truth bbs (each is a mx5 array of bbs)
@@ -600,7 +524,6 @@ function [gt0,dt0] = loadAll( gtDir, dtDir, pLoad, isMulticlass )
 % get list of files
 if(nargin<2), dtDir=[]; end
 if(nargin<3), pLoad={}; end
-if(nargin<4), isMulticlass=0; end
 if(isempty(dtDir)), fs=getFiles({gtDir}); gtFs=fs(1,:); else
   dtFile=length(dtDir)>4 && strcmp(dtDir(end-3:end),'.txt');
   if(dtFile), dirs={gtDir}; else dirs={gtDir,dtDir}; end
@@ -611,34 +534,24 @@ end
 % load ground truth
 persistent keyPrv gtPrv; key={gtDir,pLoad}; n=length(gtFs);
 if(isequal(key,keyPrv)), gt0=gtPrv; else gt0=cell(1,n);
-  for i=1:n 
-    [objs,gt0{i}]=bbLoad(gtFs{i},pLoad); 
-    if isMulticlass && (~isempty(objs))
-      gt0{i}(:,size(gt0{i},2)+1) =[objs(:).subclass]';
-    end
-  end
+  for i=1:n, [~,gt0{i}]=bbLoad(gtFs{i},pLoad); end
   gtPrv=gt0; keyPrv=key;
 end
 
 % load detections
 if(isempty(dtDir) || nargout<=1), dt0=cell(0); return; end
-if isMulticlass
-  dimMax = 6;
-else
-  dimMax = 5;
-end
 if(iscell(dtFs)), dt0=cell(1,n);
   for i=1:n, dt1=load(dtFs{i},'-ascii');
-    if(numel(dt1)==0), dt1=zeros(0,5); end; dt0{i}=dt1(:,1:dimMax); end
+    if(numel(dt1)==0), dt1=zeros(0,5); end; dt0{i}=dt1(:,1:5); end
 else
-  dt1=load(dtFs,'-ascii'); if(numel(dt1)==0), dt1=zeros(0,dimMax+1); end
+  dt1=load(dtFs,'-ascii'); if(numel(dt1)==0), dt1=zeros(0,6); end
   ids=dt1(:,1); assert(max(ids)<=n);
-  dt0=cell(1,n); for i=1:n, dt0{i}=dt1(ids==i,2:dimMax+1); end
+  dt0=cell(1,n); for i=1:n, dt0{i}=dt1(ids==i,2:6); end
 end
 
 end
 
-function [gt,dt] = evalRes( gt0, dt0, thr, mul, isMulticlass)
+function [gt,dt] = evalRes( gt0, dt0, thr, mul )
 % Evaluates detections against ground truth data.
 %
 % Uses modified Pascal criteria that allows for "ignore" regions. The
@@ -675,19 +588,10 @@ function [gt,dt] = evalRes( gt0, dt0, thr, mul, isMulticlass)
 %  dt0  - [nx5] detection results array with rows [x y w h score]
 %  thr  - [.5] the threshold on oa for comparing two bbs
 %  mul  - [0] if true allow multiple matches to each gt
-%  isMulticlass - [0]
 %
 % OUTPUTS
-% if isMulticlass=0
 %  gt   - [mx5] ground truth results [x y w h match]
 %  dt   - [nx6] detection results [x y w h score match]
-% if isMulticlass=1
-%  gt   - [mx7] ground truth results [x y w h match gt_subclass dt_subclass]
-%  dt   - [nx7] detection results [x y w h score match dt_subclass]
-%
-%  Note: Every subclass label only takes into account the positive
-%  subclasses (the background is not the label=1, subclass label=1 refers
-%  to the first positive meta-class label.
 %
 % EXAMPLE
 %
@@ -696,78 +600,40 @@ function [gt,dt] = evalRes( gt0, dt0, thr, mul, isMulticlass)
 % get parameters
 if(nargin<3 || isempty(thr)), thr=.5; end
 if(nargin<4 || isempty(mul)), mul=0; end
-if(nargin<5 || isempty(isMulticlass)), isMulticlass=0; end
 
 % if gt0 and dt0 are cell arrays run on each element in turn
-if(iscell(gt0) && iscell(dt0))
-  n=length(gt0);
-  assert(n==length(dt0));
-  gt=cell(1,n);
-  dt=gt;
-  for i=1:n, [gt{i},dt{i}] = evalRes(gt0{i},dt0{i},thr,mul,isMulticlass); end; return;
+if( iscell(gt0) && iscell(dt0) ), n=length(gt0);
+  assert(length(dt0)==n); gt=cell(1,n); dt=gt;
+  for i=1:n, [gt{i},dt{i}] = evalRes(gt0{i},dt0{i},thr,mul); end; return;
 end
 
 % check inputs
-if ~isMulticlass
-  if(isempty(gt0)), gt0=zeros(0,5); end
-  if(isempty(dt0)), dt0=zeros(0,5); end
-  assert(size(dt0,2)==5);
-  if(size(gt0,2)==6)
-    gt0 = gt0(:,1:5);
-  end
-  assert(size(gt0,2)==5);
-else
-  if(isempty(gt0)), gt0=zeros(0,6); end
-  if(isempty(dt0)), dt0=zeros(0,6); end
-  assert(size(dt0,2)==6); 
-  assert(size(gt0,2)==6);     
-end
-nd=size(dt0,1);
-ng=size(gt0,1);
+if(isempty(gt0)), gt0=zeros(0,5); end
+if(isempty(dt0)), dt0=zeros(0,5); end
+assert( size(dt0,2)==5 ); nd=size(dt0,1);
+assert( size(gt0,2)==5 ); ng=size(gt0,1);
 
 % sort dt highest score first, sort gt ignore last
 [~,ord]=sort(dt0(:,5),'descend'); dt0=dt0(ord,:);
 [~,ord]=sort(gt0(:,5),'ascend'); gt0=gt0(ord,:);
-gt=gt0; gt(:,5)=-gt(:,5); dt=dt0; 
-if isMulticlass
-  dt=[dt zeros(nd,1)];  
-  dt(:,7) = dt0(:,6);
-  dt(:,6) = zeros(nd,1);
-  gt=[gt zeros(ng,1)];  
-else
-  dt=[dt zeros(nd,1)];  
-end
-    
+gt=gt0; gt(:,5)=-gt(:,5); dt=dt0; dt=[dt zeros(nd,1)];
+
 % Attempt to match each (sorted) dt to each (sorted) gt
-oa = compOas( dt(:,1:4), gt(:,1:4), gt(:,5)==-1 );
 for d=1:nd
   bstOa=thr; bstg=0; bstm=0; % info about best match so far
-  if isMulticlass
-    bstSubclass=0;
-  end
   for g=1:ng
     % if this gt already matched, continue to next gt
     m=gt(g,5); if( m==1 && ~mul ), continue; end
     % if dt already matched, and on ignore gt, nothing more to do
     if( bstm~=0 && m==-1 ), break; end
     % compute overlap area, continue to next gt unless better match made
-    if(oa(d,g)<bstOa), continue; end
+    oa=compOa(dt(d,1:4),gt(g,1:4),m==-1); if(oa<bstOa), continue; end
     % match successful and best so far, store appropriately
-    if isMulticlass
-      bstSubclass = dt0(d,6) - 1; % Detected class labels are +1 to have label=1 if background.  
-    end
-    bstOa=oa(d,g); bstg=g; if(m==0), bstm=1; else bstm=-1; end
+    bstOa=oa; bstg=g; if(m==0), bstm=1; else bstm=-1; end
   end; g=bstg; m=bstm;
-  
   % store type of match for both dt and gt
-  if(m==-1) 
-    dt(d,6)=m; 
-  elseif(m==1) 
-    if isMulticlass
-      gt(g,7)=bstSubclass; 
-    end
-    gt(g,5)=m; dt(d,6)=m; 
-  end
+  if(m==-1), assert(mul || gt(g,5)==m); dt(d,6)=m; end
+  if(m==1), assert(gt(g,5)==0); gt(g,5)=m; dt(d,6)=m; end
 end
 
 end
@@ -790,9 +656,6 @@ function [hs,hImg] = showRes( I, gt, dt, varargin )
 %   .gtLs       - ['-'] line style for gt bbs
 %   .dtLs       - ['--'] line style for dt bbs
 %   .lw         - [3] line width
-%   .isMulticlass - [0]
-%   .showScore - [1]
-%   .showClass - [1]
 %
 % OUTPUTS
 %  hs         - handles to bbs and text labels
@@ -802,45 +665,21 @@ function [hs,hImg] = showRes( I, gt, dt, varargin )
 %
 % See also bbGt, bbGt>evalRes
 dfs={'evShow',1,'gtShow',1,'dtShow',1,'cols','krg',...
-  'gtLs','-','dtLs','--','lw',3, 'isMulticlass', 0, ...
-  'showScore', 1, 'showClass', 1};
-[evShow,gtShow,dtShow,cols,gtLs,dtLs,lw,isMulticlass,showScore,showClass]=getPrmDflt(varargin,dfs,1);
+  'gtLs','-','dtLs','--','lw',3};
+[evShow,gtShow,dtShow,cols,gtLs,dtLs,lw]=getPrmDflt(varargin,dfs,1);
 % optionally display image
 if(ischar(I)), I=imread(I); end
 if(~isempty(I)), hImg=im(I,[],0); title(''); end
-%if(~isempty(I)), hImg=imshow(I,'Border','tight'); title(''); end
 % display bbs with or w/o color coding based on output of evalRes
 hold on; hs=cell(1,1000); k=0;
 if( evShow )
-  if(gtShow) 
-    for i=1:size(gt,1)
-      k=k+1;
-      if isMulticlass
-         hs{k}=bbApply('drawMulticlass',gt(i,1:4),cols(gt(i,5)+2),lw,gtLs, [], [], showScore, showClass);
-      else
-         hs{k}=bbApply('draw',gt(i,1:4),cols(gt(i,5)+2),lw,gtLs); 
-      end
-    end
-  end
-  if(dtShow) 
-     for i=1:size(dt,1) 
-      k=k+1;
-      if isMulticlass
-        hs{k}=bbApply('drawMulticlass',dt(i,:),cols(dt(i,6)+2),lw,dtLs, [], [], showScore, showClass); 
-      else
-        hs{k}=bbApply('draw',dt(i,1:5),cols(dt(i,6)+2),lw,dtLs); 
-      end
-     end
-  end
+  if(gtShow), for i=1:size(gt,1), k=k+1;
+      hs{k}=bbApply('draw',gt(i,1:4),cols(gt(i,5)+2),lw,gtLs); end; end
+  if(dtShow), for i=1:size(dt,1), k=k+1;
+      hs{k}=bbApply('draw',dt(i,1:5),cols(dt(i,6)+2),lw,dtLs); end; end
 else
-  if isMulticlass
-    if(gtShow), k=k+1; hs{k}=bbApply('drawMulticlass',gt(:,1:4),cols(3),lw,gtLs, [], [], showScore, showClass); end
-%    if(dtShow), k=k+1; hs{k}=bbApply('drawMulticlass',dt(:,1:6),cols(3),lw,dtLs); end
-    if(dtShow), k=k+1; hs{k}=bbApply('drawMulticlass',dt,cols(3),lw,dtLs, [], [], showScore, showClass); end
-  else
-    if(gtShow), k=k+1; hs{k}=bbApply('draw',gt(:,1:4),cols(3),lw,gtLs); end
-    if(dtShow), k=k+1; hs{k}=bbApply('draw',dt,cols(3),lw,dtLs); end
-  end
+  if(gtShow), k=k+1; hs{k}=bbApply('draw',gt(:,1:4),cols(3),lw,gtLs); end
+  if(dtShow), k=k+1; hs{k}=bbApply('draw',dt(:,1:5),cols(3),lw,dtLs); end
 end
 hs=[hs{:}]; hold off;
 end
@@ -943,7 +782,7 @@ if(~strcmp(type,'fn')), [~,ord]=sort(bbs(:,5),'descend'); else
   if(size(bbs,1)<n), ord=randperm(size(bbs,1)); else ord=1:n; end; end
 bbs=bbs(ord(1:n),:); ids=ids(ord(1:n));
 % extract patches from each image
-if(n==0), Is=[]; scores=[]; imgIds=[]; return; end
+if(n==0), Is=[]; scores=[]; imgIds=[]; return; end;
 Is=cell(1,n); scores=zeros(1,n); imgIds=zeros(1,n);
 if(any(pad>0)), dims1=dims.*(1+pad); rs=dims1./dims; dims=dims1; end
 if(any(pad>0)), bbs=bbApply('resize',bbs,rs(1),rs(2)); end
@@ -956,7 +795,7 @@ for i=1:N
     I=bbApply('embed',I,bbs1(bbs1(:,5)==1,1:4),'col',[0 255 0]);
   end
   Is1=bbApply('crop',I,bbs(locs,1:4),'replicate',dims);
-  for j=1:length(locs), Is{locs(j)}=Is1{j}; end
+  for j=1:length(locs), Is{locs(j)}=Is1{j}; end;
   scores(locs)=bbs(locs,5); imgIds(locs)=i;
 end; Is=cell2array(Is);
 % optionally display

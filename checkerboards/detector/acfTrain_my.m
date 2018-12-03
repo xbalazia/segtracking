@@ -116,12 +116,16 @@ opts = initializeOpts( varargin{:} );
 if(nargin==0), detector=opts; return; end
 
 % load or initialize detector and begin logging
-nm=[opts.name 'detector.mat']; t=exist(nm,'file');
+nm=[opts.name 'Detector.mat']; t=exist(nm,'file');
 if(t), if(nargout), t=load(nm); detector=t.detector; end; return; end
 t=fileparts(nm); if(~isempty(t) && ~exist(t,'dir')), mkdir(t); end
 detector = struct( 'opts',opts, 'clf',[], 'info',[] );
-startTrain=clock; nm=[opts.name 'log.txt'];
-if(exist(nm,'file')), diary(nm); diary('off'); delete(nm); end 
+startTrain=clock; nm=[opts.name 'Log.txt'];
+if(exist(nm,'file')), 
+    diary(nm);
+    diary('off'); 
+    delete(nm); 
+end; 
 diary(nm);
 RandStream.setGlobalStream(RandStream('mrg32k3a','Seed',opts.seed));
 
@@ -184,7 +188,7 @@ for stage = 0:numel(opts.nWeak)-1
 end
 
 % save detector
-save([opts.name 'detector.mat'],'detector');
+save([opts.name 'Detector_original.mat'],'detector');
 
 % finalize logging
 diary('on'); fprintf([repmat('-',[1 75]) '\n']);
@@ -253,7 +257,7 @@ else
       end
   else % randomly select neg images for hard negatives searching
       i=0;k=0;batch=64;
-      load('AcfCaltechseed.mat');
+      load('./AcfCaltechseed.mat');
       rng(s);visit_list=randperm(nImg,nImg);       
       while(i<nImg &&k<n)
           batch=min(batch,nImg-i); Is1=cell(1,batch);

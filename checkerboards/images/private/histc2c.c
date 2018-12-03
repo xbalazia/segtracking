@@ -34,7 +34,7 @@ int findBin( double x, double *edges, int nBins ) {
 /*******************************************************************************
 * Fast indexing into multidimensional arrays.
 * Call sub2ind_init once and store the result (siz contains the nd sizes):
-*  subMul = _init( siz, nd );
+*  subMul = sub2ind_init( siz, nd );
 * Then, to index into an array A of size siz, given a subscript sub
 * (where sub is an nd int array of subscripts), you can get the index using:
 *  sub2ind(ind,sub,subMul,nd)
@@ -67,8 +67,8 @@ void histcND( double* h, double* A, double* wtMask, int n, int nd, double**edges
 }
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
-  int i, n, nd;
   mwSize *nBins;
+  int i, n, nd;
   double *A, *wtMask, **edges, *h;
   
   /* Error checking on arguments PRHS=[A1, wtMask, edges1, edges2, ...]; PLHS=[h] */
@@ -85,7 +85,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   /* extract arguments */
   A = mxGetPr(prhs[0]);
   wtMask = mxGetPr(prhs[1]);
-  nBins = (mwSize*) mxMalloc( nd * sizeof(int) );
+  nBins = mxMalloc( nd * sizeof(int) );
   for( i=0; i<nd; i++) nBins[i] = mxGetN(prhs[i+2])-1;
   edges = (double**) mxMalloc( nd * sizeof(double*) );
   for( i=0; i<nd; i++) edges[i] = mxGetPr(prhs[i+2]);

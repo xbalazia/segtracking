@@ -265,9 +265,9 @@ void applyTransform(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) 
   /* get dimensions */
   nDims = mxGetNumberOfDimensions(prhs[0]);
   nsI = (int*) mxGetDimensions(prhs[0]);
-  nsJ[0]=(int)mxGetM(prhs[1]); nsJ[1]=(int)mxGetN(prhs[1]);
-  nsJ[2]=(nDims==2) ? 1 : nsI[2];
-  areaJ=nsJ[0]*nsJ[1]; areaI=nsI[0]*nsI[1];
+  nsJ[0] = mxGetM(prhs[1]); nsJ[1]=(int)mxGetN(prhs[1]);
+  nsJ[2] = (mwSize) (nDims==2) ? 1 : nsI[2];
+  areaJ = nsJ[0]*nsJ[1]; areaI=nsI[0]*nsI[1];
 
   /* Perform interpolation */
   J = mxMalloc(sizeof(double)*areaJ*nsJ[2]);
