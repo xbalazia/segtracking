@@ -257,7 +257,7 @@ else
       end
   else % randomly select neg images for hard negatives searching
       i=0;k=0;batch=64;
-      load('./AcfCaltechseed.mat');
+      load('AcfCaltechseed.mat');
       rng(s);visit_list=randperm(nImg,nImg);       
       while(i<nImg &&k<n)
           batch=min(batch,nImg-i); Is1=cell(1,batch);
