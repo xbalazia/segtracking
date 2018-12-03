@@ -1,11 +1,11 @@
 function detector = acfTrain_my( varargin )
 % Train aggregate channel features object detector.
 %
-% Train aggregate channel features (ACF) object detector:
-%  P. Dollar, Z. Tu, P. Perona and S. Belongie
-%  "Integral Channel Features", BMVC 2009.
-% The exact details of the algorithm below differ substantially from the
-% BMVC09 paper, a more up-to-date method writeup is not yet available.
+% Train aggregate channel features (ACF) object detector as described in:
+%  P. Doll�r, R. Appel, S. Belongie and P. Perona
+%   "Fast Feature Pyramids for Object Detection", PAMI 2014.
+% The ACF detector is fast (30 fps on a single core) and achieves top
+% accuracy on rigid object detection. Please see acfReadme.m for details.
 %
 % Takes a set of parameters opts (described in detail below) and trains a
 % detector from start to finish including performing multiple rounds of
@@ -19,6 +19,9 @@ function detector = acfTrain_my( varargin )
 %
 % (1) Specifying features and model: The channel features are defined by
 % 'pPyramid'. See chnsCompute.m and chnsPyramid.m for more details. The
+% channels may be convolved by a set 'filters' to remove local correlations
+% (see our NIPS14 paper on LDCF), improving accuracy but slowing detection.
+% If 'filters'=[wFilter,nFilter] these are automatically computed. The
 % model dimensions ('modelDs') define the window height and width. The
 % padded dimensions ('modelDsPad') define the extended region around object
 % candidates that are used for classification. For example, for 100 pixel
@@ -68,6 +71,7 @@ function detector = acfTrain_my( varargin )
 %  opts       - parameters (struct or name/value pairs)
 %   (1) features and model:
 %   .pPyramid   - [{}] params for creating pyramid (see chnsPyramid)
+%   .filters    - [] [wxwxnChnsxnFilter] filters or [wFilter,nFilter]
 %   .modelDs    - [] model height+width without padding (eg [100 41])
 %   .modelDsPad - [] model height+width with padding (eg [128 64])
 %   .pNms       - [..] params for non-maximal suppression (see bbNms.m)
@@ -102,76 +106,73 @@ function detector = acfTrain_my( varargin )
 %
 % EXAMPLE
 %
-% See also acfDetect, acfDemoInria, acfModify, acfTest, chnsCompute,
-% chnsPyramid, adaBoostTrain, bbGt, bbNms, jitterImage
+% See also acfReadme, acfDetect, acfDemoInria, acfModify, acfTest,
+% chnsCompute, chnsPyramid, adaBoostTrain, bbGt, bbNms, jitterImage
 %
-% Piotr's Image&Video Toolbox      Version 3.22
-% Copyright 2013 Piotr Dollar & Ron Appel.  [pdollar-at-caltech.edu]
-% Please email me if you find bugs, or have suggestions or questions!
+% Piotr's Computer Vision Matlab Toolbox      Version NEW
+% Copyright 2014 Piotr Dollar.  [pdollar-at-gmail.com]
 % Licensed under the Simplified BSD License [see external/bsd.txt]
-
 
 % initialize opts struct
 opts = initializeOpts( varargin{:} );
 if(nargin==0), detector=opts; return; end
 
 % load or initialize detector and begin logging
-nm=[opts.name 'detector.mat']; t=exist(nm,'file');
+nm=[opts.name 'Detector.mat']; t=exist(nm,'file');
 if(t), if(nargout), t=load(nm); detector=t.detector; end; return; end
 t=fileparts(nm); if(~isempty(t) && ~exist(t,'dir')), mkdir(t); end
 detector = struct( 'opts',opts, 'clf',[], 'info',[] );
-startTrain=clock; nm=[opts.name 'log.txt'];
-if(exist(nm,'file')), diary(nm); diary('off'); delete(nm); end 
-diary(nm);
+startTrain=clock; nm=[opts.name 'Log.txt'];
+if(exist(nm,'file')), diary(nm); diary('off'); delete(nm); end; diary(nm);
 RandStream.setGlobalStream(RandStream('mrg32k3a','Seed',opts.seed));
 
 % iterate bootstraping and training
 for stage = 0:numel(opts.nWeak)-1
-  diary('on'); 
-  fprintf([repmat('-',[1 75]) '\n']);
+  diary('on'); fprintf([repmat('-',[1 75]) '\n']);
   fprintf('Training stage %i\n',stage); startStage=clock;
   
-  % sample positives and compute features
+  % sample positives and compute info about channels
   if( stage==0 )
-    Is1 = sampleWins( detector, stage, 1 );
-    X1 = chnsCompute1_myfeature( Is1, opts );
-    X1 = reshape(X1,[],size(X1,4))';
-  end
-  
-  % compute info about channels
-  if( stage==0 )
+    [Is1,IsOrig1] = sampleWins( detector, stage, 1 );
     t=ndims(Is1); if(t==3), t=Is1(:,:,1); else t=Is1(:,:,:,1); end
     t=chnsCompute_my(t,opts.pPyramid.pChns); detector.info=t.info;
+  end
+  
+  % compute local decorrelation filters
+  if( stage==0 && length(opts.filters)==2 )
+    fs = opts.filters; opts.filters = [];
+    X1 = chnsCompute1( IsOrig1, opts );
+    fs = chnsCorrelation( X1, fs(1), fs(2) );
+    opts.filters = fs; detector.opts.filters = fs;
   end
   
   % compute lambdas
   if( stage==0 && isempty(opts.pPyramid.lambdas) )
     fprintf('Computing lambdas... '); start=clock;
-    ds=size(Is1); ds(1:end-1)=1; Is1=mat2cell2(Is1,ds);
-    ls=chnsScaling(opts.pPyramid.pChns,Is1,0);
+    ds=size(IsOrig1); ds(1:end-1)=1; IsOrig1=mat2cell2(IsOrig1,ds);
+    ls=chnsScaling(opts.pPyramid.pChns,IsOrig1,0);
     ls=round(ls*10^5)/10^5; detector.opts.pPyramid.lambdas=ls;
     fprintf('done (time=%.0fs).\n',etime(clock,start));
-  end; clear Is1 ls;
-
+  end
+  
+  % compute features for positives
+  if( stage==0 )
+    X1 = chnsCompute1( Is1, opts );
+    X1 = reshape(X1,[],size(X1,4))';
+    clear Is1 IsOrig1 ls fs ds t;
+  end
   
   % sample negatives and compute features
   Is0 = sampleWins( detector, stage, 0 );
-  X0 = chnsCompute1_myfeature( Is0, opts ); clear Is0;
+  X0 = chnsCompute1( Is0, opts ); clear Is0;
   X0 = reshape(X0,[],size(X0,4))';
   
   % accumulate negatives from previous stages
   if( stage>0 )
     n0=size(X0p,1); n1=max(opts.nNeg,opts.nAccNeg)-size(X0,1);
     if(n0>n1 && n1>0), X0p=X0p(randSample(n0,n1),:); end
-    X0=[X0p; X0]; 
-%     end %#ok<AGROW>
-  end
-  
-  if stage<numel(opts.nWeak)-1
-    X0p=X0;
-  end
-  
-  
+    if(n0>0 && n1>0), X0=[X0p; X0]; end %#ok<AGROW>
+  end; X0p=X0;
   
   % train boosted clf
   detector.opts.pBoost.nWeak = opts.nWeak(stage+1);
@@ -184,7 +185,7 @@ for stage = 0:numel(opts.nWeak)-1
 end
 
 % save detector
-save([opts.name 'detector.mat'],'detector');
+save([opts.name 'Detector.mat'],'detector');
 
 % finalize logging
 diary('on'); fprintf([repmat('-',[1 75]) '\n']);
@@ -195,7 +196,8 @@ end
 
 function opts = initializeOpts( varargin )
 % Initialize opts struct.
-dfs= { 'pPyramid',{}, 'modelDs',[100 41], 'modelDsPad',[128 64], ...
+dfs= { 'pPyramid',{}, 'filters',[], ...
+  'modelDs',[100 41], 'modelDsPad',[128 64], ...
   'pNms',struct(), 'stride',4, 'cascThr',-1, 'cascCal',.005, ...
   'nWeak',128, 'pBoost', {}, 'seed',0, 'name','', 'posGtDir','', ...
   'posImgDir','', 'negImgDir','', 'posWinDir','', 'negWinDir','', ...
@@ -214,13 +216,15 @@ dfs={ 'type','maxg', 'overlap',.65, 'ovrDnm','min' };
 opts.pNms=getPrmDflt(opts.pNms,dfs,-1);
 dfs={ 'pTree',{}, 'nWeak',0, 'discrete',1, 'verbose',16 };
 opts.pBoost=getPrmDflt(opts.pBoost,dfs,1);
-dfs={'nBins',256,'maxDepth',2,'minWeight',.01,'fracFtrs',1,'nThreads',1e5};
+dfs={'nBins',256,'maxDepth',2,'minWeight',.01,'fracFtrs',1,'nThreads',16};
 opts.pBoost.pTree=getPrmDflt(opts.pBoost.pTree,dfs,1);
 opts.pLoad=getPrmDflt(opts.pLoad,{'squarify',{0,1}},-1);
-opts.pLoad.squarify{2}=opts.modelDs(2)/opts.modelDs(1);
+% JMBUENA: Removed as done in SubCat 0.2 (actTrain_subcat.m
+% http://cvwee.ucsd.edu/eshed)
+% opts.pLoad.squarify{2}=opts.modelDs(2)/opts.modelDs(1);
 end
 
-function Is = sampleWins( detector, stage, positive )
+function [Is,IsOrig] = sampleWins( detector, stage, positive )
 % Load or sample windows for training detector.
 opts=detector.opts; start=clock;
 if( positive ), n=opts.nPos; else n=opts.nNeg; end
@@ -228,7 +232,7 @@ if( positive ), crDir=opts.posWinDir; else crDir=opts.negWinDir; end
 if( exist(crDir,'dir') && stage==0 )
   % if window directory is specified simply load windows
   fs=bbGt('getFiles',{crDir}); nImg=length(fs); assert(nImg>0);
-  if(nImg>n), fs=fs(:,randSample(nImg,n)); end; n=nImg;
+  if(nImg>n), fs=fs(:,randSample(nImg,n)); else n=nImg; end
   for i=1:n, fs{i}=[{opts.imreadf},fs(i),opts.imreadp]; end
   Is=cell(1,n); parfor i=1:n, Is{i}=feval(fs{i}{:}); end
 else
@@ -237,43 +241,24 @@ else
   if(hasGt), fs={opts.posImgDir,opts.posGtDir}; end
   fs=bbGt('getFiles',fs); nImg=size(fs,2); assert(nImg>0);
   if(~isinf(n)), fs=fs(:,randperm(nImg)); end; Is=cell(nImg*1000,1);
-  tid=ticStatus('Sampling windows',1,30); 
-  if(positive)
-      k=0; i=0; batch=64;
-      while( i<nImg && k<n )
-        batch=min(batch,nImg-i); Is1=cell(1,batch);
-        parfor j=1:batch, ij=i+j;%parfor
-          I = feval(opts.imreadf,fs{1,ij},opts.imreadp{:}); %#ok<PFBNS>
-          gt=[]; if(hasGt), [~,gt]=bbGt('bbLoad',fs{2,ij},opts.pLoad); end
-          Is1{j} = sampleWins1( I, gt, detector, stage, positive );
-        end
-        Is1=[Is1{:}]; k1=length(Is1); Is(k+1:k+k1)=Is1; k=k+k1;
-       if(k>n), Is=Is(randSample(k,n));k=n; end
-        i=i+batch; tocStatus(tid,max(i/nImg,min(1,k/n)));
-      end
-  else % randomly select neg images for hard negatives searching
-      i=0;k=0;batch=64;
-      load('AcfCaltechseed.mat');
-      rng(s);visit_list=randperm(nImg,nImg);       
-      while(i<nImg &&k<n)
-          batch=min(batch,nImg-i); Is1=cell(1,batch);
-        parfor j=1:batch, ij=visit_list(i+j);%parfor
-          I = feval(opts.imreadf,fs{1,ij},opts.imreadp{:}); %#ok<PFBNS>
-          gt=[]; if(hasGt), [~,gt]=bbGt('bbLoad',fs{2,ij},opts.pLoad); end
-          Is1{j} = sampleWins1( I, gt, detector, stage, positive );
-        end
-        Is1=[Is1{:}]; k1=length(Is1); Is(k+1:k+k1)=Is1; k=k+k1;
-       if(k>n), Is=Is(randSample(k,n));k=n; end
-        i=i+batch; tocStatus(tid,max(i/nImg,min(1,k/n)));
-      end
+  diary('off'); tid=ticStatus('Sampling windows',1,30); k=0; i=0; batch=64;
+  while( i<nImg && k<n )
+    batch=min(batch,nImg-i); Is1=cell(1,batch);
+    parfor j=1:batch, ij=i+j;
+      I = feval(opts.imreadf,fs{1,ij},opts.imreadp{:}); %#ok<PFBNS>
+      gt=[]; if(hasGt), [~,gt]=bbGt('bbLoad',fs{2,ij},opts.pLoad); end
+      Is1{j} = sampleWins1( I, gt, detector, stage, positive );
+    end
+    Is1=[Is1{:}]; k1=length(Is1); Is(k+1:k+k1)=Is1; k=k+k1;
+    if(k>n), Is=Is(randSample(k,n)); k=n; end
+    i=i+batch; tocStatus(tid,max(i/nImg,k/n));
   end
-  fprintf('Sampled %i windows from %i neg images.\n',k,i);
-  %% 
-  Is=Is(1:k); 
+  Is=Is(1:k); diary('on');
+  fprintf('Sampled %i windows from %i images.\n',k,i);
 end
 % optionally jitter positive windows
 if(length(Is)<2), Is={}; return; end
-nd=ndims(Is{1})+1; Is=cat(nd,Is{:});
+nd=ndims(Is{1})+1; Is=cat(nd,Is{:}); IsOrig=Is;
 if( positive && isstruct(opts.pJitter) )
   opts.pJitter.hasChn=(nd==4); Is=jitterImage(Is,opts.pJitter);
   ds=size(Is); ds(nd)=ds(nd)*ds(nd+1); Is=reshape(Is,ds(1:nd));
@@ -286,6 +271,7 @@ if(any(ds(1:2)<opts.modelDsPad)), error('Windows too small.'); end
 nm=[opts.name 'Is' int2str(positive) 'Stage' int2str(stage)];
 if( opts.winsSave ), save(nm,'Is','-v7.3'); end
 fprintf('Done sampling windows (time=%.0fs).\n',etime(clock,start));
+diary('off'); diary('on');
 end
 
 function Is = sampleWins1( I, gt, detector, stage, positive )
@@ -307,36 +293,57 @@ if( positive ), bbs=gt; bbs=bbs(bbs(:,5)==0,:); else
   if( ~isempty(gt) )
     % discard any candidate negative bb that matches the gt
     n=size(bbs,1); keep=false(1,n);
-    for i=1:n, keep(i)=all(bbGt('compOas',bbs(i,:),gt,gt(:,5))<.1); end%<0.1
+    for i=1:n, keep(i)=all(bbGt('compOas',bbs(i,:),gt,gt(:,5))<.1); end
     bbs=bbs(keep,:);
   end
 end
 % grow bbs to a large padded size and finally crop windows
-modelDsBig=modelDsPad;%for padding use: max(8*shrink,modelDsPad)+max(2,ceil(64/shrink))*shrink;
-r=modelDs(2)/modelDs(1); assert(all(abs(bbs(:,3)./bbs(:,4)-r)<1e-5));
+modelDsBig=max(8*shrink,modelDsPad)+max(2,ceil(64/shrink))*shrink;
+% JMBUENA: Removed as done in SubCat 0.2 (acfTrain_subcat.m
+% http://cverr.ucsd.edu/eshed).
+%r=modelDs(2)/modelDs(1); assert(all(abs(bbs(:,3)./bbs(:,4)-r)<1e-5));
 r=modelDsBig./modelDs; bbs=bbApply('resize',bbs,r(1),r(2));
 Is=bbApply('crop',I,bbs,'replicate',modelDsBig([2 1]));
 end
 
-function chns = chnsCompute1_myfeature( Is, opts )
+function chns = chnsCompute1( Is, opts )
 % Compute single scale channels of dimensions modelDsPad.
 if(isempty(Is)), chns=[]; return; end
-fprintf('Extracting features... '); start=clock;
+fprintf('Extracting features... '); start=clock; fs=opts.filters;
 pChns=opts.pPyramid.pChns; smooth=opts.pPyramid.smooth;
-shrink = pChns.shrink;
 dsTar=opts.modelDsPad/pChns.shrink; ds=size(Is); ds(1:end-1)=1;
 Is=squeeze(mat2cell2(Is,ds)); n=length(Is); chns=cell(1,n);
 parfor i=1:n
-  C=chnsCompute_my(Is{i},pChns);
-  
-  C3=convTri(cat(3,C.data{:}),smooth);
-  ds=size(C3); cr=ds(1:2)-dsTar; s=floor(cr/2)+1; e=ceil(cr/2);
-  C3=C3(s(1):end-e(1),s(2):end-e(2),:);
+  C=chnsCompute_my(Is{i},pChns); C=convTri(cat(3,C.data{:}),smooth);
+  if(~isempty(fs)), C=repmat(C,[1 1 size(fs,4)]);
+    for j=1:size(C,3), C(:,:,j)=conv2(C(:,:,j),fs(:,:,j),'same'); end; end
+  if(~isempty(fs)), C=imResample(C,.5); shr=2; else shr=1; end
+  ds=size(C); cr=ds(1:2)-dsTar/shr; s=floor(cr/2)+1; e=ceil(cr/2);
+  C=C(s(1):end-e(1),s(2):end-e(2),:); chns{i}=C;
+end; chns=cat(4,chns{:});
+fprintf('done (time=%.0fs).\n',etime(clock,start));
+end
 
-  F=feature_on_templates2_autoTemplates(C3,shrink);
-
-  chns{i}=F;
-end; 
-chns=cat(4,chns{:});
+function filters = chnsCorrelation( chns, wFilter, nFilter )
+% Compute filters capturing local correlations for each channel.
+fprintf('Computing correlations... '); start=clock;
+[~,~,m,n]=size(chns); w=wFilter; wp=w*2-1;
+filters=zeros(w,w,m,nFilter,'single');
+for i=1:m
+  % compute local auto-scorrelation using Wiener-Khinchin theorem
+  mus=squeeze(mean(mean(chns(:,:,i,:)))); sig=cell(1,n);
+  parfor j=1:n
+    T=fftshift(ifft2(abs(fft2(chns(:,:,i,j)-mean(mus))).^2));
+    sig{j}=T(floor(end/2)+1-w+(1:wp),floor(end/2)+1-w+(1:wp));
+  end
+  sig=double(mean(cat(4,sig{mus>1/50}),4));
+  sig=reshape(full(convmtx2(sig,w,w)),wp+w-1,wp+w-1,[]);
+  sig=reshape(sig(w:wp,w:wp,:),w^2,w^2); sig=(sig+sig')/2;
+  % compute filters for each channel from sig (sorted by eigenvalue)
+  [fs,D]=eig(sig); fs=reshape(fs,w,w,[]);
+  [~,ord]=sort(diag(D),'descend');
+  fs=flipdim(flipdim(fs,1),2); %#ok<DFLIPDIM>
+  filters(:,:,i,:)=fs(:,:,ord(1:nFilter));
+end
 fprintf('done (time=%.0fs).\n',etime(clock,start));
 end
