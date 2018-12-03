@@ -59,7 +59,7 @@ if(1)
 end
 
 %% modify detector (see acfModify)
-if(0)
+if(1)
     detector = acfModify_my(detector,'cascThr',-1,'cascCal',0.1);
     detector.opts.pPyramid.nPerOct = 10;
 
