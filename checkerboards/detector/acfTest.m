@@ -43,7 +43,7 @@ dfs={ 'name','REQ', 'imgDir','REQ', 'gtDir','REQ', 'pLoad',[], ...
 bbsNm=[name 'Dets.txt'];
 if(reapply && exist(bbsNm,'file')), delete(bbsNm); end
 if(reapply || ~exist(bbsNm,'file'))
-  detector = load([name 'Detector.mat']);
+  detector = load([name 'detector.mat']);
   detector = detector.detector;
   if(~isempty(pModify)), detector=acfModify(detector,pModify); end
   imgNms = bbGt('getFiles',{imgDir});
