@@ -30,7 +30,7 @@ DataPath = [CodePath '/' datastr];
 %% set up parameters for training detector (see acfTrain_my)
 opts = acfTrain_my();
 opts.posGtDir = [DataPath '/annotations'];
-opts.posImgDir = [DataPath '/images'];
+opts.posImgDir = [DataPath '/images/train'];
 opts.name = [ModelPath '/'];
 
 opts.modelDs=[96 36]; opts.modelDsPad=[120 60];
@@ -73,7 +73,7 @@ end
 if(1)
     tstart = tic; [miss,~,gt,dt] = acfTest_my(...
       'name', opts.name, ...
-      'imgDir', [DataPath '/images'] , ...
+      'imgDir', [DataPath '/images/test'] , ...
       'gtDir', [DataPath '/annotations'], ...
       'pLoad', [pLoad, 'hRng',[50 inf], 'vRng', [.65 1], 'xRng', [5 635], 'yRng',[5 475]], 'show',2);
     telapsed = toc(tstart);
@@ -90,7 +90,7 @@ end
 
 %% run detector on a set of images without evaluation
 if(0)
-    imgNms = bbGt('getFiles',{[DataPath '/images']});
+    imgNms = bbGt('getFiles',{[DataPath '/images/test']});
     tic, bbs = acfDetect_my(imgNms,detector,[ModelPath '/detections.txt']); toc
     % visualize detection results on one single image
     %k=48;
