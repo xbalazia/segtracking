@@ -40,7 +40,8 @@ if(nargin<3), fileName=''; end; multiple=iscell(I);
 if(~isempty(fileName) && exist(fileName,'file')), bbs=1; return; end
 if(~multiple), bbs=acfDetectImg(I,detector); else
   n=length(I); bbs=cell(n,1);
-  parfor i=1:n, bbs{i}=acfDetectImg(I{i},detector); end
+  for i=1:n, disp(I{i}), bbs{i}=acfDetectImg(I{i},detector); end
+  %parfor i=1:n, disp(I{i}), bbs{i}=acfDetectImg(I{i},detector); end
 end
 
 % write results to disk if fileName specified
@@ -55,6 +56,30 @@ dlmwrite(fileName,bbs); bbs=1;
 end
 
 function bbs = acfDetectImg( I, detector )
+
+% JMBUENA: Workaround for BUG in gradientHist with images bigger than 4900 px in either
+% dimension
+sz = size(I);
+old_w = sz(2);
+old_h = sz(1);
+big_image = 0; 
+%big_size = 4900*3900*3; % 4900*3900 pixels x 3 channels ~ 54 MBytes (1 byte/channel)
+%max_size = 4900;
+big_size = 4100*3500*3; % 4100*3500 pixels x 3 channels ~ 41 MBytes (1 byte/channel)
+max_size = 3500;
+if  (prod(sz) > big_size)
+  big_image = 1; 
+  if (old_h == max(sz))
+    new_w = round(max_size * (old_w/old_h));
+    new_h = max_size;
+  else
+    new_h = round(max_size * (old_h/old_w));
+    new_w = max_size;
+  end
+%  I = imResampleMex(I, new_h, new_w, 1);  
+  I = imResample(I, [new_h, new_w]);
+end
+
 % Run trained sliding-window object detector on given image.
 Ds=detector; if(~iscell(Ds)), Ds={Ds}; end; nDs=length(Ds);
 opts=Ds{1}.opts; pPyramid=opts.pPyramid; pNms=opts.pNms;
@@ -84,5 +109,15 @@ for i=1:P.nScales
     if(separate), bb(:,6)=j; end; bbs{i,j}=bb;
   end
 end; bbs=cat(1,bbs{:});
+% % JMBUENA: For AFW/AFLW
+% bbs = bbApply('squarify', bbs, 2, 1./1.18);
 if(~isempty(pNms)), bbs=bbNms(bbs,pNms); end
+
+% JMBUENA: AVOID BUG of gradientHist with too big images.
+if (big_image)
+  bbs(:,1) = round(bbs(:,1) * (old_w/new_w));
+  bbs(:,2) = round(bbs(:,2) * (old_h/new_h));
+  bbs(:,3) = round(bbs(:,3) * (old_w/new_w));
+  bbs(:,4) = round(bbs(:,4) * (old_h/new_h));
+end
 end

@@ -10,25 +10,25 @@ function tpl = set(tpl,action,varargin)
 %  Copyright (C) 2003 Guillaume Flandin <Guillaume@artefact.tk>
 %  $Revision: 1.0 $Date: 2003/05/05 22:19:51 $
 
-narginchk(3,5);
+error(nargchk(3,5,nargin));
 
 switch lower(action)
 	case 'root'
-    narginchk(3,3);
+		error(nargchk(3,3,nargin));
 		if exist(varargin{1},'dir')
 			tpl.root = varargin{1};
 		else
 			error('[Template] No such directory.');
 		end
 	case 'unknowns'
-    narginchk(3,3);
+		error(nargchk(3,3,nargin));
 		if ismember(varargin{1},{'remove' 'comment' 'keep'})
 			tpl.unknowns = varargin{1};
 		else
 			error('[Template] Unknowns: ''remove'', ''comment'' or ''keep''.');
 		end
 	case 'file'
-    narginchk(4,4);
+		error(nargchk(4,4,nargin));
 		if iscellstr(varargin{1})
 			for i=1:length(varargin{1})
 				ind = find(ismember(tpl.handles,varargin{1}{i}));
@@ -53,7 +53,7 @@ switch lower(action)
 			error('[Template] Badly formed handles.');
 		end
 	case 'block'
-    narginchk(4,5);
+		error(nargchk(4,5,nargin));
 		tpl = loadtpl(tpl,varargin{1});
 		if nargin == 4
 			name = varargin{2};
@@ -85,7 +85,7 @@ switch lower(action)
 		tpl = set(tpl,'var',varargin{2},blk);
 		tpl = set(tpl,'var',varargin{1},str);
 	case 'var'
-    narginchk(3,4);
+		error(nargchk(3,4,nargin));
 		if iscellstr(varargin{1})
 			for i=1:length(varargin{1})
 				ind = find(ismember(tpl.varkeys,varargin{1}{i}));

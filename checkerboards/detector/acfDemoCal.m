@@ -22,7 +22,7 @@ clc;
 CodePath = '/home/balazia/pedtrack/checkerboards';
 addpath(genpath(CodePath));
 modelstr = 'models_Caltech';
-versionstr = 'Checkerboards-my2'; % 'Checkerboards-original' 'Checkerboards-my'
+versionstr = 'Checkerboards-my1'; % 'Checkerboards-original' 'Checkerboards-my'
 ModelPath = [CodePath '/' modelstr '/' versionstr];
 datastr = 'data-USA';
 DataPath = [CodePath '/' datastr];
@@ -31,7 +31,7 @@ DataPath = [CodePath '/' datastr];
 opts = acfTrain_my();
 opts.posGtDir = [DataPath '/annotations-x'];
 opts.posImgDir = [DataPath '/images-x'];
-opts.name = versionstr;
+opts.name = [ModelPath '/'];
 
 opts.modelDs=[96 36]; opts.modelDsPad=[120 60];
 opts.pPyramid.smooth=0; opts.pPyramid.pChns.pColor.smooth=0; 
