@@ -40,7 +40,7 @@ function bbs = acfDetect_my( I, detector, fileName )
 if(nargin<3), fileName=''; end
 n = length(I);
 bbs = cell(n,1);
-parfor i=1:n, disp(i+'/'+n+': '+I{i}); bbs{i} = acfDetectImg_my(I{i},detector); end
+parfor i=1:n, disp(i+'/'+n+': '); disp(I{i}); bbs{i} = acfDetectImg_my(I{i},detector); end
 
 % write results to disk if fileName specified
 if(isempty(fileName)), return; end
