@@ -362,7 +362,7 @@ if __name__ == '__main__':
 			if vis and webcam_num == -1:
 					# cv2.imshow('test', im2show)
 					# cv2.waitKey(0)
-					result_path = os.path.join(args.image_dir , 'detections', imglist[num_images-1][:-4] + '.jpg')
+					result_path = os.path.join(args.image_dir, 'detections', imglist[num_images-1][:-4] + '.jpg')
 					cv2.imwrite(result_path, im2show)
 			else:
 					im2showRGB = cv2.cvtColor(im2show, cv2.COLOR_BGR2RGB)
@@ -381,8 +381,7 @@ if __name__ == '__main__':
 			cap.release()
 			cv2.destroyAllWindows()
 
-	with open('detections.txt', 'w') as detFile:
+	with open(os.path.join(args.image_dir , 'detections.txt'), 'w') as detFile:
 		for d in sorted(detections.keys()):
-			print(str(d))
 			for bb in detections[d]:
 				detFile.write(bb + '\n')
