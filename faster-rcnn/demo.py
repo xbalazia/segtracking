@@ -343,10 +343,12 @@ if __name__ == '__main__':
 						cls_dets = cls_dets[order]
 						keep = nms(cls_dets, cfg.TEST.NMS, force_cpu=not cfg.USE_GPU_NMS)
 						cls_dets = cls_dets[keep.view(-1).long()]
+						label = pascal_classes[j]
 						if vis:
-							im2show = vis_detections(im2show, pascal_classes[j], cls_dets.cpu().numpy(), 0.5)
+							im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), 0.5)
 						for d in cls_dets:
-							print(str(pascal_classes[j]) + str(d))
+							if label == 'person':
+								print(label + d.str)
 						#detections[num_images] = str(pascal_classes[j]) + str(cls_dets)
 
 			misc_toc = time.time()
