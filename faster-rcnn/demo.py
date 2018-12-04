@@ -344,13 +344,13 @@ if __name__ == '__main__':
 						keep = nms(cls_dets, cfg.TEST.NMS, force_cpu=not cfg.USE_GPU_NMS)
 						cls_dets = cls_dets[keep.view(-1).long()]
 						label = pascal_classes[j]
-						if vis:
-							im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), 0.5)
-						for bb in cls_dets:
-							if num_images not in detections:
-								detections[num_images] = []
-							if label == 'person':
-								bb = str(num_images+1)+','+label+','+str(bb).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
+						if label == 'person':
+							if vis:
+								im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), 0.5)
+							for bb in cls_dets:
+								if num_images not in detections:
+									detections[num_images] = []
+								bb = str(num_images+1)+','+str(bb).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
 								print(bb)
 								detections[num_images].append(bb)
 
@@ -358,8 +358,8 @@ if __name__ == '__main__':
 			nms_time = misc_toc - misc_tic
 
 			if webcam_num == -1:
-					sys.stdout.write('Remaining: {:d}, detect time: {:.3f}s, nms time: {:.3f}s   \r' \
-													 .format(num_images, detect_time, nms_time))
+					sys.stdout.write('Remaining: {:d}, detect time: {:.3f}s, remaining time: {:d}m   \r' \
+													 .format(num_images, detect_time, num_images*(detect_time+nms_time)/60))
 					sys.stdout.flush()
 
 			if vis and webcam_num == -1:
@@ -381,6 +381,5 @@ if __name__ == '__main__':
 			cv2.destroyAllWindows()
 
 	with open('detections.txt', 'w') as detFile:
-		for d in sorted(detections.keys()):
-			for bb in d:
-				detFile.write(detections[bb])
+		for bb in sorted(detections.keys()):
+			detFile.write(detections[bb])
