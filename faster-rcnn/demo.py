@@ -375,7 +375,7 @@ if __name__ == '__main__':
 
 			if webcam_num == -1:
 				num_images -= 1
-				rem_time = detect_time, num_images*(detect_time+nms_time)
+				rem_time = num_images*(detect_time+nms_time)
 				rem_time_unit = 's'
 				if rem_time >= 60:
 					rem_time /= 60
@@ -386,7 +386,7 @@ if __name__ == '__main__':
 						if rem_time >= 24:
 							rem_time /= 24
 							rem_time_unit = 'd'
-				sys.stdout.write('Remaining: {:d}, detections: {:d}, detect time: {:.3f}s, remaining time: {:.0f}'+rem_time_unit+'\r'.format(num_images, ndet, rem_time))
+				sys.stdout.write('Remaining: {:d}, detections: {:d}, detect time: {:.3f}s, remaining time: {:.0f}'+rem_time_unit+'\r'.format(num_images, ndet, detect_time, rem_time))
 				sys.stdout.flush()
 
 	if webcam_num >= 0:
