@@ -358,10 +358,6 @@ if __name__ == '__main__':
 			misc_toc = time.time()
 			nms_time = misc_toc - misc_tic
 
-			if webcam_num == -1:
-					sys.stdout.write('Remaining: {:d}, detections: {:d}, detect time: {:.3f}s, remaining time: {:.0f}m\r'.format(num_images, ndet, detect_time, num_images*(detect_time+nms_time)/60))
-					sys.stdout.flush()
-
 			if vis and webcam_num == -1:
 					# cv2.imshow('test', im2show)
 					# cv2.waitKey(0)
@@ -379,6 +375,19 @@ if __name__ == '__main__':
 
 			if webcam_num == -1:
 				num_images -= 1
+				rem_time = detect_time, num_images*(detect_time+nms_time)
+				rem_time_unit = 's'
+				if rem_time >= 60:
+					rem_time /= 60
+					rem_time_unit = 'm'
+					if rem_time >= 60:
+						rem_time /= 60
+						rem_time_unit = 'h'
+						if rem_time >= 24:
+							rem_time /= 24
+							rem_time_unit = 'd'
+				sys.stdout.write('Remaining: {:d}, detections: {:d}, detect time: {:.3f}s, remaining time: {:.0f}'+rem_time_unit+'\r'.format(num_images, ndet, rem_time))
+				sys.stdout.flush()
 
 	if webcam_num >= 0:
 			cap.release()
@@ -390,4 +399,3 @@ if __name__ == '__main__':
 				detFile.write(bb+'\n')
 
 	sys.stdout.write('Done.')
-	
