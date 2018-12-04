@@ -346,7 +346,7 @@ if __name__ == '__main__':
 						if vis:
 							im2show = vis_detections(im2show, pascal_classes[j], cls_dets.cpu().numpy(), 0.5)
 						print(cls_dets.size())
-						detections{num_images} = cls_dets
+						detections[num_images] = cls_dets
 
 			misc_toc = time.time()
 			nms_time = misc_toc - misc_tic
