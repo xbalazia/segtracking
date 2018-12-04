@@ -35,9 +35,10 @@ if ~s
 end
 
 % image dimensions
-a = [sceneInfo.imgFolder sprintf(sceneInfo.imgFileFormat,sceneInfo.frameNums(1))];
+a1 = sceneInfo.imgFolder;
+a2 = sprintf(sceneInfo.imgFileFormat,sceneInfo.frameNums(1));
 [sceneInfo.imgHeight, sceneInfo.imgWidth, ~]= ...
-    size(imread(a));
+    size(imread([a1 a2]));
 
 % generic target size, will be determined based on detections
 sceneInfo.targetSize=20; 
