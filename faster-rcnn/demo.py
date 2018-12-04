@@ -244,8 +244,6 @@ if __name__ == '__main__':
 	detections = {}
 	while (num_images >= 0):
 			total_tic = time.time()
-			if webcam_num == -1:
-				num_images -= 1
 
 			# Get image from the webcam
 			if webcam_num >= 0:
@@ -350,7 +348,7 @@ if __name__ == '__main__':
 							for bb in cls_dets:
 								if num_images not in detections:
 									detections[num_images] = []
-								bb = str(num_images+1)+','+str(bb).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
+								bb = str(num_images)+','+str(bb).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
 								print(bb)
 								detections[num_images].append(bb)
 
@@ -358,7 +356,7 @@ if __name__ == '__main__':
 			nms_time = misc_toc - misc_tic
 
 			if webcam_num == -1:
-					sys.stdout.write('Remaining: {:d}, detect time: {:.3f}s, remaining time: {:.0f}m\r'.format(num_images+1, detect_time, (num_images+1)*(detect_time+nms_time)/60))
+					sys.stdout.write('Remaining: {:d}, detect time: {:.3f}s, remaining time: {:.0f}m\r'.format(num_images, detect_time, num_images*(detect_time+nms_time)/60))
 					sys.stdout.flush()
 
 			if vis and webcam_num == -1:
@@ -375,6 +373,10 @@ if __name__ == '__main__':
 					print('Frame rate:', frame_rate)
 					if cv2.waitKey(1) & 0xFF == ord('q'):
 							break
+
+			if webcam_num == -1:
+				num_images -= 1
+
 	if webcam_num >= 0:
 			cap.release()
 			cv2.destroyAllWindows()
@@ -382,5 +384,5 @@ if __name__ == '__main__':
 	with open('detections.txt', 'w') as detFile:
 		for d in sorted(detections.keys()):
 			print(str(d))
-			for bb in d:
-				detFile.write(detections[bb] + '\n')
+			for bb in detections[d]:
+				detFile.write(bb + '\n')
