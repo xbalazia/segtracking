@@ -22,7 +22,7 @@ clc;
 CodePath = '/home/balazia/pedtrack/checkerboards';
 addpath(genpath(CodePath));
 modelstr = 'models';
-versionstr = 'AcfInria';
+versionstr = 'Checkerboards-2';
 ModelPath = [CodePath '/' modelstr '/' versionstr];
 datastr = 'data-USA';
 DataPath = [CodePath '/' datastr];

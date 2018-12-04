@@ -71,7 +71,7 @@ P = chnsPyramid_my(I,pPyramid); bbs = cell(P.nScales,nDs);
 
 modelDsPad=opts.modelDsPad; modelDs=opts.modelDs;
 shift=(modelDsPad-modelDs)/2-pad;
-nchc = uint8(prod([2,5,5])); %nchc = uint8(prod(opts.pPyramid.pChns.cbin));
+nchc = uint8(prod(opts.pPyramid.pChns.cbin));
 
 for i=1:P.nScales
   for j=1:nDs, opts=Ds{j}.opts;  
