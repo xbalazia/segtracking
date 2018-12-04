@@ -239,7 +239,7 @@ if __name__ == '__main__':
 		imglist = sorted(os.listdir(os.path.join(args.image_dir, 'test')), reverse=False)
 		num_images = len(imglist)
 
-	print('Loaded Photo: {} images.'.format(num_images))
+	print('Loaded {} images.'.format(num_images))
 
 	detections = {}
 	while (num_images >= 0):
@@ -347,7 +347,7 @@ if __name__ == '__main__':
 						if vis:
 							im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), 0.5)
 						for d in cls_dets:
-							print(label + d.str())
+							print(label + str(d))
 						#detections[num_images] = str(pascal_classes[j]) + str(cls_dets)
 
 			misc_toc = time.time()
