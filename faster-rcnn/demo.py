@@ -349,7 +349,7 @@ if __name__ == '__main__':
 								im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), visConfThreshold)
 							for bb in cls_dets:
 								bb = str(num_images)+','+str(bb).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
-								if bb.split(',')[-1] >= visConfThreshold:
+								if float(bb.split(',')[-1]) >= visConfThreshold:
 									if num_images not in detections:
 										detections[num_images] = []
 									detections[num_images].append(bb)
