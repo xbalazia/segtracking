@@ -345,9 +345,9 @@ if __name__ == '__main__':
 						cls_dets = cls_dets[keep.view(-1).long()]
 						if vis:
 							im2show = vis_detections(im2show, pascal_classes[j], cls_dets.cpu().numpy(), 0.5)
-						print(cls_dets.size())
-						#detection[pascal_classes[j]]
-						#detections[num_images] = cls_dets
+						for d in cls_dets:
+							print(str(pascal_classes[j]) + str(d))
+						#detections[num_images] = str(pascal_classes[j]) + str(cls_dets)
 
 			misc_toc = time.time()
 			nms_time = misc_toc - misc_tic
