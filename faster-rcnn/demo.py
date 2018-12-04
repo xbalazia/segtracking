@@ -347,16 +347,15 @@ if __name__ == '__main__':
 						if vis:
 							im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), 0.5)
 						for d in cls_dets:
-							if label == 'person':
-								print(label + d.str)
+							print(label + d.str())
 						#detections[num_images] = str(pascal_classes[j]) + str(cls_dets)
 
 			misc_toc = time.time()
 			nms_time = misc_toc - misc_tic
 
 			if webcam_num == -1:
-					sys.stdout.write('im_detect: {:d}/{:d} {:.3f}s {:.3f}s   \r' \
-													 .format(num_images + 1, len(imglist), detect_time, nms_time))
+					sys.stdout.write('Remaining: {:d}, detect time: {:.3f}s, nms time: {:.3f}s   \r' \
+													 .format(num_images + 1, detect_time, nms_time))
 					sys.stdout.flush()
 
 			if vis and webcam_num == -1:
