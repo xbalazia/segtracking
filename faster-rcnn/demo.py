@@ -149,6 +149,8 @@ if __name__ == '__main__':
   if args.set_cfgs is not None:
     cfg_from_list(args.set_cfgs)
   cfg.USE_GPU_NMS = args.cuda
+  cfg.CUDA = args.cuda
+  cfg.GPU_ID = 6
   print('CUDA='+str(args.cuda))
 
   print('Using config:')
