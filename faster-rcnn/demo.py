@@ -229,7 +229,7 @@ if __name__ == '__main__':
 	max_per_image = 100
 	thresh = 0.05
 	vis = True
-	visConfThreshold = 0.5
+	vis_conf_threshold = 0.5
 
 	webcam_num = args.webcam_num
 	# Set up webcam or get image directories
@@ -346,10 +346,10 @@ if __name__ == '__main__':
 						label = pascal_classes[j]
 						if label == 'person':
 							if vis:
-								im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), visConfThreshold)
+								im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), vis_conf_threshold)
 							for bb in cls_dets:
 								bb = str(num_images)+','+str(bb).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
-								if float(bb.split(',')[-1]) >= visConfThreshold:
+								if float(bb.split(',')[-1]) >= vis_conf_threshold:
 									if num_images not in detections:
 										detections[num_images] = []
 									detections[num_images].append(bb)
@@ -388,3 +388,6 @@ if __name__ == '__main__':
 		for d in sorted(detections.keys()):
 			for bb in detections[d]:
 				detFile.write(bb+'\n')
+
+	sys.stdout.write('Done.')
+	
