@@ -236,7 +236,7 @@ if __name__ == '__main__':
     cap = cv2.VideoCapture(webcam_num)
     num_images = 0
   else:
-    imglist = sorted(os.listdir(os.path.join(args.image_dir, 'test')), reverse=True)
+    imglist = sorted(os.listdir(os.path.join(args.image_dir, 'test')), reverse=False)
     num_images = len(imglist)
 
   print('Loaded Photo: {} images.'.format(num_images))
@@ -345,6 +345,7 @@ if __name__ == '__main__':
             cls_dets = cls_dets[keep.view(-1).long()]
             if vis:
               im2show = vis_detections(im2show, pascal_classes[j], cls_dets.cpu().numpy(), 0.5)
+            print(cls_dets)###
 
       misc_toc = time.time()
       nms_time = misc_toc - misc_tic
