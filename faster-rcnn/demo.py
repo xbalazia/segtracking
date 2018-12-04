@@ -346,11 +346,12 @@ if __name__ == '__main__':
 						label = pascal_classes[j]
 						if vis:
 							im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), 0.5)
+						for d in cls_dets:
 						if num_images not in detections:
 							detections[num_images] = []
-						if True: #label == 'person'
-							bb = str(num_images)+','+str(cls_dets[0]).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
-							detections[num_images].append(bb)
+						#if label == 'person':
+						bb = str(num_images)+','+label+','+str(d).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
+						detections[num_images].append(bb)
 
 			misc_toc = time.time()
 			nms_time = misc_toc - misc_tic
