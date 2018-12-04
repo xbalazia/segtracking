@@ -347,7 +347,7 @@ if __name__ == '__main__':
 						if vis:
 							im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), 0.5)
 						for d in cls_dets:
-							s = num_images+','+label+','+str(d).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
+							s = str(num_images)+','+label+','+str(d).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
 							print(s)
 							detections[num_images].append(s)
 
