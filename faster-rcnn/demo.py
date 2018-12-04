@@ -358,7 +358,7 @@ if __name__ == '__main__':
 			nms_time = misc_toc - misc_tic
 
 			if webcam_num == -1:
-					sys.stdout.write('Remaining: {:d}, detect time: {:.3f}s, remaining time: {:d}m   \r' \
+					sys.stdout.write('Remaining: {:d}, detect time: {:.3f}s, remaining time: {:f}m   \r' \
 													 .format(num_images, detect_time, num_images*(detect_time+nms_time)/60))
 					sys.stdout.flush()
 
