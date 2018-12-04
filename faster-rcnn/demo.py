@@ -358,7 +358,7 @@ if __name__ == '__main__':
 			nms_time = misc_toc - misc_tic
 
 			if webcam_num == -1:
-					sys.stdout.write('Remaining: {:d}, detect time: {:.3f}s, remaining time: {:f}m   \r' \
+					sys.stdout.write('Remaining: {:d}, detect time: {:.3f}s, remaining time: {:.0f}m\r' \
 													 .format(num_images, detect_time, num_images*(detect_time+nms_time)/60))
 					sys.stdout.flush()
 
@@ -381,5 +381,6 @@ if __name__ == '__main__':
 			cv2.destroyAllWindows()
 
 	with open('detections.txt', 'w') as detFile:
-		for bb in sorted(detections.keys()):
-			detFile.write(detections[bb])
+		for d in sorted(detections.keys()):
+			for bb in d:
+				detFile.write(detections[bb] + '\n')
