@@ -349,17 +349,17 @@ if __name__ == '__main__':
 						for bb in cls_dets:
 							if num_images not in detections:
 								detections[num_images] = []
-							#if label == 'person':
-							bb = str(num_images)+','+label+','+str(bb).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
-							print(bb)
-							detections[num_images].append(bb)
+							if label == 'person':
+								bb = str(num_images+1)+','+label+','+str(bb).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
+								print(bb)
+								detections[num_images].append(bb)
 
 			misc_toc = time.time()
 			nms_time = misc_toc - misc_tic
 
 			if webcam_num == -1:
 					sys.stdout.write('Remaining: {:d}, detect time: {:.3f}s, nms time: {:.3f}s   \r' \
-													 .format(num_images + 1, detect_time, nms_time))
+													 .format(num_images, detect_time, nms_time))
 					sys.stdout.flush()
 
 			if vis and webcam_num == -1:
