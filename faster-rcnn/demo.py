@@ -375,4 +375,6 @@ if __name__ == '__main__':
 			cv2.destroyAllWindows()
 
 	with open('detections.txt', 'w') as detFile:
-	
+		for d in sorted(detections.keys()):
+			for bb in d:
+				detFile.write(detections[d])
