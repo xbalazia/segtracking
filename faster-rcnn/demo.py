@@ -236,7 +236,7 @@ if __name__ == '__main__':
     cap = cv2.VideoCapture(webcam_num)
     num_images = 0
   else:
-    imglist = sorted(os.listdir(args.image_dir), reverse=True)
+    imglist = sorted(os.listdir(os.path.join(args.image_dir, 'test'), reverse=True)
     num_images = len(imglist)
 
   print('Loaded Photo: {} images.'.format(num_images))
@@ -255,7 +255,7 @@ if __name__ == '__main__':
         im_in = np.array(frame)
       # Load the demo image
       else:
-        im_file = os.path.join(args.image_dir, imglist[num_images])
+        im_file = os.path.join(args.image_dir, 'test', imglist[num_images])
         # im = cv2.imread(im_file)
         im_in = np.array(imread(im_file))
       if len(im_in.shape) == 2:
