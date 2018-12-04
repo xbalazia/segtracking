@@ -47,6 +47,7 @@ if(reapply || ~exist(bbsNm,'file'))
   detector = detector.detector;
   if(~isempty(pModify)), detector=acfModify(detector,pModify); end
   imgNms = bbGt('getFiles',{imgDir});
+  opts.pPyramid.pChns.cbin
   acfDetect_my( imgNms, detector, bbsNm );
 end
 
