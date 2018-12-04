@@ -185,22 +185,15 @@ if __name__ == '__main__':
 
   fasterRCNN.create_architecture()
 
-  print("load checkpoint %s" % (load_name))
+  print("Load checkpoint %s" % (load_name))
   if args.cuda > 0:
     checkpoint = torch.load(load_name)
   else:
     checkpoint = torch.load(load_name, map_location=(lambda storage, loc: storage))
-  print(checkpoint.keys())
   fasterRCNN.load_state_dict(checkpoint['model'])
   if 'pooling_mode' in checkpoint.keys():
     cfg.POOLING_MODE = checkpoint['pooling_mode']
-
-
-  print('load model successfully!')
-
-  # pdb.set_trace()
-
-  print("load checkpoint %s" % (load_name))
+  print('Model loaded successfully!')
 
   # initilize the tensor holder here.
   im_data = torch.FloatTensor(1)
@@ -241,7 +234,7 @@ if __name__ == '__main__':
     cap = cv2.VideoCapture(webcam_num)
     num_images = 0
   else:
-    imglist = os.listdir(args.image_dir)
+    imglist = sorted(os.listdir(args.image_dir), reverse=True)
     num_images = len(imglist)
 
   print('Loaded Photo: {} images.'.format(num_images))
@@ -362,7 +355,7 @@ if __name__ == '__main__':
       if vis and webcam_num == -1:
           # cv2.imshow('test', im2show)
           # cv2.waitKey(0)
-          result_path = os.path.join(args.image_dir, imglist[num_images][:-4] + "_det.jpg")
+          result_path = os.path.join(args.image_dir + "_detections", imglist[num_images][:-4])
           cv2.imwrite(result_path, im2show)
       else:
           im2showRGB = cv2.cvtColor(im2show, cv2.COLOR_BGR2RGB)
