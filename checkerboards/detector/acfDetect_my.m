@@ -62,7 +62,6 @@ function bbs = acfDetectImg_my( I, detector )
 % Run trained sliding-window object detector on given image.
 Ds=detector; if(~iscell(Ds)), Ds={Ds}; end; nDs=length(Ds);
 opts=Ds{1}.opts; pPyramid=opts.pPyramid; pNms=opts.pNms;
-opts.pPyramid.pChns
 imreadf=opts.imreadf; imreadp=opts.imreadp;
 shrink=pPyramid.pChns.shrink; pad=pPyramid.pad;
 separate=nDs>1 && isfield(pNms,'separate') && pNms.separate;
