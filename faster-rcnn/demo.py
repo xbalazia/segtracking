@@ -349,6 +349,8 @@ if __name__ == '__main__':
 						for d in cls_dets:
 							s = str(num_images)+','+label+','+str(d).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
 							print(s)
+							if num_images not in detections:
+								detections[num_images] = []
 							detections[num_images].append(s)
 
 			misc_toc = time.time()
