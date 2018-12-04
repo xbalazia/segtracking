@@ -241,6 +241,7 @@ if __name__ == '__main__':
 
 	print('Loaded {} images.'.format(num_images))
 
+	ndet = 0;
 	detections = {}
 	while num_images > 0:
 			total_tic = time.time()
@@ -348,15 +349,15 @@ if __name__ == '__main__':
 							for bb in cls_dets:
 								if num_images not in detections:
 									detections[num_images] = []
-								bb = str(num_images)+','+str(bb).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
-								print(bb+'\n')
+								bb = str(num_images)+','+str(bb).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')+'\n'
 								detections[num_images].append(bb)
+								ndet += 1
 
 			misc_toc = time.time()
 			nms_time = misc_toc - misc_tic
 
 			if webcam_num == -1:
-					sys.stdout.write('Remaining: {:d}, detect time: {:.3f}s, remaining time: {:.0f}m\r'.format(num_images, detect_time, num_images*(detect_time+nms_time)/60))
+					sys.stdout.write('Remaining: {:d}, detections: {:d}, detect time: {:.3f}s, remaining time: {:.0f}m\r'.format(num_images, ndet, detect_time, num_images*(detect_time+nms_time)/60))
 					sys.stdout.flush()
 
 			if vis and webcam_num == -1:
@@ -384,4 +385,4 @@ if __name__ == '__main__':
 	with open(os.path.join(args.image_dir , 'detections.txt'), 'w') as detFile:
 		for d in sorted(detections.keys()):
 			for bb in detections[d]:
-				detFile.write(bb + '\n')
+				detFile.write(bb)
