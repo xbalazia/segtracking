@@ -148,13 +148,13 @@ if __name__ == '__main__':
     cfg_from_file(args.cfg_file)
   if args.set_cfgs is not None:
     cfg_from_list(args.set_cfgs)
-
-  print('CUDA='+str(args.cuda))
   cfg.USE_GPU_NMS = args.cuda
 
   print('Using config:')
   pprint.pprint(cfg)
   np.random.seed(cfg.RNG_SEED)
+
+  print('CUDA='+str(args.cuda))
 
   # train set
   # -- Note: Use validation set and disable the flipped to enable faster loading.
