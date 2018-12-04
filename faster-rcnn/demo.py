@@ -347,9 +347,9 @@ if __name__ == '__main__':
 						if vis:
 							im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), 0.5)
 						for d in cls_dets:
-							s = str(d).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
-							print(label + ' ' + s)
-						#detections[num_images] = str(pascal_classes[j]) + str(cls_dets)
+							s = num_images+','+label+','+str(d).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
+							print(s)
+							detections[num_images].append(s)
 
 			misc_toc = time.time()
 			nms_time = misc_toc - misc_tic
@@ -380,4 +380,4 @@ if __name__ == '__main__':
 	with open('detections.txt', 'w') as detFile:
 		for d in sorted(detections.keys()):
 			for bb in d:
-				detFile.write(detections[d])
+				detFile.write(detections[bb])
