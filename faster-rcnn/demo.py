@@ -242,7 +242,7 @@ if __name__ == '__main__':
 	print('Loaded {} images.'.format(num_images))
 
 	detections = {}
-	while (num_images >= 0):
+	while num_images > 0:
 			total_tic = time.time()
 
 			# Get image from the webcam
