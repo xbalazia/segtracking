@@ -347,7 +347,8 @@ if __name__ == '__main__':
 						if vis:
 							im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), 0.5)
 						for d in cls_dets:
-							print(label + ' ' + str(d))
+							s = str(d).replace('tensor','').replace('(','').replace(')','').replace('[','').replace(']','').replace(' ','')
+							print(label + ' ' + s)
 						#detections[num_images] = str(pascal_classes[j]) + str(cls_dets)
 
 			misc_toc = time.time()
