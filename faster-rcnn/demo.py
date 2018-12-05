@@ -191,7 +191,7 @@ if __name__ == '__main__':
 		###
 		print('torch.cuda.device_count()='+str(torch.cuda.device_count()))
 		print('torch.cuda.current_device()='+str(torch.cuda.current_device()))
-		torch.cuda.set_device(1)
+		torch.cuda.device(1)
 		print('torch.cuda.current_device()='+str(torch.cuda.current_device()))
 		###
 		checkpoint = torch.load(load_name)
