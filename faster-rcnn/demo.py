@@ -251,7 +251,7 @@ if __name__ == '__main__':
 				im_in = np.array(frame)
 			# Load the demo image
 			else:
-				im_file = os.path.join(args.image_dir, 'test-500', imglist[num_images-1])
+				im_file = os.path.join(args.image_dir, 'test', imglist[num_images-1])
 				# im = cv2.imread(im_file)
 				im_in = np.array(imread(im_file))
 			if len(im_in.shape) == 2:
@@ -357,7 +357,7 @@ if __name__ == '__main__':
 			if vis and webcam_num == -1:
 					# cv2.imshow('test', im2show)
 					# cv2.waitKey(0)
-					result_path = os.path.join(args.image_dir, 'detections-500', imglist[num_images-1])
+					result_path = os.path.join(args.image_dir, 'detections', imglist[num_images-1])
 					cv2.imwrite(result_path, im2show)
 			else:
 					im2showRGB = cv2.cvtColor(im2show, cv2.COLOR_BGR2RGB)
