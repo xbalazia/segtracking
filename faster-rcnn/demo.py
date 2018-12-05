@@ -149,8 +149,8 @@ if __name__ == '__main__':
 	if args.set_cfgs is not None:
 		cfg_from_list(args.set_cfgs)
 	cfg.USE_GPU_NMS = args.cuda
-	cfg.CUDA = args.cuda
-	cfg.GPU_ID = 6
+	#cfg.CUDA = args.cuda
+	#cfg.GPU_ID = 6
 
 	print('Using config:')
 	pprint.pprint(cfg)
@@ -170,8 +170,6 @@ if __name__ == '__main__':
 											 'cow', 'diningtable', 'dog', 'horse',
 											 'motorbike', 'person', 'pottedplant',
 											 'sheep', 'sofa', 'train', 'tvmonitor'])
-
-	CUDA_VISIBLE_DEVICES = 6
 
 	# initilize the network here.
 	if args.net == 'vgg16':
