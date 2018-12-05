@@ -151,6 +151,7 @@ if __name__ == '__main__':
 	cfg.USE_GPU_NMS = args.cuda
 	cfg.CUDA = args.cuda
 	cfg.GPU_ID = 6
+	torch.cuda.set_device(6)
 	print(torch.cuda.current_device())
 
 	print('Using config:')
