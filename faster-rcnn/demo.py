@@ -162,8 +162,7 @@ if __name__ == '__main__':
 	input_dir = args.load_dir + "/" + args.net + "/" + args.dataset
 	if not os.path.exists(input_dir):
 		raise Exception('There is no input directory for loading network from ' + input_dir)
-	load_name = os.path.join(input_dir,
-		'faster_rcnn_{}_{}_{}.pth'.format(args.checksession, args.checkepoch, args.checkpoint))
+	load_name = os.path.join(input_dir, 'faster_rcnn_{}_{}_{}.pth'.format(args.checksession, args.checkepoch, args.checkpoint))
 
 	pascal_classes = np.asarray(['__background__',
 											 'aeroplane', 'bicycle', 'bird', 'boat',
@@ -188,8 +187,8 @@ if __name__ == '__main__':
 	fasterRCNN.create_architecture()
 
 	print("Load checkpoint %s" % (load_name))
-	print('CUDA='+str(args.cuda))
 	if args.cuda > 0:
+		print('CUDA='+str(args.cuda))
 		checkpoint = torch.load(load_name)
 	else:
 		checkpoint = torch.load(load_name, map_location=(lambda storage, loc: storage))
@@ -387,7 +386,7 @@ if __name__ == '__main__':
 						if rem_time >= 24:
 							rem_time /= 24
 							rem_time_unit = 'd'
-				sys.stdout.write('Remaining: {:d}, detections: {:d}, detect time: {:.3f}s, remaining time: {:.3f}{:s}     \r'.format(num_images, ndet, detect_time, rem_time, rem_time_unit))
+				sys.stdout.write('Remaining: {:d}, detections: {:d}, detect time: {:.3f}s, remaining time: {:.3f}{}     \r'.format(num_images, ndet, detect_time, rem_time, rem_time_unit))
 				sys.stdout.flush()
 
 	if webcam_num >= 0:
