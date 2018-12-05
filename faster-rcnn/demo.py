@@ -221,6 +221,7 @@ if __name__ == '__main__':
 		cfg.CUDA = True
 
 	if args.cuda > 0:
+		print('CUDA='+args.cuda)
 		fasterRCNN.cuda()
 
 	fasterRCNN.eval()
@@ -386,7 +387,7 @@ if __name__ == '__main__':
 						if rem_time >= 24:
 							rem_time /= 24
 							rem_time_unit = 'd'
-				sys.stdout.write('Remaining: {:d}, detections: {:d}, detect time: {:.3f}s, remaining time: {:.3f}{:s}\r'.format(num_images, ndet, detect_time, rem_time, rem_time_unit))
+				sys.stdout.write('Remaining: {:d}, detections: {:d}, detect time: {:.3f}s, remaining time: {:.3f}{:s}     \r'.format(num_images, ndet, detect_time, rem_time, rem_time_unit))
 				sys.stdout.flush()
 
 	if webcam_num >= 0:
