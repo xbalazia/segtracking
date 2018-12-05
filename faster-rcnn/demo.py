@@ -397,5 +397,4 @@ if __name__ == '__main__':
 			for bb in detections[d]:
 				detFile.write(bb+'\n')
 
-	sys.stdout.write('Done.\n')
-	sys.stdout.flush()
+	sys.stdout.write('\nDone.\n')
