@@ -188,10 +188,10 @@ if __name__ == '__main__':
 	fasterRCNN.create_architecture()
 
 	print("Load checkpoint %s" % (load_name))
+	print('CUDA='+args.cuda)
 	if args.cuda > 0:
 		checkpoint = torch.load(load_name)
 	else:
-		print('CUDA='+args.cuda)
 		checkpoint = torch.load(load_name, map_location=(lambda storage, loc: storage))
 	fasterRCNN.load_state_dict(checkpoint['model'])
 	if 'pooling_mode' in checkpoint.keys():
