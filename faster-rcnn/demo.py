@@ -188,7 +188,7 @@ if __name__ == '__main__':
 	fasterRCNN.create_architecture()
 
 	print("Load checkpoint %s" % (load_name))
-	print('CUDA='+args.cuda)
+	print('CUDA='+str(args.cuda))
 	if args.cuda > 0:
 		checkpoint = torch.load(load_name)
 	else:
