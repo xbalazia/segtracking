@@ -149,10 +149,8 @@ if __name__ == '__main__':
 	if args.set_cfgs is not None:
 		cfg_from_list(args.set_cfgs)
 	cfg.USE_GPU_NMS = args.cuda
-	###
-	cfg.CUDA = args.cuda
-	cfg.GPU_ID = 6
-	###
+	#cfg.CUDA = args.cuda
+	#cfg.GPU_ID = 6
 
 	print('Using config:')
 	pprint.pprint(cfg)
@@ -190,15 +188,6 @@ if __name__ == '__main__':
 
 	print("Load checkpoint %s" % (load_name))
 	if args.cuda > 0:
-		###
-		print('###')
-		print('torch.cuda.is_available()='+str(torch.cuda.is_available()))
-		print('torch.cuda.device_count()='+str(torch.cuda.device_count()))
-		print('torch.cuda.current_device()='+str(torch.cuda.current_device()))
-		print('torch.cuda.set_device(0)'); torch.cuda.set_device(0)
-		print('torch.cuda.current_device()='+str(torch.cuda.current_device()))
-		print('###')
-		###
 		checkpoint = torch.load(load_name)
 	else:
 		checkpoint = torch.load(load_name, map_location=(lambda storage, loc: storage))
@@ -359,7 +348,7 @@ if __name__ == '__main__':
 								im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), vis_conf_threshold)
 							for bb in cls_dets:
 								bb_list = bb.tolist()
-								s = ','.join(format(b, '10.4f') for b in bb_list)
+								s = ','.join(format(b, '1.4f') for b in bb_list)
 								bb_string = str(num_images)+','+s
 								print(bb_string)
 								if bb_list[-1] >= vis_conf_threshold:
