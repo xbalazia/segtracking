@@ -358,14 +358,13 @@ if __name__ == '__main__':
 							if vis:
 								im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), vis_conf_threshold)
 							for bb in cls_dets:
-								l = bb.tolist()
-								s = ','.join(l)
-								bb = str(num_images)+','+s
-								print(bb)
-								if float(bb.split(',')[-1]) >= vis_conf_threshold:
+								bb_list = bb.tolist()
+								bb_string = str(num_images)+','+','.join(l)
+								print(bb_string)
+								if bb_list[-1] >= vis_conf_threshold:
 									if num_images not in detections:
 										detections[num_images] = []
-									detections[num_images].append(bb)
+									detections[num_images].append(bb_string)
 									ndet += 1
 
 			misc_toc = time.time()
