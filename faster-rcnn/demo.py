@@ -171,6 +171,8 @@ if __name__ == '__main__':
 											 'motorbike', 'person', 'pottedplant',
 											 'sheep', 'sofa', 'train', 'tvmonitor'])
 
+	CUDA_VISIBLE_DEVICES = 6
+
 	# initilize the network here.
 	if args.net == 'vgg16':
 		fasterRCNN = vgg16(pascal_classes, pretrained=False, class_agnostic=args.class_agnostic)
