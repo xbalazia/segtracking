@@ -149,10 +149,9 @@ if __name__ == '__main__':
 	if args.set_cfgs is not None:
 		cfg_from_list(args.set_cfgs)
 	cfg.USE_GPU_NMS = args.cuda
-	cfg.CUDA = args.cuda
-	cfg.GPU_ID = 6
+	#cfg.CUDA = args.cuda
+	#cfg.GPU_ID = 6
 	torch.cuda.set_device(6)
-	print(torch.cuda.current_device())
 
 	print('Using config:')
 	pprint.pprint(cfg)
@@ -191,7 +190,7 @@ if __name__ == '__main__':
 	print("Load checkpoint %s" % (load_name))
 	if args.cuda > 0:
 		###
-		print('CUDA='+str(args.cuda))
+		print('torch.cuda.current_device()='+str(torch.cuda.current_device()))
 		###
 		checkpoint = torch.load(load_name)
 	else:
