@@ -359,7 +359,8 @@ if __name__ == '__main__':
 								im2show = vis_detections(im2show, label, cls_dets.cpu().numpy(), vis_conf_threshold)
 							for bb in cls_dets:
 								bb_list = bb.tolist()
-								bb_string = str(num_images)+','+','.join(l)
+								s = ','.join(bb_list)
+								bb_string = str(num_images)+','+s
 								print(bb_string)
 								if bb_list[-1] >= vis_conf_threshold:
 									if num_images not in detections:
