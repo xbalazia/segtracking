@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CUDA_VISIBLE_DEVICES=6
+export CUDA_VISIBLE_DEVICES=0
 
 python3 demo.py --dataset pascal_voc --image_dir data/images \
 				--load_dir data/pretrained_model --net vgg16 --cfg cfgs/vgg16.yml \

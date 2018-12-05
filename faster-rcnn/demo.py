@@ -189,11 +189,13 @@ if __name__ == '__main__':
 	print("Load checkpoint %s" % (load_name))
 	if args.cuda > 0:
 		###
+		print('###')
 		print('torch.cuda.is_available()='+str(torch.cuda.is_available()))
 		print('torch.cuda.device_count()='+str(torch.cuda.device_count()))
 		print('torch.cuda.current_device()='+str(torch.cuda.current_device()))
-		torch.cuda.set_device(1); print('torch.cuda.set_device(1)')
+		print('torch.cuda.set_device(1)'); torch.cuda.set_device(1)
 		print('torch.cuda.current_device()='+str(torch.cuda.current_device()))
+		print('###')
 		###
 		checkpoint = torch.load(load_name)
 	else:
