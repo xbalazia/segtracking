@@ -38,7 +38,8 @@ while toframe<=FF
     
     opt.frames=fromframe:toframe;
     
-    % DO TRACKING ON SUBWINDOR HERE
+    % DO TRACKING ON SUBWINDOW HERE
+    '% DO TRACKING ON SUBWINDOW HERE'
     stateInfo=segTracking(sceneFile,opt);
     
     allstInfo=[allstInfo stateInfo];
