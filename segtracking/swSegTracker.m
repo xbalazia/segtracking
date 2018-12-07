@@ -82,14 +82,14 @@ catch err
 end
 
 % print to files
-tubeFolder = sceneInfo.tubeFolder;
-if exist(tubeFolder,'dir')
-    rmdir(tubeFolder,'s');
+trkFolder = sceneInfo.trkFolder;
+if exist(trkFolder,'dir')
+    rmdir(trkFolder,'s');
 end
-mkdir(tubeFolder);
+mkdir(trkFolder);
 [nFrames, nSubjects] = size(stateInfo.Xi);
 for s=1:nSubjects
-    fileName = sprintf('%s/subject%d.txt',tubeFolder,s);
+    fileName = sprintf('%s/subject%d.txt',trkFolder,s);
     file = fopen(fileName,'w');
     for f=1:nFrames
         if stateInfo.Xi(f,s)>0
