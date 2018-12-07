@@ -1,4 +1,9 @@
-function visResult2(stateInfo, sp_labels, iminfo)
+function visResult2(stateInfo, visFolder, sp_labels, iminfo)
+
+if ~exist(visFolder,'dir')
+    mkdir(visFolder);
+end
+
 %% vis result
 alphablend=0.5;
 cnt=0;
@@ -9,12 +14,6 @@ labeling=stateInfo.splabeling;
 bglabel=stateInfo.bglabel;
 finallab=setdiff(labeling,bglabel);
 sceneInfo=stateInfo.sceneInfo;
-
-visFolder = sceneInfo.visFolder;
-if ~exist(visFolder,'dir')
-    mkdir(visFolder);
-end
-visPathFormat = strcat(visFolder,sceneInfo.imgFileFormat);
 
 detcnt=0;
 for t=1:F
@@ -34,15 +33,15 @@ for t=1:F
             l=labeling(cnt);
             col=getColorFromID(l);
             if l==bglabel, continue; end
-            
+        
             [u,v]=find(thisF==s);
             imind=sub2ind(size(thisF),u,v);
             Io(imind)=l;
-            
+        
             Itmp(imind)=col(1);        Itmp(imind+npix)=col(2);        Itmp(imind+npix*2)=col(3);
         
-        %         tpos(seg,1)=mean(v);
-        %         tpos(seg,2)=mean(u);
+            %         tpos(seg,1)=mean(v);
+            %         tpos(seg,2)=mean(u);
         end
     end
     
@@ -156,12 +155,9 @@ for t=1:F
                 end
             end
         end
-        
-        %im2save=getframe(gcf);
-        %im2save=im2save.cdata;
         if t==1, Ifin(1:50,1:50,:)=0; end % new batch
         if t==F, Ifin(1:50,1:50,:)=1; end % end batch
-        imwrite(im2save,sprintf(visPathFormat,sceneInfo.frameNums(t)));
+        imwrite(Ifin,sprintf('%ss%02d-f%04d.png',visFolder,sceneInfo.scenario,sceneInfo.frameNums(t)));
     end
     pause(.01);
 end
