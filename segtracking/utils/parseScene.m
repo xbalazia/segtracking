@@ -11,13 +11,13 @@ catch err,    fprintf('Error reading %s. %s',sceneFile,err.message);
 end
 
 % make sure ini contains all necessary fields
-assert(ini.IsKeys('Scene','imgFolder'),'Need imgFolder');
 assert(ini.IsKeys('Scene','frameRate'),'Need frameRate');
+assert(ini.IsKeys('Scene','imgFolder'),'Need imgFolder');
 assert(ini.IsKeys('Scene','detFile'),'Need detFile');
 assert(ini.IsKeys('Scene','tubeFolder'),'Need tubeFolder');
 
-sceneInfo.imgFolder = ini.GetValues('Scene','imgFolder');
 sceneInfo.frameRate = ini.GetValues('Scene','frameRate');
+sceneInfo.imgFolder = ini.GetValues('Scene','imgFolder');
 sceneInfo.detFile = ini.GetValues('Scene','detFile');
 sceneInfo.tubeFolder = ini.GetValues('Scene','tubeFolder');
 
