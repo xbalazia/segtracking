@@ -85,7 +85,7 @@ end
 [nFrames, nSubjects] = size(stateInfo.Xi);
 size(stateInfo.Xi)
 for s=1:nSubjects
-    fileName = strcat('subject',s,'.txt');
+    fileName = sprintf('subject%d.txt',s);
     fileName
     file = fopen(fileName,'w');
     for f=1:nFrames
