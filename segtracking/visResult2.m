@@ -11,10 +11,10 @@ finallab=setdiff(labeling,bglabel);
 sceneInfo=stateInfo.sceneInfo;
 
 visFolder = sceneInfo.visFolder;
-imgFileFormat = sceneInfo.imgFileFormat;
 if ~exist(visFolder,'dir')
     mkdir(visFolder);
 end
+visPathFormat = strcat(visFolder,sceneInfo.imgFileFormat);
 
 detcnt=0;
 for t=1:F
@@ -161,7 +161,7 @@ for t=1:F
         im2save=im2save.cdata;
         if t==1, Ifin(1:50,1:50,:)=0; end % new batch
         if t==F, Ifin(1:50,1:50,:)=1; end % end batch
-        imwrite(im2save,sprintf(strcat('%ss%02d-ff',imgFileFormat),visFolder,sceneInfo.scenario,sceneInfo.frameNums(t)));
+        imwrite(im2save,sprintf(visPathFormat,sceneInfo.frameNums(t)));
     end
     pause(.01);
 end
