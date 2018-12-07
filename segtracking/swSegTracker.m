@@ -85,11 +85,15 @@ end
 [nFrames, nSubjects] = size(stateInfo.Xi);
 size(stateInfo.Xi)
 for s=1:nSubjects
-    file = fopen(strcat('subject',s,'.txt'),'w');
+    fileName = strcat('subject',s,'.txt');
+    fileName
+    file = fopen(fileName,'w');
     for f=1:nFrames
         if stateInfo.Xi(f,s)>0
             % frame number, subject number, x, y, w, h, confidence=1
-            fprintf(file, strcat(f,',',s,',',stateInfo.Xi(f,s),',',stateInfo.Yi(f,s),',',stateInfo.W(f,s),',',stateInfo.H(f,s),',',1,'\n'));
+            bb = strcat(f,',',s,',',stateInfo.Xi(f,s),',',stateInfo.Yi(f,s),',',stateInfo.W(f,s),',',stateInfo.H(f,s),',',1,'\n');
+            %bb
+            fprintf(file, bb);
         end
     end
     fclose(file);
