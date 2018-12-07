@@ -99,9 +99,9 @@ end
 %%%%%%%%%%%%%%%%%%
 % This one is optional
 try
-    fprintf('Installing liblinear-1.94...\n');
-    if ~exist(['external/liblinear-1.94/matlab/predict.',mexext],'file')
-        cd external/liblinear-1.94/matlab
+    fprintf('Installing liblinear-220...\n');
+    if ~exist(['external/liblinear-220/matlab/predict.',mexext],'file')
+        cd external/liblinear-220/matlab
         make;
         assert(lsvmerr==0);
         cd(segdir);
