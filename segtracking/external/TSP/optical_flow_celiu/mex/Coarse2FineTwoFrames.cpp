@@ -72,8 +72,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 	int nSORIterations= 20;
 	if(nrhs>2)
 	{
-		int nDims=mxGetNumberOfDimensions(prhs[2]);
-		const int *dims=mxGetDimensions(prhs[2]);
+		mwSize nDims=mxGetNumberOfDimensions(prhs[2]);
+		const mwSize *dims=mxGetDimensions(prhs[2]);
 		double* para=(double *)mxGetData(prhs[2]);
 		int npara=dims[0]*dims[1];
 		if(npara>0)
