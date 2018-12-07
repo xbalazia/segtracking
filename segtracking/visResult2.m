@@ -1,4 +1,11 @@
 function visResult2(stateInfo, sp_labels, iminfo)
+
+visFolder = 'data/vis0/';
+if exist(visFolder,'dir')
+    rmdir(visFolder);
+end
+mkdir(visFolder);
+
 %% vis result
 alphablend=0.5;
 cnt=0;
@@ -118,7 +125,7 @@ for t=1:F
         im2save=im2save.cdata;
         if t==1, im2save(1:50,1:50,:)=0; end % new batch
         if t==F, im2save(1:50,1:50,:)=255; end % end batch
-        imwrite(im2save,sprintf('data/vis0/s%02d-f%04d.png',sceneInfo.scenario,sceneInfo.frameNums(t)));
+        imwrite(im2save,sprintf('%ss%02d-f%04d.png',visFolder,sceneInfo.scenario,sceneInfo.frameNums(t)));
         %     end
     else
         lw=0; % in each dir
@@ -152,7 +159,7 @@ for t=1:F
         end
         if t==1, Ifin(1:50,1:50,:)=0; end % new batch
         if t==F, Ifin(1:50,1:50,:)=1; end % end batch
-        imwrite(Ifin,sprintf('data/vis0/s%02d-f%04d.png',sceneInfo.scenario,sceneInfo.frameNums(t)));
+        imwrite(Ifin,sprintf('%ss%02d-f%04d.png',visFolder,sceneInfo.scenario,sceneInfo.frameNums(t)));
     end
     pause(.01);
 end
