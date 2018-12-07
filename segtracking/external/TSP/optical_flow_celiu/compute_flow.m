@@ -21,5 +21,5 @@ para = [alpha,ratio,minWidth,nOuterFPIterations,nInnerFPIterations,nSORIteration
 
 % this is the core part of calling the mexed dll file for computing optical flow
 % it also returns the time that is needed for two-frame estimation
-[vx,vy,warpI2] = Coarse2FineTwoFrames(im1,im2,para);
+[vx,vy,~] = Coarse2FineTwoFrames(im1,im2,para);
 angle = atan2(vy, vx);
