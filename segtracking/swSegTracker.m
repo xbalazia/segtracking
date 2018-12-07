@@ -88,7 +88,7 @@ for s=1:nSubjects
     for f=1:nFrames
         if stateInfo.Xi(f,s)>0
             % frame number, subject number, x, y, w, h, confidence=1
-            fprintf(file, f+','+s+','+stateInfo.Xi(f,s)+','+stateInfo.Yi(f,s)+','+stateInfo.W(f,s)+','+stateInfo.H(f,s)+','+1+'\n');
+            fprintf(file, strcat(f,',',s,',',stateInfo.Xi(f,s),',',stateInfo.Yi(f,s),',',stateInfo.W(f,s),',',stateInfo.H(f,s),',',1,'\n'));
         end
     end
     fclose(file);
