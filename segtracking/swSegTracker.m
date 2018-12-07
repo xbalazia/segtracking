@@ -94,9 +94,7 @@ for s=1:nSubjects
     for f=1:nFrames
         if stateInfo.Xi(f,s)>0
             % frame number, x, y, w, h, confidence=1
-            bb = sprintf('%d,%f,%f,%f,%f,%f\n',f,stateInfo.Xi(f,s),stateInfo.Yi(f,s),stateInfo.W(f,s),stateInfo.H(f,s),1);
-            %bb
-            fprintf(file, bb);
+            fprintf(file, sprintf('%d,%f,%f,%f,%f,%f\n',f,stateInfo.Xi(f,s),stateInfo.Yi(f,s),stateInfo.W(f,s),stateInfo.H(f,s),1));
         end
     end
     fclose(file);
