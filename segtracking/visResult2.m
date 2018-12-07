@@ -1,10 +1,9 @@
 function visResult2(stateInfo, sp_labels, iminfo)
 
 visFolder = 'data/vis0/';
-if exist(visFolder,'dir')
-    rmdir(visFolder,'s');
+if ~exist(visFolder,'dir')
+    mkdir(visFolder);
 end
-mkdir(visFolder);
 
 %% vis result
 alphablend=0.5;
