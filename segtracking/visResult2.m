@@ -156,6 +156,9 @@ for t=1:F
                 end
             end
         end
+        
+        im2save=getframe(gcf);
+        im2save=im2save.cdata;
         if t==1, Ifin(1:50,1:50,:)=0; end % new batch
         if t==F, Ifin(1:50,1:50,:)=1; end % end batch
         imwrite(im2save,sprintf(strcat('%ss%02d-ff',imgFileFormat),visFolder,sceneInfo.scenario,sceneInfo.frameNums(t)));
