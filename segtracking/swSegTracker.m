@@ -83,6 +83,7 @@ end
 
 % print to files
 [nFrames, nSubjects] = size(stateInfo.Xi);
+size(stateInfo.Xi)
 for s=1:nSubjects
     file = fopen(strcat('subject',s,'.txt'),'w');
     for f=1:nFrames
