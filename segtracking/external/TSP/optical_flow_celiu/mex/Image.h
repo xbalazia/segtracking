@@ -2701,8 +2701,8 @@ template <class T>
 template <class T1>
 void Image<T>::LoadMatlabImageCore(const mxArray *image,bool IsImageScaleCovnersion)
 {
-	int nDim = mxGetNumberOfDimensions(image);
-	const int* imDim = mxGetDimensions(image);
+	mwSize nDim = mxGetNumberOfDimensions(image);
+	const mwSize* imDim = mxGetDimensions(image);
 	if(nDim==2)
 		allocate(imDim[1],imDim[0]);
 	else if(nDim==3)
