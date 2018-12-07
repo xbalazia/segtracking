@@ -1,6 +1,5 @@
 function visResult2(stateInfo, visFolder, sp_labels, iminfo)
 
-%visFolder = 'data/vis0/';
 if ~exist(visFolder,'dir')
     mkdir(visFolder);
 end
@@ -9,8 +8,6 @@ end
 alphablend=0.5;
 cnt=0;
 if usejava('desktop'), clf; end
-
-
 
 F=size(stateInfo.Xi,1);
 labeling=stateInfo.splabeling;
