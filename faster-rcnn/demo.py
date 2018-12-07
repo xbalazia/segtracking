@@ -244,6 +244,7 @@ if __name__ == '__main__':
 	ndet = 0;
 	detections = {}
 	while num_images > 0:
+			detection_tic = time.time()
 			total_tic = time.time()
 
 			# Get image from the webcam
@@ -372,6 +373,8 @@ if __name__ == '__main__':
 					print('Frame rate:', frame_rate)
 					if cv2.waitKey(1) & 0xFF == ord('q'):
 							break
+			detection_toc = time.time()
+			detection_time = detection_toc - detection_tic
 
 			if webcam_num == -1:
 				num_images -= 1
@@ -386,8 +389,9 @@ if __name__ == '__main__':
 						if rem_time >= 24:
 							rem_time /= 24
 							rem_time_unit = 'd'
-				sys.stdout.write('Remaining: {:d}, detections: {:d}, detect time: {:.3f}s, remaining time: {:.3f}{}     \r'.format(num_images, ndet, detect_time, rem_time, rem_time_unit))
+				sys.stdout.write('Remaining: {:d}, detections: {:d}, detection time: {:.3f}s, remaining time: {:.3f}{}     \r'.format(num_images, ndet, detection_time, rem_time, rem_time_unit))
 				sys.stdout.flush()
+
 
 	if webcam_num >= 0:
 			cap.release()
