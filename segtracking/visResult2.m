@@ -29,18 +29,20 @@ for t=1:F
     Io=zeros(size(im(:,:,1)));
     for s=segs
         cnt=cnt+1;
-        l=labeling(cnt);
-        col=getColorFromID(l);
-        if l==bglabel, continue; end
-        
-        [u,v]=find(thisF==s);
-        imind=sub2ind(size(thisF),u,v);
-        Io(imind)=l;
-        
-        Itmp(imind)=col(1);        Itmp(imind+npix)=col(2);        Itmp(imind+npix*2)=col(3);
+        if ~cnt>length(labeling)
+            l=labeling(cnt);
+            col=getColorFromID(l);
+            if l==bglabel, continue; end
+            
+            [u,v]=find(thisF==s);
+            imind=sub2ind(size(thisF),u,v);
+            Io(imind)=l;
+            
+            Itmp(imind)=col(1);        Itmp(imind+npix)=col(2);        Itmp(imind+npix*2)=col(3);
         
         %         tpos(seg,1)=mean(v);
         %         tpos(seg,2)=mean(u);
+        end
     end
     
     edges=getEdges(Io,1);
