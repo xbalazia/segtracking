@@ -378,7 +378,7 @@ if __name__ == '__main__':
 
 			if webcam_num == -1:
 				num_images -= 1
-				rem_time = num_images*(detect_time+nms_time)
+				rem_time = num_images*detection_time
 				rem_time_unit = 's'
 				if rem_time >= 60:
 					rem_time /= 60
