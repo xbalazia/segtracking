@@ -84,8 +84,7 @@ end
 % print to files
 [nFrames, nSubjects] = size(stateInfo.Xi);
 for s=1:nSubjects
-    fileName = sprintf('%s-subject%d.txt',sceneInfo.tubeFilePrefix,s);
-    fileName
+    fileName = sprintf('%s/subject%d.txt',sceneInfo.tubeFolder,s);
     file = fopen(fileName,'w');
     for f=1:nFrames
         if stateInfo.Xi(f,s)>0
