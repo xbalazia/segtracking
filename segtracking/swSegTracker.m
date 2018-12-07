@@ -84,7 +84,7 @@ end
 % print to files
 [nFrames, nSubjects] = size(stateInfo.Xi);
 for s=1:nSubjects
-    file = fopen('subject'+s+'.txt','w');
+    file = fopen(strcat('subject',s,'.txt'),'w');
     for f=1:nFrames
         if stateInfo.Xi(f,s)>0
             % frame number, subject number, x, y, w, h, confidence=1
