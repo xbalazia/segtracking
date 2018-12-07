@@ -21,7 +21,6 @@ addpath(genpath('./external'))
 % get scene information and parameters
 sceneFile = p.Results.scene;
 sceneInfo = parseScene(sceneFile);
-sceneInfo.tubeFilePrefix
 opt=parseOptions(p.Results.params);
 
 stateInfo = [];
@@ -85,7 +84,7 @@ end
 % print to files
 [nFrames, nSubjects] = size(stateInfo.Xi);
 for s=1:nSubjects
-    fileName = sprintf('data/tracking-subject%d.txt',s);
+    fileName = sprintf('%s-subject%d.txt',sceneInfo.tubeFilePrefix,s);
     fileName
     file = fopen(fileName,'w');
     for f=1:nFrames
