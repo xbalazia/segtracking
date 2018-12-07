@@ -84,7 +84,7 @@ end
 % print to files
 tubeFolder = sceneInfo.tubeFolder;
 if exist(tubeFolder,'dir')
-    rmdir(tubeFolder);
+    rmdir(tubeFolder,'s');
 end
 mkdir(tubeFolder);
 [nFrames, nSubjects] = size(stateInfo.Xi);
