@@ -83,15 +83,14 @@ end
 
 % print to files
 [nFrames, nSubjects] = size(stateInfo.Xi);
-size(stateInfo.Xi)
 for s=1:nSubjects
-    fileName = sprintf('subject%d.txt',s);
+    fileName = sprintf('%s-subject%d.txt',sceneInfo.tubeFilePrefix,s);
     fileName
     file = fopen(fileName,'w');
     for f=1:nFrames
         if stateInfo.Xi(f,s)>0
-            % frame number, subject number, x, y, w, h, confidence=1
-            bb = strcat(f,',',s,',',stateInfo.Xi(f,s),',',stateInfo.Yi(f,s),',',stateInfo.W(f,s),',',stateInfo.H(f,s),',',1,'\n');
+            % frame number, x, y, w, h, confidence=1
+            bb = sprintf('%d,%f,%f,%f,%f,%f\n',f,stateInfo.Xi(f,s),stateInfo.Yi(f,s),stateInfo.W(f,s),stateInfo.H(f,s),1);
             %bb
             fprintf(file, bb);
         end
