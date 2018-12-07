@@ -118,7 +118,7 @@ for t=1:F
         im2save=im2save.cdata;
         if t==1, im2save(1:50,1:50,:)=0; end % new batch
         if t==F, im2save(1:50,1:50,:)=255; end % end batch
-        imwrite(im2save,sprintf('tmp/res/s%02d-f%04d.jpg',sceneInfo.scenario,sceneInfo.frameNums(t)));
+        imwrite(im2save,sprintf('data/vis0/s%02d-f%04d.png',sceneInfo.scenario,sceneInfo.frameNums(t)));
         %     end
     else
         lw=0; % in each dir
