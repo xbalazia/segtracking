@@ -47,9 +47,6 @@ def parse_args():
 	Parse input arguments
 	"""
 	parser = argparse.ArgumentParser(description='Train a Fast R-CNN network')
-	parser.add_argument('--dataset', dest='dataset',
-											help='training dataset',
-											default='pascal_voc', type=str)
 	parser.add_argument('--cfg', dest='cfg_file',
 											help='optional config file',
 											default='cfgs/vgg16.yml', type=str)
@@ -59,12 +56,18 @@ def parse_args():
 	parser.add_argument('--set', dest='set_cfgs',
 											help='set config keys', default=None,
 											nargs=argparse.REMAINDER)
-	parser.add_argument('--load_dir', dest='load_dir',
+	parser.add_argument('--data_dir', dest='data_dir',
+											help='directory to load data',
+											default="data")
+	parser.add_argument('--images_dir', dest='images_dir',
+											help='directory to load images',
+											default="images")
+	parser.add_argument('--visualizations_dir', dest='visualizations_dir',
+											help='directory to output visualizations',
+											default="visualizations")
+	parser.add_argument('--models_dir', dest='models_dir',
 											help='directory to load models',
 											default="/srv/share/jyang375/models")
-	parser.add_argument('--image_dir', dest='image_dir',
-											help='directory to load images for demo',
-											default="images")
 	parser.add_argument('--cuda', dest='cuda',
 											help='whether use CUDA',
 											action='store_true')
@@ -156,10 +159,10 @@ if __name__ == '__main__':
 	# train set
 	# -- Note: Use validation set and disable the flipped to enable faster loading.
 
-	input_dir = args.load_dir + "/" + args.net + "/" + args.dataset
-	if not os.path.exists(input_dir):
-		raise Exception('There is no input directory for loading network from ' + input_dir)
-	load_name = os.path.join(input_dir, 'faster_rcnn_{}_{}_{}.pth'.format(args.checksession, args.checkepoch, args.checkpoint))
+	model_dir = args.models_dir + "/" + args.net
+	if not os.path.exists(model_dir):
+		raise Exception('There is no input directory for loading network from ' + model_dir)
+	load_name = os.path.join(model_dir, 'faster_rcnn_{}_{}_{}.pth'.format(args.checksession, args.checkepoch, args.checkpoint))
 
 	pascal_classes = np.asarray(['__background__',
 											 'aeroplane', 'bicycle', 'bird', 'boat',
@@ -233,7 +236,7 @@ if __name__ == '__main__':
 		cap = cv2.VideoCapture(webcam_num)
 		num_images = 0
 	else:
-		imglist = sorted(os.listdir(os.path.join(args.image_dir, 'test')), reverse=False)
+		imglist = sorted(os.listdir(args.images_dir), reverse=False)
 		num_images = len(imglist)
 
 	print('Loaded {} images.'.format(num_images))
@@ -251,7 +254,7 @@ if __name__ == '__main__':
 				im_in = np.array(frame)
 			# Load the demo image
 			else:
-				im_file = os.path.join(args.image_dir, 'test', imglist[num_images-1])
+				im_file = os.path.join(args.images_dir, imglist[num_images-1])
 				# im = cv2.imread(im_file)
 				im_in = np.array(imread(im_file))
 			if len(im_in.shape) == 2:
@@ -357,7 +360,7 @@ if __name__ == '__main__':
 			if vis and webcam_num == -1:
 					# cv2.imshow('test', im2show)
 					# cv2.waitKey(0)
-					result_path = os.path.join(args.image_dir, 'detections', imglist[num_images-1])
+					result_path = os.path.join(args.visualizations_dir, imglist[num_images-1])
 					cv2.imwrite(result_path, im2show)
 			else:
 					im2showRGB = cv2.cvtColor(im2show, cv2.COLOR_BGR2RGB)
@@ -389,7 +392,7 @@ if __name__ == '__main__':
 			cap.release()
 			cv2.destroyAllWindows()
 
-	with open(os.path.join(args.image_dir , 'detections.txt'), 'w') as detFile:
+	with open(os.path.join(args.data_dir, 'detections.txt'), 'w') as detFile:
 		for d in sorted(detections.keys()):
 			for bb in detections[d]:
 				detFile.write(bb+'\n')
