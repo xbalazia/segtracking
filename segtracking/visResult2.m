@@ -19,6 +19,7 @@ visFileFormat = strcat(visFolder,sceneInfo.imgFileFormat);
 
 detcnt=0;
 for t=1:F
+    fileName=sprintf(visFileFormat,sceneInfo.frameNums(t);
     thisF=sp_labels(:,:,t);
     %     im=getFrame(sceneInfo,t);
     im=iminfo(t).img;
@@ -125,7 +126,7 @@ for t=1:F
         im2save=im2save.cdata;
         if t==1, im2save(1:50,1:50,:)=0; end % new batch
         if t==F, im2save(1:50,1:50,:)=255; end % end batch
-        imwrite(im2save,sprintf('%ss%02d-f%04d.png',visFolder,sceneInfo.scenario,sceneInfo.frameNums(t)));
+        imwrite(im2save,fileName);
         %     end
     else
         lw=0; % in each dir
@@ -159,7 +160,7 @@ for t=1:F
         end
         if t==1, Ifin(1:50,1:50,:)=0; end % new batch
         if t==F, Ifin(1:50,1:50,:)=1; end % end batch
-        imwrite(Ifin,sprintf(visFileFormat,sceneInfo.frameNums(t)));
+        imwrite(Ifin,fileName);
     end
     pause(.01);
 end
