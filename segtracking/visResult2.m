@@ -1,6 +1,6 @@
-function visResult2(stateInfo, sp_labels, iminfo)
+function visResult2(stateInfo, visFolder, sp_labels, iminfo)
 
-visFolder = 'data/vis0/';
+%visFolder = 'data/vis0/';
 if ~exist(visFolder,'dir')
     mkdir(visFolder);
 end

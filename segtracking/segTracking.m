@@ -401,7 +401,7 @@ end
 % bglabel=nLabels;
 
 % uncoment to visualize
-visResult2(stateInfo,sp_labels,iminfo)
+visResult2(stateInfo,sceneInfo.visFolder,sp_labels,iminfo)
 
 
 % allens=0;
