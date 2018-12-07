@@ -46,7 +46,7 @@ using namespace std;
 // 	mexErrMsgTxt("Unknown type of the image!");
 // }
 
-void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
+void mexFunction(mwSize nlhs, mxArray *plhs[], mwSize nrhs, const mxArray *prhs[])
 {
 	// check for proper number of input and output arguments
 	if(nrhs<2 || nrhs>3)
