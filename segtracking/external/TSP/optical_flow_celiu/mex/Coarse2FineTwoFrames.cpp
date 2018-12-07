@@ -75,7 +75,7 @@ void mexFunction(mwSize nlhs, mxArray *plhs[], mwSize nrhs, const mxArray *prhs[
 		mwSize nDims=mxGetNumberOfDimensions(prhs[2]);
 		const mwSize *dims=mxGetDimensions(prhs[2]);
 		double* para=(double *)mxGetData(prhs[2]);
-		mwSize npara=dims[0]*dims[1];
+		int npara=dims[0]*dims[1];
 		if(npara>0)
 			alpha=para[0];
 		if(npara>1)
