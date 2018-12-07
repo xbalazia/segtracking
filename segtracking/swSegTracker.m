@@ -82,9 +82,13 @@ catch err
 end
 
 % print to files
+tubeFolder = sceneInfo.tubeFolder;
+if ~exist(sceneInfo,'dir')
+    mkdir(tubeFolder);
+end
 [nFrames, nSubjects] = size(stateInfo.Xi);
 for s=1:nSubjects
-    fileName = sprintf('%s/subject%d.txt',sceneInfo.tubeFolder,s);
+    fileName = sprintf('%s/subject%d.txt',tubeFolder,s);
     file = fopen(fileName,'w');
     for f=1:nFrames
         if stateInfo.Xi(f,s)>0
