@@ -1,10 +1,5 @@
 function visResult2(stateInfo, sp_labels, iminfo)
 
-visFolder = 'data/vis0/';
-if ~exist(visFolder,'dir')
-    mkdir(visFolder);
-end
-
 %% vis result
 alphablend=0.5;
 cnt=0;
@@ -15,6 +10,12 @@ labeling=stateInfo.splabeling;
 bglabel=stateInfo.bglabel;
 finallab=setdiff(labeling,bglabel);
 sceneInfo=stateInfo.sceneInfo;
+
+visFolder = sceneInfo.visFolder;
+if ~exist(visFolder,'dir')
+    mkdir(visFolder);
+end
+visFileFormat = strcat(visFolder,sceneInfo.imgFileFormat);
 
 detcnt=0;
 for t=1:F
@@ -158,7 +159,7 @@ for t=1:F
         end
         if t==1, Ifin(1:50,1:50,:)=0; end % new batch
         if t==F, Ifin(1:50,1:50,:)=1; end % end batch
-        imwrite(Ifin,sprintf('%ss%02d-f%04d.png',visFolder,sceneInfo.scenario,sceneInfo.frameNums(t)));
+        imwrite(Ifin,sprintf(visFileFormat,sceneInfo.frameNums(t)));
     end
     pause(.01);
 end
