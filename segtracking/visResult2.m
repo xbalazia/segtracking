@@ -19,7 +19,7 @@ visFileFormat = strcat(visFolder,sceneInfo.imgFileFormat);
 
 detcnt=0;
 for t=1:F
-    fileName=sprintf(visFileFormat,sceneInfo.frameNums(t);
+    fileName=sprintf(visFileFormat,sceneInfo.frameNums(t));
     thisF=sp_labels(:,:,t);
     %     im=getFrame(sceneInfo,t);
     im=iminfo(t).img;
