@@ -83,9 +83,10 @@ end
 
 % print to files
 tubeFolder = sceneInfo.tubeFolder;
-if ~exist(tubeFolder,'dir')
-    mkdir(tubeFolder);
+if exist(tubeFolder,'dir')
+    delete(tubeFolder);
 end
+mkdir(tubeFolder);
 [nFrames, nSubjects] = size(stateInfo.Xi);
 for s=1:nSubjects
     fileName = sprintf('%s/subject%d.txt',tubeFolder,s);
