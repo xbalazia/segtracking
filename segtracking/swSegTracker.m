@@ -2,7 +2,7 @@ function stateInfo=swSegTracker(varargin)
 % This code accompanies the publication
 %
 % Joint Tracking and Segmentation of Multiple Targets
-% A. Milan, L. Leal-Taixé, K. Schindler and I. Reid
+% A. Milan, L. Leal-Taixe, K. Schindler and I. Reid
 % CVPR 2015
 %
 
@@ -75,9 +75,21 @@ stateInfo.splabeling=uint16(stateInfo.splabeling);
 stateInfo.detlabeling=uint16(stateInfo.detlabeling);
 
 try
-    gtInfo=convertTXTToStruct(sceneInfo.gtFile);
-    printFinalEvaluation(stateInfo, gtInfo, sceneInfo, struct('track3d',char(howToTrack(sceneInfo.scenario))));
+    gtInfo = convertTXTToStruct(sceneInfo.gtFile);
+    printFinalEvaluation(stateInfo, gtInfo, sceneInfo, struct('track3d', char(howToTrack(sceneInfo.scenario))));
 catch err
-    fprintf('Evaluation failed. %s\n',err.message);
+    fprintf('Evaluation failed. %s\n', err.message);
 end
 
+% print to files
+[nFrames, nSubjects] = size(stateInfo.Xi);
+for s=1:nSubjects
+    file = fopen('subject'+s+'.txt','w');
+    for f=1:nFrames
+        if stateInfo.Xi(f,s)>0
+            % frame number, subject number, x, y, w, h, confidence=1
+            fprintf(file, f+','+s+','+stateInfo.Xi(f,s)+','+stateInfo.Yi(f,s)+','+stateInfo.W(f,s)+','+stateInfo.H(f,s)+','+1+'\n');
+        end
+    end
+    fclose(file);
+end
