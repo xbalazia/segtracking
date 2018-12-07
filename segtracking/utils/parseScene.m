@@ -14,12 +14,12 @@ end
 assert(ini.IsKeys('Scene','imgFolder'),'Need imgFolder');
 assert(ini.IsKeys('Scene','frameRate'),'Need frame rate');
 assert(ini.IsKeys('Scene','frameRate'),'Need detections file');
-
+assert(ini.IsKeys('Scene','tubeFilePrefix'),'Need tube output text file prefix');
 
 sceneInfo.imgFolder = ini.GetValues('Scene','imgFolder');
 sceneInfo.frameRate = ini.GetValues('Scene','frameRate');
-sceneInfo.detFile   = ini.GetValues('Scene','detFile');
-
+sceneInfo.detFile = ini.GetValues('Scene','detFile');
+sceneInfo.tubeFilePrefix = ini.GetValues('Scene','tubeFilePrefix');
 
 % Default file format: %06d.jpg
 [sceneInfo.imgFileFormat,s]=ini.GetValues('Scene','imgFileFormat');
