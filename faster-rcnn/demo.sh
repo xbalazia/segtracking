@@ -2,6 +2,6 @@
 
 export CUDA_VISIBLE_DEVICES=1
 
-python3 demo.py --data_dir data/ --images_dir data/images-caltech --visualizations_dir data/visualizations-caltech \
+python3 demo.py --data_dir data/ --images_dir data/images-virat --visualizations_dir data/visualizations-virat \
 				--models_dir data/models --net vgg16 --cfg cfgs/vgg16.yml --checksession 1 --checkepoch 6 --checkpoint 10021 \
 				--cuda
