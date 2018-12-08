@@ -403,7 +403,7 @@ if __name__ == '__main__':
 			cap.release()
 			cv2.destroyAllWindows()
 
-	with open(args.detections_file), 'w') as detFile:
+	with open(args.detections_file, 'w') as detFile:
 		for d in sorted(detections.keys()):
 			for bb in detections[d]:
 				detFile.write(bb+'\n')
