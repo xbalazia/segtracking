@@ -66,7 +66,7 @@ if(0)
 end
 
 %% test detector and evaluate (see acfTest_my)
-if(1)
+if(0)
     tstart = tic; [miss,~,gt,dt] = acfTest_my(...
       'name', opts.name, ...
       'imgDir', [CodePath '/data/images/test'] , ...
@@ -85,7 +85,7 @@ if(1)
 end
 
 %% run detector on a set of images without evaluation
-if(0)
+if(1)
     imgNms = bbGt('getFiles',{[CodePath 'data/images']});
     tic, bbs = acfDetect_my(imgNms,detector,[ModelPath 'detections.txt']); toc
     % visualize detection results on one single image
