@@ -54,7 +54,6 @@ if( multiple ) % add image index to each bb and flatten result
   for i=1:n, bbs{i}=[ones(size(bbs{i},1),1)*i bbs{i}]; end
   bbs=cell2mat(bbs);
 end
-bbs
 dlmwrite(fileName,bbs); bbs=1;
 
 end
