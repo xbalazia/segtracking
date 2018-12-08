@@ -362,7 +362,10 @@ if __name__ == '__main__':
 			if vis and webcam_num == -1:
 					# cv2.imshow('test', im2show)
 					# cv2.waitKey(0)
-					result_path = os.path.join(args.visualizations_dir, imglist[num_images-1])
+					visualizations_dir = args.visualizations_dir
+					if not os.path.exists(visualizations_dir):
+    				os.makedirs(visualizations_dir)
+					result_path = os.path.join(visualizations_dir, imglist[num_images-1])
 					cv2.imwrite(result_path, im2show)
 			else:
 					im2showRGB = cv2.cvtColor(im2show, cv2.COLOR_BGR2RGB)
