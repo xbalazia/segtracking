@@ -19,14 +19,14 @@
 
 %% set up environment
 clc;
-CodePath = '/home/balazia/pedtrack/checkerboards';
+CodePath = '/home/balazia/pedtrack/checkerboards/';
 addpath(genpath(CodePath));
-ModelPath = [CodePath '/data/models/Checkerboards/'];
+ModelPath = [CodePath 'data/models/Checkerboards/'];
 
 %% set up parameters for training detector (see acfTrain_my)
 opts = acfTrain_my();
-opts.posGtDir = [CodePath '/data/annotations'];
-opts.posImgDir = [CodePath '/data/images/train'];
+opts.posGtDir = [CodePath 'data/annotations'];
+opts.posImgDir = [CodePath 'data/images/train'];
 opts.name = ModelPath;
 
 opts.modelDs=[96 36]; opts.modelDsPad=[120 60];
