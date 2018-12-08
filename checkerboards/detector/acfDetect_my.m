@@ -54,6 +54,7 @@ if( multiple ) % add image index to each bb and flatten result
   for i=1:n, bbs{i}=[ones(size(bbs{i},1),1)*i bbs{i}]; end
   bbs=cell2mat(bbs);
 end
+disp(bbs);
 dlmwrite(fileName,bbs); bbs=1;
 
 end
@@ -82,6 +83,7 @@ for i=1:P.nScales
     bb(:,4)=modelDs(1)/P.scales(i);
     if(separate), bb(:,6)=j; end; bbs{i,j}=bb;
   end
+  if(),  end
 end; bbs=cat(1,bbs{:});
 if(~isempty(pNms)), bbs=bbNms(bbs,pNms); end
 end
