@@ -364,7 +364,7 @@ if __name__ == '__main__':
 					# cv2.waitKey(0)
 					visualizations_dir = args.visualizations_dir
 					if not os.path.exists(visualizations_dir):
-    				os.makedirs(visualizations_dir)
+						os.makedirs(visualizations_dir)
 					result_path = os.path.join(visualizations_dir, imglist[num_images-1])
 					cv2.imwrite(result_path, im2show)
 			else:
