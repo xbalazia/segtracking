@@ -51,7 +51,7 @@ end
 if(isempty(fileName)), return; end
 d=fileparts(fileName); if(~isempty(d)&&~exist(d,'dir')), mkdir(d); end
 if( multiple ) % add image index to each bb and flatten result
-  for i=1:n, bbs{i}=[ones(size(bbs{i},1),1)*i zeros(size(bbs{i},1),1) bbs{i} zeros(size(bbs{i},1),1)]; end
+  for i=1:n, bbs{i}=[ones(size(bbs{i},1),1)*i zeros(size(bbs{i},1),1) bbs{i} zeros(size(bbs{i},1),2)]; end
   bbs=cell2mat(bbs);
 end
 %bbs = cat(2, zeros(size(bbs,1),2), bbs);
