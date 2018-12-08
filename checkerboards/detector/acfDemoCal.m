@@ -69,8 +69,8 @@ end
 if(0)
     tstart = tic; [miss,~,gt,dt] = acfTest_my(...
       'name', opts.name, ...
-      'imgDir', [CodePath '/data/images/test'] , ...
-      'gtDir', [CodePath '/data/annotations'], ...
+      'imgDir', [CodePath 'data/images/test'] , ...
+      'gtDir', [CodePath 'data/annotations'], ...
       'pLoad', [pLoad, 'hRng',[50 inf], 'vRng', [.65 1], 'xRng', [5 635], 'yRng',[5 475]], 'show',2);
     telapsed = toc(tstart);
 
@@ -86,7 +86,7 @@ end
 
 %% run detector on a set of images without evaluation
 if(1)
-    imgNms = bbGt('getFiles',{[CodePath 'data/images']});
+    imgNms = bbGt('getFiles',{[CodePath 'data/images/test']});
     tic, bbs = acfDetect_my(imgNms,detector,[ModelPath 'detections.txt']); toc
     % visualize detection results on one single image
     %k=48;
