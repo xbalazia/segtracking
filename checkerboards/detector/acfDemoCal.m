@@ -21,17 +21,13 @@
 clc;
 CodePath = '/home/balazia/pedtrack/checkerboards';
 addpath(genpath(CodePath));
-modelstr = 'models';
-versionstr = 'Checkerboards';
-ModelPath = [CodePath '/' modelstr '/' versionstr];
-datastr = 'data-USA';
-DataPath = [CodePath '/' datastr];
+ModelPath = [CodePath '/data/models/Checkerboards/'];
 
 %% set up parameters for training detector (see acfTrain_my)
 opts = acfTrain_my();
-opts.posGtDir = [DataPath '/annotations'];
-opts.posImgDir = [DataPath '/images/train'];
-opts.name = [ModelPath '/'];
+opts.posGtDir = [CodePath '/data/annotations'];
+opts.posImgDir = [CodePath '/data/images/train'];
+opts.name = ModelPath;
 
 opts.modelDs=[96 36]; opts.modelDsPad=[120 60];
 opts.pPyramid.smooth=0; opts.pPyramid.pChns.pColor.smooth=0; 
@@ -73,25 +69,25 @@ end
 if(1)
     tstart = tic; [miss,~,gt,dt] = acfTest_my(...
       'name', opts.name, ...
-      'imgDir', [DataPath '/images/test'] , ...
-      'gtDir', [DataPath '/annotations'], ...
+      'imgDir', [CodePath '/data/images/test'] , ...
+      'gtDir', [CodePath '/data/annotations'], ...
       'pLoad', [pLoad, 'hRng',[50 inf], 'vRng', [.65 1], 'xRng', [5 635], 'yRng',[5 475]], 'show',2);
     telapsed = toc(tstart);
 
-    fid = fopen([ModelPath '/AcfCaltechLog.txt'],'a'); 
+    fid = fopen([ModelPath 'AcfCaltechLog.txt'],'a'); 
     fprintf(fid,'\n test time = %f seconds = %f hours\n', telapsed, telapsed/3600);
     fclose(fid);
 
     sprintf('time=\t'); fix(clock)
     newline;
-    savefig([ModelPath '/curve'],'pdf');
+    savefig([ModelPath 'curve'],'pdf');
     close;
 end
 
 %% run detector on a set of images without evaluation
 if(0)
-    imgNms = bbGt('getFiles',{[DataPath '/images']});
-    tic, bbs = acfDetect_my(imgNms,detector,[ModelPath '/detections.txt']); toc
+    imgNms = bbGt('getFiles',{[CodePath 'data/images']});
+    tic, bbs = acfDetect_my(imgNms,detector,[ModelPath 'detections.txt']); toc
     % visualize detection results on one single image
     %k=48;
     %I=imread(imgNms{k});
