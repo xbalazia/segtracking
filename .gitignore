@@ -1,5 +1,5 @@
 pull-and-push.bat
-checkerboards/data-USA/
+checkerboards/data/
 checkerboards/models/
 faster-rcnn/data/
 segtracking/data/
