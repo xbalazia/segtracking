@@ -93,8 +93,8 @@ for s=1:nSubjects
     file = fopen(fileName,'w');
     for f=1:nFrames
         if stateInfo.Xi(f,s)>0
-            % frame number, subject number, x, y, w, h, confidence (1), 3d coordinate x (-1), 3d coordinate y (-1)
-            fprintf(file, sprintf('%d,%d,%f,%f,%f,%f,%f,%f,%f\n',f,s,stateInfo.Xi(f,s),stateInfo.Yi(f,s),stateInfo.W(f,s),stateInfo.H(f,s),1,-1,-1));
+            % frame number, subject number, x, y, w, h, confidence (1), 3d coordinate x (0), 3d coordinate y (0)
+            fprintf(file, sprintf('%d,%d,%f,%f,%f,%f,%f,%f,%f\n',f,s,stateInfo.Xi(f,s),stateInfo.Yi(f,s),stateInfo.W(f,s),stateInfo.H(f,s),1,0,0));
         end
     end
     fclose(file);

@@ -352,8 +352,8 @@ if __name__ == '__main__':
 								if bb_list[-1] >= vis_conf_threshold:
 									if num_images not in detections:
 										detections[num_images] = []
-									# frame number, subject number (-1), x, y, w, h, confidence, 3d coordinate x (-1), 3d coordinate y (-1)
-									detections[num_images].append(str(num_images)+',-1,'+','.join(format(b, '1.4f') for b in bb_list)+',-1,-1')
+									# frame number, subject number (0), x, y, w, h, confidence, 3d coordinate x (0), 3d coordinate y (0)
+									detections[num_images].append(str(num_images)+',0,'+','.join(format(b, '1.4f') for b in bb_list)+',0,0')
 									ndet += 1
 
 			misc_toc = time.time()
