@@ -62,6 +62,9 @@ def parse_args():
 	parser.add_argument('--images_dir', dest='images_dir',
 											help='directory to load images',
 											default="images")
+	parser.add_argument('--detections_file', dest='detections_file',
+											help='file to output detections',
+											default="detections.txt")
 	parser.add_argument('--visualizations_dir', dest='visualizations_dir',
 											help='directory to output visualizations',
 											default="visualizations")
@@ -400,7 +403,7 @@ if __name__ == '__main__':
 			cap.release()
 			cv2.destroyAllWindows()
 
-	with open(os.path.join(args.data_dir, 'detections.txt'), 'w') as detFile:
+	with open(args.detections_file), 'w') as detFile:
 		for d in sorted(detections.keys()):
 			for bb in detections[d]:
 				detFile.write(bb+'\n')
