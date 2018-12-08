@@ -87,7 +87,7 @@ end
 %% run detector on a set of images without evaluation
 if(1)
     imgNms = bbGt('getFiles',{[CodePath 'data/images/test']});
-    tic, bbs = acfDetect_my(imgNms,detector,[ModelPath 'detections.txt']); toc
+    tic, bbs = acfDetect_my(imgNms,detector,[ModelPath 'detections-caltech-chkb.txt']); toc
     % visualize detection results on one single image
     %k=48;
     %I=imread(imgNms{k});
