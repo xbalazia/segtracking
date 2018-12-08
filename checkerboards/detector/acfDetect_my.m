@@ -51,7 +51,7 @@ end
 if(isempty(fileName)), return; end
 d=fileparts(fileName); if(~isempty(d)&&~exist(d,'dir')), mkdir(d); end
 if( multiple ) % add image index to each bb and flatten result
-  for i=1:n, bbs{i}=[ones(size(bbs{i},1),1)*i bbs{i}]; end
+  for i=1:n, bbs{i}=[ones(size(bbs{i},1),1)*i zeros(size(bbs,1)) bbs{i}]; end
   bbs=cell2mat(bbs);
 end
 %bbs = cat(2, zeros(size(bbs,1),2), bbs);
@@ -85,6 +85,6 @@ for i=1:P.nScales
     bb(:,4)=modelDs(1)/P.scales(i);
     if(separate), bb(:,6)=j; end; bbs{i,j}=bb;
   end
-end; bbs=cat(1,-1,bbs{:});
+end; bbs=cat(1,bbs{:});
 if(~isempty(pNms)), bbs=bbNms(bbs,pNms); end
 end
