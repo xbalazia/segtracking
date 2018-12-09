@@ -20,18 +20,18 @@
 
 % parameters for TSPs
 K = 800;
-imgFolder = [sceneInfo.imgFolder '/' sceneInfo.database '/'];
-tspFolder = [sceneInfo.tmpFolder '/' sceneInfo.database '/TSP_flows/'];
+root = sceneInfo.imgFolder; 
 [~, fe]=strtok(sceneInfo.imgFileFormat,'.');
-files = dir([imgFolder '*' fe]);
-
+files = dir([root '*' fe]);
+% frames=1:20;files=files(frames);
 dispOn = false;
 
 % infer the TSPs
-[sp_labels] = TSP(K, imgFolder, tspFolder, files, dispOn);
+[sp_labels] = TSP(K, root, files, dispOn);
 
 % save the results
-save(fullfile([sceneInfo.tmpFolder '/' sceneInfo.database '/'],sprintf('sp-K%d.mat',K)),'sp_labels','-v7.3');
+outfile=sprintf('sp-K%d.mat',K);
+save(fullfile(sceneInfo.imgFolder,outfile), 'sp_labels','-v7.3');
 
 
 %% view the results

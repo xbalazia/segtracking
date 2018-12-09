@@ -66,7 +66,8 @@ detections=parseDetections(sceneInfo,opt);
 K= opt.nSP;
 
 % superpixel info
-load(fullfile(sceneInfo.tmpFolder,sceneInfo.database,sprintf('sp-K%d.mat',K)));
+spfile=sprintf('sp-K%d.mat',K);
+load(fullfile(sceneInfo.imgFolder,spfile));
 
 stateInfo=stitchTempWins(allstInfo,allwins,detections,sp_labels);
 stateInfo.frameNums=uint16(stateInfo.frameNums);
@@ -81,13 +82,7 @@ catch err
 end
 
 % print to files
-if ~exist(sceneInfo.trkFolder,'dir')
-    mkdir(sceneInfo.trkFolder);
-end
-if ~exist(fullfile(sceneInfo.trkFolder,sceneInfo.database),'dir')
-    mkdir(fullfile(sceneInfo.trkFolder,sceneInfo.database));
-end
-trkFolder = fullfile(sceneInfo.trkFolder,sceneInfo.database,sceneInfo.detector);
+trkFolder = sceneInfo.trkFolder;
 if exist(trkFolder,'dir')
     rmdir(trkFolder,'s');
 end

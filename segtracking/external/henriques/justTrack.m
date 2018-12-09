@@ -14,7 +14,7 @@ mid=[]; mt=[];
 % base_path = './tmp/img2/';
 % base_path='d:/diss/others/kalal/_input/';
 % base_path='d:/diss/others/fayao/dataset_track/afl4/imgs/';
-base_path = [sceneInfo.imgFolder '/' sceneInfo.database '/'];
+base_path = sceneInfo.imgFolder;
 
 %parameters according to the paper
 padding = 1;					%extra area surrounding the target

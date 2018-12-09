@@ -2,7 +2,10 @@ function [detections, nDets]=parseDetections(sceneInfo, opt, confthr)
 % read detection file and create a struct array
 
 % global opt scenario
-detFile=fullfile(sceneInfo.detFolder,sceneInfo.database,sceneInfo.detector,'detections.txt');
+
+nDets=0;
+
+detFile=sceneInfo.detFile;
 % first determine the type
 [pathstr, filename, fileext]=fileparts(detFile);
 % is there a .mat file available?
@@ -100,7 +103,7 @@ if opt.track3d
     
     for t=1:F,  detections(t).xp=detections(t).xw;detections(t).yp=detections(t).yw;        end
 else
-    for t=1:F
+    for t=1:F,  
         detections(t).xp=detections(t).xi;
         detections(t).yp=detections(t).yi;  
         % YSHIFT
