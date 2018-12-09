@@ -31,8 +31,7 @@ dispOn = false;
 [sp_labels] = TSP(K, imgFolder, tspFolder, files, dispOn);
 
 % save the results
-outfile=fullfile(tspFolder,sprintf('sp-K%d.mat',K));
-save(fullfile(tspFolder,outfile),'sp_labels','-v7.3');
+save(fullfile(tspFolder,sprintf('sp-K%d.mat',K)),'sp_labels','-v7.3');
 
 
 %% view the results
