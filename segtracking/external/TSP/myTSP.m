@@ -23,7 +23,8 @@ K = 800;
 imgFolder = sceneInfo.imgFolder;
 tmpFolder = sceneInfo.tmpFolder; 
 [~, fe]=strtok(sceneInfo.imgFileFormat,'.');
-files = sort({dir([imgFolder '*' fe])});
+[~,idx] = sort({dir([imgFolder '*' fe])});
+files = files(idx);
 dispOn = false;
 
 % infer the TSPs
