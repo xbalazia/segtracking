@@ -43,6 +43,7 @@ if ~s
 end
 
 % image dimensions
+[sceneInfo.imgFolder '/' sceneInfo.imgFolder '/']
 [sceneInfo.imgHeight, sceneInfo.imgWidth, ~]= ...
     size(imread([sceneInfo.imgFolder '/' sceneInfo.imgFolder '/' sprintf(sceneInfo.imgFileFormat,sceneInfo.frameNums(1))]));
 
