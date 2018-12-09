@@ -11,11 +11,11 @@ bglabel=stateInfo.bglabel;
 finallab=setdiff(labeling,bglabel);
 sceneInfo=stateInfo.sceneInfo;
 
-visFolder = sceneInfo.visFolder;
+visFolder = fullfile(sceneInfo.visFolder,sceneInfo.dataset);
 if ~exist(visFolder,'dir')
     mkdir(visFolder);
 end
-visFileFormat = strcat(visFolder,sceneInfo.imgFileFormat);
+visFileFormat = [visFolder '/' sceneInfo.imgFileFormat];
 
 detcnt=0;
 for t=1:F

@@ -81,7 +81,7 @@ catch err
 end
 
 % print to files
-trkFolder = sceneInfo.trkFolder;
+trkFolder = fullfile(sceneInfo.trkFolder,sceneInfo.database);
 if exist(trkFolder,'dir')
     rmdir(trkFolder,'s');
 end
