@@ -38,7 +38,7 @@ if ~s, sceneInfo.imgFileFormat='%06d.jpg'; end
 [sceneInfo.frameNums,s]=ini.GetValues('Scene','frameNums');
 if ~s
     [~, fe]=strtok(sceneInfo.imgFileFormat,'.');    
-    imglisting=dir([sceneInfo.imgFolder, database, '*', fe]);
+    imglisting=dir([sceneInfo.imgFolder, sceneInfo.database, '*', fe]);
     sceneInfo.frameNums=1:length(imglisting);
 end
 
