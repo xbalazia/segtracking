@@ -31,7 +31,6 @@ for t=1:F
     fprintf('.');
     
     thisF1=TSP(:,:,t);
-    thisF1
     exseg=unique(thisF1(:));
     exseg=reshape(exseg,1,length(exseg));
 
