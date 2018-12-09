@@ -36,9 +36,10 @@ catch
     end
     save(fifile,'flowinfo','-v7.3');
 end
+fprintf('\n');
 
 % all images in one array
-fprintf('\nimage info');
+fprintf('image info');
 iifile=fullfile(seqInfoDir,sprintf('iminfo-%04d-%d-%d.mat',scenario,frames(1),frames(end)));
 try load(iifile)
 catch
@@ -49,7 +50,6 @@ catch
     end
     save(iifile,'iminfo','-v7.3');
 end
-
 fprintf('\n');
 
 %%%%% Iunsp
@@ -65,10 +65,11 @@ catch
     %     Iunsp=sp_labels;
     save(Iunsplfile,'Iunsp','-v7.3');
 end
+fprintf('\n');
 
 %%%%% ISall
 % all info about superpixel in one single matrix
-fprintf('\nISall');
+fprintf('ISall');
 isallDir = fullfile(tmpFolder,'ISall');
 if ~exist(isallDir,'dir'), mkdir(isallDir); end
 ISallfile=fullfile(isallDir,sprintf('%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K));
