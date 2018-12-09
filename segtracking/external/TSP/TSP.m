@@ -48,15 +48,15 @@ if (~exist('dispOn','var') || isempty(dispOn))
     dispOn = true;
 end
 
-root_flows = fullfile(tmpFolder,'TSP_flows/');
-if (~exist(root_flows,'dir'))
-    mkdir(root_flows);
+tmp_flows = fullfile(tmpFolder,'TSP_flows/');
+if (~exist(tmp_flows,'dir'))
+    mkdir(tmp_flows);
 end
 
 
 alldone=1;
 for f=2:numel(files)
-    outname = fullfile(root_flows,[files(f).name(1:end-4) '_flow.mat']);
+    outname = fullfile(tmp_flows,[files(f).name(1:end-4) '_flow.mat']);
     if ~exist(outname,'file')
         alldone=0;
         break;
@@ -74,7 +74,7 @@ if ~alldone
     if strncmp(hname,'acvt',4)
       fprintf('We are on cluster. Do single thread\n');
       for f=2:numel(files)
-	  outname = fullfile(root_flows,[files(f).name(1:end-4) '_flow.mat']);
+	  outname = fullfile(tmp_flows,[files(f).name(1:end-4) '_flow.mat']);
 	  if exist(outname,'file'), continue; end
 	  im1 = imread(fullfile(tmpFolder,files(f-1).name));
 	  im2 = imread(fullfile(tmpFolder,files(f).name));
@@ -88,7 +88,7 @@ if ~alldone
         parpool;
       end
       parfor f=2:numel(files)
-	  outname = fullfile(root_flows,[files(f).name(1:end-4) '_flow.mat']);
+	  outname = fullfile(tmp_flows,[files(f).name(1:end-4) '_flow.mat']);
 	  if exist(outname,'file'), continue; end
 	  im1 = imread(fullfile(tmpFolder,files(f-1).name));
 	  im2 = imread(fullfile(tmpFolder,files(f).name));
@@ -101,7 +101,7 @@ if ~alldone
     disp(' -> Optical flow calculations done');
 end
 
-flow_files = dir([root_flows '*_flow.mat']);
+flow_files = dir([tmp_flows '*_flow.mat']);
 
 if (~exist('frames','var') || isempty(frames))
     frames = 1:numel(files);
@@ -126,7 +126,7 @@ for f=frames
         vx = zeros(size(oim,1), size(oim,2));
         vy = zeros(size(oim,1), size(oim,2));
         % load the optical flow
-        load([root_flows flow_files(f-1).name]);
+        load([tmp_flows flow_files(f-1).name]);
         
         vx = -flow.bvx;
         vy = -flow.bvy;

@@ -32,7 +32,7 @@ dispOn = false;
 
 % save the results
 outfile=fullfile(tmpFolder,sprintf('sp-K%d.mat',K));
-save(fullfile(tmpFolder,outfile), 'sp_labels','-v7.3');
+save(fullfile(tmpFolder,outfile),'sp_labels','-v7.3');
 
 
 %% view the results
