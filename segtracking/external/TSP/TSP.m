@@ -32,6 +32,7 @@ addpath('external/TSP/gui/');
 addpath('external/TSP/mex/');
 addpath('external/TSP/util/');
 
+imgFolder
 
 params.cov_var_p = 1000;
 params.cov_var_a = 100;
