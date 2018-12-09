@@ -4,7 +4,7 @@ function [im, filename]=getFrame(sceneInfo,t)
 im=[];
 
 filename=getFrameFile(sceneInfo,t);
-if ~exist(filename,'file');
+if ~exist(filename,'file')
     warning('File %s does not exist!',filename);
 else
     im=double(imread(filename))/255;
