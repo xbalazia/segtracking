@@ -11,7 +11,7 @@ bglabel=stateInfo.bglabel;
 finallab=setdiff(labeling,bglabel);
 sceneInfo=stateInfo.sceneInfo;
 
-visFolder = fullfile(sceneInfo.visFolder,sceneInfo.dataset);
+visFolder = fullfile(sceneInfo.visFolder,sceneInfo.database);
 if ~exist(visFolder,'dir')
     mkdir(visFolder);
 end
