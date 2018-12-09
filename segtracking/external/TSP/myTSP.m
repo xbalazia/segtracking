@@ -28,6 +28,7 @@ files = dir([imgFolder '*' fe]);
 dispOn = false;
 
 % infer the TSPs
+numel(files)
 [sp_labels] = TSP(K, imgFolder, tmpFolder, files, dispOn);
 
 % save the results
