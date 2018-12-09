@@ -4,4 +4,4 @@ imgFile=getFrameFile(sceneInfo,t);
 [~,imgFile,~]=fileparts(imgFile);
 imgFile
 t
-flowFile = [sceneInfo.tmpFolder '/TSP_flows/' imgFile '_flow.mat'];
+flowFile = [sceneInfo.tmpFolder sceneInfo.database '/TSP_flows/' imgFile '_flow.mat'];
