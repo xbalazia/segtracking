@@ -60,6 +60,7 @@ for t=1:F
     %%% flow %%%
     
     im=getFrame(sceneInfo,t);
+    im
     for seg=1:length(exseg)
         scnt=scnt+1;
         ISall(scnt,1)=exseg(seg);
