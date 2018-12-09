@@ -84,7 +84,10 @@ end
 if ~exist(sceneInfo.trkFolder,'dir')
     mkdir(sceneInfo.trkFolder);
 end
-trkFolder = fullfile(sceneInfo.trkFolder,sceneInfo.database);
+if ~exist(fullfile(sceneInfo.trkFolder,sceneInfo.database),'dir')
+    mkdir(fullfile(sceneInfo.trkFolder,sceneInfo.database));
+end
+trkFolder = fullfile(sceneInfo.trkFolder,sceneInfo.database,sceneInfo.detector);
 if exist(trkFolder,'dir')
     rmdir(trkFolder,'s');
 end
