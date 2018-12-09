@@ -1,6 +1,6 @@
 function [sp_labels] = TSP(K, imgFolder, tspFolder, files, dispOn, frames)
 %TSP Temporal Superpixel Segmentation.
-%   SP_LABELS = TSP(K, imgFolder, tmpFolder, FILES) returns the label matrix in time and
+%   SP_LABELS = TSP(K, imgFolder, tspFolder, FILES) returns the label matrix in time and
 %   space for the video volume in UINT32. K is the (approximate) number of
 %   superpixels per frame. imgFolder is the directory to the input frames.
 %   tspFolder is the directory to the output flows. FILES is a
@@ -94,6 +94,7 @@ if ~alldone
     disp(' -> Optical flow calculations done');
 end
 
+tspFolder
 flow_files = dir([tspFolder '*_flow.mat']);
 
 if (~exist('frames','var') || isempty(frames))
