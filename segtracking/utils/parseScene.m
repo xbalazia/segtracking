@@ -27,7 +27,7 @@ sceneInfo.detFolder = ini.GetValues('Scene','detFolder');
 sceneInfo.trkFolder = ini.GetValues('Scene','trkFolder');
 sceneInfo.visFolder = ini.GetValues('Scene','visFolder');
 sceneInfo.database = ini.GetValues('Scene','database');
-sceneInfo.detector = ini.GetValues('Scene','detector');
+sceneInfo.detector = ini.GetValues('Scene','visFolder');
 
 % Default file format: %06d.jpg
 [sceneInfo.imgFileFormat,s]=ini.GetValues('Scene','imgFileFormat');
@@ -38,13 +38,13 @@ if ~s, sceneInfo.imgFileFormat='%06d.jpg'; end
 [sceneInfo.frameNums,s]=ini.GetValues('Scene','frameNums');
 if ~s
     [~, fe]=strtok(sceneInfo.imgFileFormat,'.');    
-    imglisting=dir([fullfile(sceneInfo.imgFolder,sceneInfo.database), '*', fe]);
+    imglisting=dir([sceneInfo.imgFolder, '/', sceneInfo.imgFolder, '/', '*', fe]);
     sceneInfo.frameNums=1:length(imglisting);
 end
 
 % image dimensions
 [sceneInfo.imgHeight, sceneInfo.imgWidth, ~]= ...
-    size(imread([fullfile(sceneInfo.imgFolder,sceneInfo.database) sprintf(sceneInfo.imgFileFormat,sceneInfo.frameNums(1))]));
+    size(imread([sceneInfo.imgFolder '/' sceneInfo.imgFolder '/' sprintf(sceneInfo.imgFileFormat,sceneInfo.frameNums(1))]));
 
 % generic target size, will be determined based on detections
 sceneInfo.targetSize=20; 
