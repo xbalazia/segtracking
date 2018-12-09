@@ -4,7 +4,6 @@ checkerboards/data/
 checkerboards/models/
 faster-rcnn/data/
 segtracking/data/
-segtracking/tmp/
 *.asv
 *.mexa64
 *.mexw64
