@@ -23,9 +23,8 @@ K = 800;
 imgFolder = sceneInfo.imgFolder;
 tmpFolder = sceneInfo.tmpFolder; 
 [~, fe]=strtok(sceneInfo.imgFileFormat,'.');
-filePattern = dir([imgFolder '*' fe]);
 
-files = dir(filePattern); 
+files = dir([imgFolder '*' fe]); 
 xlsfiles = {files.name}
 [~,idx] = sort(xlsfiles)
 files = files(idx)
