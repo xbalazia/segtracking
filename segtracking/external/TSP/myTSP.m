@@ -20,7 +20,7 @@
 
 % parameters for TSPs
 K = 800;
-imgFolder = sceneInfo.imgFolder;
+imgFolder = fullfile(sceneInfo.imgFolder,sceneInfo.database);
 tspFolder = fullfile(sceneInfo.tmpFolder,'TSP_flows');
 [~, fe]=strtok(sceneInfo.imgFileFormat,'.');
 files = dir([imgFolder '*' fe]);
