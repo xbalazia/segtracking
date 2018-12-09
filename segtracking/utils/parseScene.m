@@ -44,7 +44,7 @@ end
 
 % image dimensions
 [sceneInfo.imgHeight, sceneInfo.imgWidth, ~]= ...
-    size(imread([sceneInfo.imgFolder sprintf(sceneInfo.imgFileFormat,sceneInfo.frameNums(1))]));
+    size(imread([sceneInfo.imgFolder sceneInfo.database sprintf(sceneInfo.imgFileFormat,sceneInfo.frameNums(1))]));
 
 % generic target size, will be determined based on detections
 sceneInfo.targetSize=20; 
