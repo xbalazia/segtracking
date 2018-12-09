@@ -3,7 +3,7 @@ function [flowinfo, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = ...
 % precomp auxiliary data
 %%%%%% superpixels
 
-tmpFolder = fullfile(sceneInfo.imgFolder,'tmp');
+tmpFolder = sceneInfo.tmpFolder;
 createTempFolders(tmpFolder)
 F=length(frames);
     spfile=fullfile(tmpFolder,sprintf('sp-K%d.mat',K));
