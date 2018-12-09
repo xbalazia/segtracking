@@ -31,7 +31,7 @@ dispOn = false;
 [sp_labels] = TSP(K, imgFolder, tspFolder, files, dispOn);
 
 % save the results
-save(fullfile(tspFolder,sprintf('sp-K%d.mat',K)),'sp_labels','-v7.3');
+save(fullfile([sceneInfo.tmpFolder '/' sceneInfo.database '/'],sprintf('sp-K%d.mat',K)),'sp_labels','-v7.3');
 
 
 %% view the results
