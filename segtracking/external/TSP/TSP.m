@@ -74,12 +74,12 @@ if ~alldone
     if strncmp(hname,'acvt',4)
       fprintf('We are on cluster. Do single thread\n');
       for f=2:numel(files)
-	  outname = fullfile(tmp_flows,[files(f).name(1:end-4) '_flow.mat']);
-	  if exist(outname,'file'), continue; end
-	  im1 = imread(fullfile(tmpFolder,files(f-1).name));
-	  im2 = imread(fullfile(tmpFolder,files(f).name));
-	  disp([' -> ' outname]);
-	  compute_of(im1,im2,outname);
+        outname = fullfile(tmp_flows,[files(f).name(1:end-4) '_flow.mat']);
+        if exist(outname,'file'), continue; end
+        im1 = imread(fullfile(imgFolder,files(f-1).name));
+        im2 = imread(fullfile(imgFolder,files(f).name));
+        disp([' -> ' outname]);
+        compute_of(im1,im2,outname);
       end    
    else
       fprintf('Use multiple CPUs\n');
@@ -88,12 +88,12 @@ if ~alldone
         parpool;
       end
       parfor f=2:numel(files)
-	  outname = fullfile(tmp_flows,[files(f).name(1:end-4) '_flow.mat']);
-	  if exist(outname,'file'), continue; end
-	  im1 = imread(fullfile(tmpFolder,files(f-1).name));
-	  im2 = imread(fullfile(tmpFolder,files(f).name));
-	  disp([' -> ' outname]);
-	  compute_of(im1,im2,outname);
+        outname = fullfile(tmp_flows,[files(f).name(1:end-4) '_flow.mat']);
+        if exist(outname,'file'), continue; end
+        im1 = imread(fullfile(imgFolder,files(f-1).name));
+        im2 = imread(fullfile(imgFolder,files(f).name));
+        disp([' -> ' outname]);
+        compute_of(im1,im2,outname);
       end    
       delete(gcp)
     end
