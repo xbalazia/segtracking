@@ -30,6 +30,7 @@ files = files(idx);
 dispOn = false;
 
 % infer the TSPs
+imgFolder
 [sp_labels] = TSP(K, imgFolder, tspFolder, files, dispOn);
 
 % save the results
