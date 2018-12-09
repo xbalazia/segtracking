@@ -2,7 +2,7 @@ function [detections, nDets]=parseDetections(sceneInfo, opt, confthr)
 % read detection file and create a struct array
 
 % global opt scenario
-detFile=fullfile(sceneInfo.detFolder,sceneInfo.database,sceneInfo.detector,'.txt');
+detFile=fullfile(sceneInfo.detFolder,sceneInfo.database,sceneInfo.detector,'detections.txt');
 % first determine the type
 [pathstr, filename, fileext]=fileparts(detFile);
 % is there a .mat file available?
