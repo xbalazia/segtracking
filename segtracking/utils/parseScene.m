@@ -27,7 +27,7 @@ sceneInfo.detFolder = ini.GetValues('Scene','detFolder');
 sceneInfo.trkFolder = ini.GetValues('Scene','trkFolder');
 sceneInfo.visFolder = ini.GetValues('Scene','visFolder');
 sceneInfo.database = ini.GetValues('Scene','database');
-sceneInfo.detector = ini.GetValues('Scene','visFolder');
+sceneInfo.detector = ini.GetValues('Scene','detector');
 
 % Default file format: %06d.jpg
 [sceneInfo.imgFileFormat,s]=ini.GetValues('Scene','imgFileFormat');
