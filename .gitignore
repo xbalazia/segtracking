@@ -1,4 +1,5 @@
 pull-and-push.bat
+data/
 checkerboards/data/
 checkerboards/models/
 faster-rcnn/data/
