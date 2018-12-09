@@ -71,7 +71,7 @@ end
 fprintf('\nISall');
 isallDir = fullfile(tmpFolder,'ISall');
 if ~exist(isallDir,'dir'), mkdir(isallDir); end
-ISallfile=fullfile(isallDir,sprintf('ISall/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K));
+ISallfile=fullfile(isallDir,sprintf('%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K));
 try load(ISallfile)
 catch
     [ISall,IMIND]=combineAllIndices(sp_labels, Iunsp, sceneInfo, flowinfo, iminfo);
