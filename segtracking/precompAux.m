@@ -18,7 +18,7 @@ F=length(frames);
 
 %%%%%% optic flow
 % clear flowinfo iminfo
-fprintf('flow');
+fprintf('seqinfo/flowinfo:');
 if ~exist('tmp/seqinfo/','dir'), mkdir('tmp/seqinfo'); end
 fifile=sprintf('tmp/seqinfo/flowinfo-%04d-%d-%d.mat',scenario,frames(1),frames(end));
 try load(fifile)
@@ -33,7 +33,7 @@ end
 fprintf('\n');
 
 % all images in one array
-fprintf('image info');
+fprintf('seqinfo/iminfo');
 iifile=sprintf('tmp/seqinfo/iminfo-%04d-%d-%d.mat',scenario,frames(1),frames(end));
 try load(iifile)
 catch
@@ -73,9 +73,9 @@ end
 fprintf('\n');
 
 %%%%%%%% concat sequence info into struct array
+fprintf('seqinfo');
 clear seqinfo SPPerFrame
 sifile=sprintf('tmp/seqinfo/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K);
-fprintf('seqinfo');
 try load(sifile)
 catch
     for t=1:F

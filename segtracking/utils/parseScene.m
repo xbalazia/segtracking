@@ -11,17 +11,26 @@ catch err,    fprintf('Error reading %s. %s',sceneFile,err.message);
 end
 
 % make sure ini contains all necessary fields
-assert(ini.IsKeys('Scene','frameRate'),'Need frameRate');
-assert(ini.IsKeys('Scene','imgFolder'),'Need imgFolder');
-assert(ini.IsKeys('Scene','detFile'),'Need detFile');
-assert(ini.IsKeys('Scene','trkFolder'),'Need trkFolder');
-assert(ini.IsKeys('Scene','visFolder'),'Need visFolder');
+assert(ini.IsKeys('Scene','img'),'Need imgFolder');
+assert(ini.IsKeys('Scene','tmp'),'Need tmpFolder');
+assert(ini.IsKeys('Scene','det'),'Need det');
+assert(ini.IsKeys('Scene','trk'),'Need trk');
+assert(ini.IsKeys('Scene','vis'),'Need vis');
+assert(ini.IsKeys('Scene','database'),'Need database');
+assert(ini.IsKeys('Scene','detector'),'Need detector');
 
-sceneInfo.frameRate = ini.GetValues('Scene','frameRate');
-sceneInfo.imgFolder = ini.GetValues('Scene','imgFolder');
-sceneInfo.detFile = ini.GetValues('Scene','detFile');
-sceneInfo.trkFolder = ini.GetValues('Scene','trkFolder');
-sceneInfo.visFolder = ini.GetValues('Scene','visFolder');
+img = ini.GetValues('Scene','img');
+tmp = ini.GetValues('Scene','tmp');
+det = ini.GetValues('Scene','det');
+trk = ini.GetValues('Scene','trk');
+vis = ini.GetValues('Scene','vis');
+database = ini.GetValues('Scene','database');
+
+sceneInfo.imgFolder = [img database '/'];
+sceneInfo.tmpFolder = [tmp database '/'];
+sceneInfo.detFolder = [det database '/' detector '/'];
+sceneInfo.trkFolder = [trk database '/' detector '/'];
+sceneInfo.visFolder = [vis database '/' detector '/'];
 
 % Default file format: %06d.jpg
 [sceneInfo.imgFileFormat,s]=ini.GetValues('Scene','imgFileFormat');
