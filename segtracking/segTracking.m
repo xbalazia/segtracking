@@ -133,7 +133,6 @@ hyps=getBBoxesFromHyps(hypotheses,F);
 % unaries
 totalNSegs=length(Q);
 tatalNDets=length(alldpoints.sp);
-size(ISall)%%%%%%%%%%%%%%%%%%%%
 DcostS=getSegUnaries(Q,hypotheses,hyps,sp_labels,iminfo,F,ISall,opt,sPerFrame);
 DcostD=getDetUnaries(detections,hypotheses,hyps,alldpoints,opt);
 Dcost=int32(opt.unaryFactor*[DcostS DcostD]);
