@@ -1,5 +1,5 @@
 function stateInfo=runDP(sceneInfo, detections, opt, myopt)
-
+'E0'
 % global sceneInfo
 
 % check if opt struct is what we want
@@ -45,7 +45,8 @@ dres = build_graph(dres);
 % end
 
 
-
+'E1'
+    
 
 %%% setting parameters for tracking
 c_en      = .1;     %% birth cost
@@ -110,6 +111,7 @@ if length(bboxes_tracked)<F
     end
 end
 
+'E2'
 
 % bboxes_tracked
 % sceneInfo
@@ -127,4 +129,5 @@ if isfield(myopt,'dataFunction')
   stateInfo.outlierLabel=length(stateInfo.splines)+1;
   stateInfo.opt = myopt;
 end
+'E3'
 

@@ -121,7 +121,7 @@ ISallglob=ISall; Qglob=Q;
 %% generate initial set of trajectory hypotheses
 generateHypotheses;
 
-'A0'
+'A(beg)'
 
 saveiters=0; smiter=0;
 
@@ -130,6 +130,8 @@ saveiters=0; smiter=0;
 %
 hyps=getBBoxesFromHyps(hypotheses,F);
 
+'A1'
+
 % unaries
 totalNSegs=length(Q);
 tatalNDets=length(alldpoints.sp);
@@ -137,12 +139,14 @@ DcostS=getSegUnaries(Q,hypotheses,hyps,sp_labels,iminfo,F,ISall,opt,sPerFrame);
 DcostD=getDetUnaries(detections,hypotheses,hyps,alldpoints,opt);
 Dcost=int32(opt.unaryFactor*[DcostS DcostD]);
 
+'A2'
+
 labdet=opt.labdet;
 
 uf=opt.unaryFactor;
 [nLabels,nVars]=size(DcostS);
 
-'A1'
+'A(end)'
 
 % construct pairwies potentials
 [Scost, SN, TN, DN, Nhood, NB]= ...
@@ -170,8 +174,6 @@ energy=evaluateEnergy(labeling, hypotheses, Dcost, Nhood, sceneInfo, opt);
 [metrics2d, metrics3d]= ...
     printSTUpdate(0,stStartTime,energy,sceneInfo,opt,hypotheses,used,0,0);
 
-'A2'
-
 % main optimization loop
 labeling(:)=nLabels;
 hypBeforeHSM=hypotheses;
@@ -189,7 +191,6 @@ while 1
     oldN=length(hypotheses);
     
 %     fprintf('Removing old hypotheses...');
-'A3'
     % update info about when each hypothesis was last used (active)
     for m=1:length(hypotheses)
         if ~isempty(intersect(m,used))
