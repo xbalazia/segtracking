@@ -27,6 +27,7 @@ toolarge=0;
 maxMB=200;
 
 scnt=0;
+F
 for t=1:F
     fprintf('.');
     
@@ -97,7 +98,6 @@ for t=1:F
     
     
 end
-fprintf('\n');
 
 %%% EXPERIMENTAL
 % spBoxFeatures;
