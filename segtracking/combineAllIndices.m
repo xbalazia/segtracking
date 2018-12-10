@@ -27,7 +27,6 @@ toolarge=0;
 maxMB=200;
 
 scnt=0;
-F
 for t=1:F
     fprintf('.');
     
@@ -93,7 +92,6 @@ for t=1:F
         ISall(scnt,10)=mean(meanflowY(imind1));
         
         ISall(scnt,11)=numel(imind1);
-
     end
     
     

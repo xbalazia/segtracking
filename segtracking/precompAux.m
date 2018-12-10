@@ -14,19 +14,13 @@ F=length(frames);
         thisd=pwd;
         TSPd=fullfile('external','TSP');
         myTSP;
-
     end
-
-
-% sp_labels=sp_labels+1;
-
-
 
 %%%%%% optic flow
 % clear flowinfo iminfo
+fprintf('flow');
 if ~exist('tmp/seqinfo/','dir'), mkdir('tmp/seqinfo'); end
 fifile=sprintf('tmp/seqinfo/flowinfo-%04d-%d-%d.mat',scenario,frames(1),frames(end));
-fprintf('flow');
 try load(fifile)
 catch
     for t=2:F
@@ -36,9 +30,10 @@ catch
     end
     save(fifile,'flowinfo','-v7.3');
 end
+fprintf('\n');
 
 % all images in one array
-fprintf('\nimage info');
+fprintf('image info');
 iifile=sprintf('tmp/seqinfo/iminfo-%04d-%d-%d.mat',scenario,frames(1),frames(end));
 try load(iifile)
 catch
@@ -49,14 +44,13 @@ catch
     end
     save(iifile,'iminfo','-v7.3');
 end
-
 fprintf('\n');
 
 %%%%% Iunsp
 % independent superpixels for each frame
+fprintf('Iunsp');
 if ~exist('tmp/Iunsp/','dir'), mkdir('tmp/Iunsp'); end
 Iunsplfile=sprintf('tmp/Iunsp/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K);
-fprintf('Iunsp');
 try load(Iunsplfile)
 catch
     Iunsp=unspliceSeg(sp_labels);
@@ -64,10 +58,11 @@ catch
     %     Iunsp=sp_labels;
     save(Iunsplfile,'Iunsp','-v7.3');
 end
+fprintf('\n');
 
 %%%%% ISall
 % all info about superpixel in one single matrix
-fprintf('\nISall');
+fprintf('ISall');
 if ~exist('tmp/ISall/','dir'), mkdir('tmp/ISall'); end
 ISallfile=sprintf('tmp/ISall/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K);
 try load(ISallfile)
