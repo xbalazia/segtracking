@@ -1,18 +1,18 @@
 function sceneInfo = parseScene(sceneFile)
 % read .ini file containing essential scene information
 
-sceneInfo =[];
+sceneInfo=[];
 
 ini=IniConfig();
 
 
 try ini.ReadFile(sceneFile);
-catch err,    fprintf('Error reading %s. %s',sceneFile,err.message);
+    catch err,    fprintf('Error reading %s. %s',sceneFile,err.message);
 end
 
 % make sure ini contains all necessary fields
-assert(ini.IsKeys('Scene','img'),'Need imgFolder');
-assert(ini.IsKeys('Scene','tmp'),'Need tmpFolder');
+assert(ini.IsKeys('Scene','img'),'Need img');
+assert(ini.IsKeys('Scene','tmp'),'Need tmp');
 assert(ini.IsKeys('Scene','det'),'Need det');
 assert(ini.IsKeys('Scene','trk'),'Need trk');
 assert(ini.IsKeys('Scene','vis'),'Need vis');
