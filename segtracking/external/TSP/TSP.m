@@ -107,6 +107,7 @@ if (~exist('frames','var') || isempty(frames))
 else
     frames(frames>numel(files)) = [];
 end
+tmpFolder
 oim = imread([tmpFolder files(1).name]);
 sp_labels = zeros(size(oim,1), size(oim,2), numel(frames), 'uint32');
 frame_it = 0;
