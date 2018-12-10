@@ -36,7 +36,7 @@ sceneInfo.visFolder = [vis database '/' detector '/'];
 
 % Default file format: %06d.jpg
 [sceneInfo.imgFileFormat,s]=ini.GetValues('Scene','imgFileFormat');
-if ~s, sceneInfo.imgFileFormat='%06d.jpg'; end
+if ~s, sceneInfo.imgFileFormat='%s'; end
 
 
 % if no frame nums, determine from images
