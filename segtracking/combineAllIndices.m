@@ -47,11 +47,11 @@ for t=1:F
         meanflowY=flow2.flow.fvy;
         
     elseif t==F
-        t
         flow1=flowinfo(t);
         meanflowX=-flow1.flow.bvx;
         meanflowY=-flow1.flow.bvy;        
     else
+        t
         flow1=flowinfo(t);
         flow2=flowinfo(t+1);
         
