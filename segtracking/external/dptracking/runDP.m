@@ -73,9 +73,7 @@ end
 %tic;
 dres_dp       = tracking_dp(dres, c_en, c_ex, c_ij, betta, thr_cost, max_it, 0);
 dres_dp.r     = -dres_dp.id;
-%'E0'
 %toc;
-%'E1'
 
 % tic
 % display('in DP tracking with nms in the loop...')
