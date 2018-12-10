@@ -51,7 +51,7 @@ for t=1:F
         meanflowX=-flow1.flow.bvx;
         meanflowY=-flow1.flow.bvy;        
     else
-        [t length(flowinfo)] %
+        [t F length(flowinfo)] %
         flow1=flowinfo(t);
         flow2=flowinfo(t+1);
         
