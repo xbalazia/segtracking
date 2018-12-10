@@ -25,8 +25,7 @@ stStartTime=tic;
 % if nargin>0, scenario=scen; end
 % frames=1:30;
 
-%if ~isfield(opt,'frames'), opt.frames = 1:length(sceneInfo.frameNums); end
-%UNCOMMENT
+if ~isfield(opt,'frames'), opt.frames = 1:length(sceneInfo.frameNums); end %UNCOMMENT
 frames=opt.frames;
 
 
