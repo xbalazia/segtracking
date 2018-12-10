@@ -120,7 +120,8 @@ global ISallglob Qglob inanyglob
 ISallglob=ISall; Qglob=Q;
 %% generate initial set of trajectory hypotheses
 generateHypotheses;
-'ALRIGHT'
+
+'A0'
 
 saveiters=0; smiter=0;
 
@@ -140,6 +141,8 @@ labdet=opt.labdet;
 
 uf=opt.unaryFactor;
 [nLabels,nVars]=size(DcostS);
+
+'A1'
 
 % construct pairwies potentials
 [Scost, SN, TN, DN, Nhood, NB]= ...
@@ -167,6 +170,8 @@ energy=evaluateEnergy(labeling, hypotheses, Dcost, Nhood, sceneInfo, opt);
 [metrics2d, metrics3d]= ...
     printSTUpdate(0,stStartTime,energy,sceneInfo,opt,hypotheses,used,0,0);
 
+'A2'
+
 % main optimization loop
 labeling(:)=nLabels;
 hypBeforeHSM=hypotheses;
@@ -184,6 +189,7 @@ while 1
     oldN=length(hypotheses);
     
 %     fprintf('Removing old hypotheses...');
+'A3'
     % update info about when each hypothesis was last used (active)
     for m=1:length(hypotheses)
         if ~isempty(intersect(m,used))
