@@ -1,5 +1,5 @@
 function Dcost=getSegUnaries(Q,hypotheses,hyps,sp_labels,iminfo,F,ISall,opt,sPerFrame)
-
+'A0'
 % precomp
 % whether a superpixel is inside hypotheses box
 
@@ -41,6 +41,7 @@ else
     
     inanyglob=insideany;
 end
+'A1'
 
 % save('tmploop.mat','ISall','insideany','hyps','sp_labels','iminfo','Q','F','sPerFrame','hypotheses');
 % pause
@@ -52,5 +53,5 @@ lambda=opt.unaryOFFactor;
 
 Dcost=(1-lambda)*DcostCol + lambda*DcostOF;
 Dcost=DcostCol + lambda*DcostOF;
-
+'A2'
 % Dcost=DcostCol;

@@ -130,20 +130,12 @@ saveiters=0; smiter=0;
 %
 hyps=getBBoxesFromHyps(hypotheses,F);
 
-'A(beg)'
-
 % unaries
 totalNSegs=length(Q);
-'A0'
 tatalNDets=length(alldpoints.sp);
-'A1'
 DcostS=getSegUnaries(Q,hypotheses,hyps,sp_labels,iminfo,F,ISall,opt,sPerFrame);
-'A2'
 DcostD=getDetUnaries(detections,hypotheses,hyps,alldpoints,opt);
-'A3'
 Dcost=int32(opt.unaryFactor*[DcostS DcostD]);
-
-'A(end)'
 
 labdet=opt.labdet;
 
