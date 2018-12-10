@@ -70,13 +70,12 @@ if nargin>1
 end
 
 %display('in DP tracking ...')
-tic
-'E0'
+tic;
 dres_dp       = tracking_dp(dres, c_en, c_ex, c_ij, betta, thr_cost, max_it, 0);
-'E1'
 dres_dp.r     = -dres_dp.id;
-'E2'
-toc
+'E0'
+toc;
+'E1'
 
 % tic
 % display('in DP tracking with nms in the loop...')

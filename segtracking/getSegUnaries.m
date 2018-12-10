@@ -33,14 +33,7 @@ else
 %     end
 
     % mex replacement
-    'A0'
-    W=hyps.W;
-    'A1'
-    H=hyps.H;
-    'A2'
-    Xi=hyps.Xi;
-    'A3'
-    Yi=hyps.Yi;
+    Xi=hyps.Xi;Yi=hyps.Yi;W=hyps.W;H=hyps.H;
     'A4'
     insideany=insideAny(ISall,Xi,Yi,W,H);
     'A5'
