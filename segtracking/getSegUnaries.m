@@ -34,9 +34,7 @@ else
 
     % mex replacement
     Xi=hyps.Xi;Yi=hyps.Yi;W=hyps.W;H=hyps.H;
-    'A4'
     insideany=insideAny(ISall,Xi,Yi,W,H);
-    'A5'
     insideany=logical(insideany);
 %     isequal(insideany,insideany2)
     
