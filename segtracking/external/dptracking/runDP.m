@@ -69,15 +69,14 @@ if nargin>1
     thr_cost=opt.thr_cost;
 end
 
-'E0'
-
 %display('in DP tracking ...')
 tic
+'E0'
 dres_dp       = tracking_dp(dres, c_en, c_ex, c_ij, betta, thr_cost, max_it, 0);
-dres_dp.r     = -dres_dp.id;
-toc
-
 'E1'
+dres_dp.r     = -dres_dp.id;
+'E2'
+toc
 
 % tic
 % display('in DP tracking with nms in the loop...')
@@ -103,7 +102,6 @@ bboxes_tracked = dres2bboxes(dres_dp, fnum);  %% we are visualizing the "DP with
 % if scenario==72
 %     bboxes_tracked(201).bbox=[];
 % end
-'E2'
 
 %% pad rest
 if length(bboxes_tracked)<F
