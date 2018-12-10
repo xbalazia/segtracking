@@ -77,7 +77,7 @@ try
     gtInfo = convertTXTToStruct(sceneInfo.gtFile);
     printFinalEvaluation(stateInfo, gtInfo, sceneInfo, struct('track3d', char(howToTrack(sceneInfo.scenario))));
 catch err
-    fprintf('Evaluation failed. %s\n', err.message);
+    fprintf('Evaluation skipped. %s\n', err.message);
 end
 
 % print to files
