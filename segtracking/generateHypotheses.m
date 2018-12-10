@@ -15,15 +15,20 @@ try load(hfile)
 catch
     pOpt=getPirOptions;
     opt.cutToTA=0;
+    'E0'
     startPT=runDP(sceneInfo, detections,pOpt,opt);
+    'E1'
     if isfield(startPT,'stateVec')
         startPT=rmfield(startPT,'stateVec');
     end
-    startPT.opt=opt;    
+    startPT.opt=opt;   
+    'E2'
     hypotheses=getHypsFromDP(startPT,frames,F,sceneInfo,opt);
+    'E3'
     DPHyp=hypotheses;
     save(hfile,'DPHyp','startPT');
 end
+fprintf('OK\n');
 
 fprintf('MFTHyp:');
 hfile=sprintf('%s/MFTHyp-%04d-%d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end),opt.maxMFTHyp);
@@ -32,6 +37,7 @@ catch err
     generateHypothesesMFT;
     save(hfile,'hypothesesMFTH');
 end
+fprintf('OK\n');
 
 fprintf('MFTDPHyp:');
 hfile=sprintf('%s/MFTDPHyp-%04d-%d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end),opt.maxMFTDPHyp);
@@ -40,6 +46,7 @@ catch err
     generateHypothesesMFTDP;
     save(hfile,'hypothesesMFTDP');
 end
+fprintf('OK\n');
 
 hypotheses=DPHyp;
 hypotheses=[hypotheses hypothesesMFTDP];

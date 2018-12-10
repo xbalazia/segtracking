@@ -67,4 +67,3 @@ for d=1:size(startPT.Xi,2)
 end
 
 hypothesesMFTDP=getHypsFromDP(MFTHypsDP,frames,F,sceneInfo,opt);
-fprintf('OK\n');

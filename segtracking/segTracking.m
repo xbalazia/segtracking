@@ -120,6 +120,7 @@ global ISallglob Qglob inanyglob
 ISallglob=ISall; Qglob=Q;
 %% generate initial set of trajectory hypotheses
 generateHypotheses;
+'ALRIGHT'
 
 saveiters=0; smiter=0;
 

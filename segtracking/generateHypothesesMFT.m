@@ -95,4 +95,3 @@ for dd=1:maxMFT
 %     pause
 end
 hypothesesMFTH=getHypsFromDP(MFTHyps,frames,F,sceneInfo,opt);
-fprintf('OK\n');
