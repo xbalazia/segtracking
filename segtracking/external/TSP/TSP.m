@@ -75,8 +75,8 @@ if ~alldone
       for f=2:numel(files)
 	  outname = fullfile(tspDir,[files(f).name(1:end-4) '_flow.mat']);
 	  if exist(outname,'file'), continue; end
-	  im1 = imread(fullfile(root,files(f-1).name));
-	  im2 = imread(fullfile(root,files(f).name));
+	  im1 = imread(fullfile(tmpFolder,files(f-1).name));
+	  im2 = imread(fullfile(tmpFolder,files(f).name));
 	  disp([' -> ' outname]);
 	  compute_of(im1,im2,outname);
       end    
@@ -89,8 +89,8 @@ if ~alldone
       parfor f=2:numel(files)
 	  outname = fullfile(tspDir,[files(f).name(1:end-4) '_flow.mat']);
 	  if exist(outname,'file'), continue; end
-	  im1 = imread(fullfile(root,files(f-1).name));
-	  im2 = imread(fullfile(root,files(f).name));
+	  im1 = imread(fullfile(tmpFolder,files(f-1).name));
+	  im2 = imread(fullfile(tmpFolder,files(f).name));
 	  disp([' -> ' outname]);
 	  compute_of(im1,im2,outname);
       end    
@@ -107,7 +107,7 @@ if (~exist('frames','var') || isempty(frames))
 else
     frames(frames>numel(files)) = [];
 end
-oim = imread([root files(1).name]);
+oim = imread([tmpFolder files(1).name]);
 sp_labels = zeros(size(oim,1), size(oim,2), numel(frames), 'uint32');
 frame_it = 0;
 
@@ -116,7 +116,7 @@ for f=frames
     disp([' -> Frame '  num2str(f) ' / ' num2str(numel(frames))]);
     
     frame_it = frame_it + 1;
-    oim1 = imread([root files(f).name]);
+    oim1 = imread([tmpFolder files(f).name]);
     
     if (frame_it==1)
         IMG = IMG_init(oim1, params);
