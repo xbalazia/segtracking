@@ -88,12 +88,12 @@ for dd=1:maxMFT
     
     
     [alldetscores, scidx]=sort(remDets.sp,'descend');
-    fprintf('Dets left: %d\n',length(remDets.xp));
+    %fprintf('Dets left: %d\n',length(remDets.xp));
     detNew=detStructToArray(remDets,F);
 %     displayDetectionBBoxes(sceneInfo,detNew);
 
 %     pause
     
-
+    fprintf('OK\n');
 end
 hypothesesMFTH=getHypsFromDP(MFTHyps,frames,F,sceneInfo,opt);

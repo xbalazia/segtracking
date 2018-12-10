@@ -23,15 +23,15 @@ catch
     save(hfile,'DPHyp','startPT');
 end
 
+fprintf('MFTHyp:');
 hfile=sprintf('%s/MFTHyp-%04d-%d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end),opt.maxMFTHyp)
-fprintf('MFTHyp');
 try load(hfile)
 catch err
     generateHypothesesMFT;save(hfile,'hypothesesMFTH');
 end
 
+fprintf('MFTDPHyp:');
 hfile=sprintf('%s/MFTDPHyp-%04d-%d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end),opt.maxMFTDPHyp)
-fprintf('MFTDPHyp');
 try load(hfile)
 catch err
     generateHypothesesMFTDP;save(hfile,'hypothesesMFTDP');

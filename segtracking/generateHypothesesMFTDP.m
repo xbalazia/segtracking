@@ -64,7 +64,7 @@ for d=1:size(startPT.Xi,2)
     end
     
     
-    
+    fprintf('OK\n');
 end
 
 
