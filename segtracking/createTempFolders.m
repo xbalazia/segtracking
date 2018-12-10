@@ -10,7 +10,7 @@ tmpSubFolders={...
     'res',...
     };
 
-for t=1:length(tmpfolders)
+for t=1:length(tmpSubFolders)
     tsf=char(tmpSubFolders(t));
     tf=fullfile(tmpFolder,tsf);
     if ~exist(tf,'dir'), mkdir(tf); end
