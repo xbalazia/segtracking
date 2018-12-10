@@ -1,6 +1,6 @@
-function [ISall,IMIND]=combineAllIndices(TSP,Iunsp,sceneInfo,flowinfo,iminfo)
+function [ISall,IMIND]=combineAllIndices(sp_labels,Iunsp,sceneInfo,flowinfo,iminfo)
 % a helper lookup table
-% ISall(k,1) = TSP
+% ISall(k,1) = sp_labels
 % ISall(k,2) = Iunsp
 % ISall(k,3) = frame
 % ISall(k,4) = mean x (v)
@@ -14,11 +14,11 @@ function [ISall,IMIND]=combineAllIndices(TSP,Iunsp,sceneInfo,flowinfo,iminfo)
 % ISall(k,12-20) = LabBB
 % where k is the k-th variable (super-pixel)
 
-[imh, imw, F]=size(TSP);
+[imh, imw, F]=size(sp_labels);
 npix=imw*imh;
 nVars=0;
 for t=1:F
-    nVars=nVars+numel(unique(TSP(:,:,t)));
+    nVars=nVars+numel(unique(sp_labels(:,:,t)));
 end
 ISall=zeros(nVars,11);
 IMIND=zeros(nVars,0,'uint32'); % size of largest SP unknown
@@ -30,7 +30,7 @@ scnt=0;
 for t=1:F
     fprintf('.');
     
-    thisF1=TSP(:,:,t);
+    thisF1=sp_labels(:,:,t);
     exseg=unique(thisF1(:));
     exseg=reshape(exseg,1,length(exseg));
 
@@ -46,12 +46,12 @@ for t=1:F
         meanflowX=flow2.flow.fvx;
         meanflowY=flow2.flow.fvy;
         
-    elseif t==length(flowinfo) % elseif t==F
+    elseif t==F
         flow1=flowinfo(t);
         meanflowX=-flow1.flow.bvx;
         meanflowY=-flow1.flow.bvy;        
     else
-        [t F length(flowinfo)] %
+        [t F length(flowinfo)] %COMMENT_MICHAL
         flow1=flowinfo(t);
         flow2=flowinfo(t+1);
         
