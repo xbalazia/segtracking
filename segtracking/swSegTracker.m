@@ -66,8 +66,7 @@ detections=parseDetections(sceneInfo,opt);
 K= opt.nSP;
 
 % superpixel info
-spfile=sprintf('sp-K%d.mat',K);
-load(fullfile(sceneInfo.imgFolder,spfile));
+load(sprintf('%ssp-K%d.mat',sceneInfo.tmpFolder,K));
 
 stateInfo=stitchTempWins(allstInfo,allwins,detections,sp_labels);
 stateInfo.frameNums=uint16(stateInfo.frameNums);

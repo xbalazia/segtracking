@@ -12,7 +12,6 @@ hfile=sprintf('%s/DPHyp-%04d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end))
 fprintf('DPHyp');
 try load(hfile)
 catch
-    
     pOpt=getPirOptions;
     opt.cutToTA=0;
     startPT=runDP(sceneInfo, detections,pOpt,opt);
@@ -22,7 +21,6 @@ catch
     hypotheses=getHypsFromDP(startPT, frames,F,sceneInfo,opt);
     DPHyp=hypotheses;
     save(hfile,'DPHyp','startPT');
-
 end
 
 hfile=sprintf('%s/MFTHyp-%04d-%d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end),opt.maxMFTHyp)

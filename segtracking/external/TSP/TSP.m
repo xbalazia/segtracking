@@ -1,16 +1,16 @@
 function [sp_labels] = TSP(K, tmpFolder, files, dispOn, frames)
 %TSP Temporal Superpixel Segmentation.
-%   SP_LABELS = TSP(K, ROOT, FILES) returns the label matrix in time and
+%   SP_LABELS = TSP(K, TMPFOLDER, FILES) returns the label matrix in time and
 %   space for the video volume in UINT32. K is the (approximate) number of
-%   superpixels per frame. ROOT is the directory to the frames. FILES is a
+%   superpixels per frame. TMPFOLDER is the directory to the frames. FILES is a
 %   list of the frame images, typically obtained using
-%      FILES = dir([ROOT '*.jpg']);
+%      FILES = dir([TMPFOLDER '*.jpg']);
 %
-%   SP_LABELS = TSP(K, ROOT, FILES, DISPON) supplies an additional flag to
+%   SP_LABELS = TSP(K, TMPFOLDER, FILES, DISPON) supplies an additional flag to
 %   display the progress of the algorithm while processing. If omitted or
 %   empty, DISPON defaults to true.
 %
-%   SP_LABELS = TSP(K, ROOT, FILES, DISPON, FRAMES) supplies an additional
+%   SP_LABELS = TSP(K, TMPFOLDER, FILES, DISPON, FRAMES) supplies an additional
 %   variable that indicates which frames to process. FRAMES should be in
 %   the format of STARTFRAME:ENDFRAME. If omitted or empty, FRAMES defaults
 %   to 1:NUMFRAMES.
@@ -47,15 +47,15 @@ if (~exist('dispOn','var') || isempty(dispOn))
     dispOn = true;
 end
 
-root_flows = fullfile(root,'TSP_flows/');
-if (~exist(root_flows,'dir'))
-    mkdir(root_flows);
+tspDir = fullfile(tmpFolder,'TSP_flows');
+if (~exist(tspDir,'dir'))
+    mkdir(tspDir);
 end
 
 
 alldone=1;
 for f=2:numel(files)
-    outname = fullfile(root_flows,[files(f).name(1:end-4) '_flow.mat']);
+    outname = fullfile(tspDir,[files(f).name(1:end-4) '_flow.mat']);
     if ~exist(outname,'file')
         alldone=0;
         break;
@@ -73,7 +73,7 @@ if ~alldone
     if strncmp(hname,'acvt',4)
       fprintf('We are on cluster. Do single thread\n');
       for f=2:numel(files)
-	  outname = fullfile(root_flows,[files(f).name(1:end-4) '_flow.mat']);
+	  outname = fullfile(tspDir,[files(f).name(1:end-4) '_flow.mat']);
 	  if exist(outname,'file'), continue; end
 	  im1 = imread(fullfile(root,files(f-1).name));
 	  im2 = imread(fullfile(root,files(f).name));
@@ -87,7 +87,7 @@ if ~alldone
         parpool;
       end
       parfor f=2:numel(files)
-	  outname = fullfile(root_flows,[files(f).name(1:end-4) '_flow.mat']);
+	  outname = fullfile(tspDir,[files(f).name(1:end-4) '_flow.mat']);
 	  if exist(outname,'file'), continue; end
 	  im1 = imread(fullfile(root,files(f-1).name));
 	  im2 = imread(fullfile(root,files(f).name));
@@ -100,7 +100,7 @@ if ~alldone
     disp(' -> Optical flow calculations done');
 end
 
-flow_files = dir([root_flows '*_flow.mat']);
+flow_files = dir([tspDir '*_flow.mat']);
 
 if (~exist('frames','var') || isempty(frames))
     frames = 1:numel(files);
@@ -125,7 +125,7 @@ for f=frames
         vx = zeros(size(oim,1), size(oim,2));
         vy = zeros(size(oim,1), size(oim,2));
         % load the optical flow
-        load([root_flows flow_files(f-1).name]);
+        load([tspDir flow_files(f-1).name]);
         
         vx = -flow.bvx;
         vy = -flow.bvy;
