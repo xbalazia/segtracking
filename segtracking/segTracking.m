@@ -25,13 +25,9 @@ stStartTime=tic;
 % if nargin>0, scenario=scen; end
 % frames=1:30;
 
-if ~isfield(opt,'frames'), opt.frames = 1:length(sceneInfo.frameNums); end %UNCOMMENT
+if ~isfield(opt,'frames'), opt.frames = 1:length(sceneInfo.frameNums); end
 frames=opt.frames;
-
-
-
 F=length(frames);
-F
 % opt.maxRemove=0;
 % opt.canvel=3;
 
@@ -75,12 +71,8 @@ avgMinDetDistF=avgMinDetDist(detections);
 
 %% all ims, all flows
 fprintf('Precomputing helper structures\n');
-[~, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = ...
-    precompAux(scenario,sceneInfo,K,frames);
-
-% TODO: MOVO TO PRECOMP
+[~, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = precompAux(scenario,sceneInfo,K,frames);
 sPerFrame=segsPerFrame(sp_labels);
-
 
 meanFlow=mean(sqrt(ISall(:,9).^2 + ISall(:,10).^2),1);
 
@@ -90,7 +82,6 @@ if isfield(opt,'ucostpar')
     ufac=1/avgMinDetDistF; ufac=min(ufac,10); ufac=max(ufac,0.1);
     opt.unaryFactor = opt.unaryFactor * ufac;
 end
-
 
 
 opt.objMaskFile='objMask.mat';

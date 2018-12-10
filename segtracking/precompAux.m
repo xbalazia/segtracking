@@ -1,9 +1,9 @@
-function [flowinfo, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = ...
-    precompAux(scenario,sceneInfo,K,frames)
+function [flowinfo, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = precompAux(scenario,sceneInfo,K,frames)
 % precomp auxiliary data
-%%%%%% superpixels
 
+%%%%%% superpixels
 F=length(frames);
+F
 try
     load(sprintf('%ssp-K%d.mat',sceneInfo.tmpFolder,K));
     sp_labels=sp_labels(:,:,frames);
