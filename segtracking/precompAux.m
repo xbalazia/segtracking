@@ -3,7 +3,7 @@ function [flowinfo, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = ...
 % precomp auxiliary data
 %%%%%% superpixels
 
-createTempFolders()
+createTempFolders(sceneInfo.tmpFolder)
 F=length(frames);
     spfile=sprintf('sp-K%d.mat',K);
     try
@@ -33,7 +33,7 @@ end
 fprintf('\n');
 
 % all images in one array
-fprintf('seqinfo/iminfo');
+fprintf('seqinfo/iminfo:');
 iifile=sprintf('tmp/seqinfo/iminfo-%04d-%d-%d.mat',scenario,frames(1),frames(end));
 try load(iifile)
 catch
@@ -48,7 +48,7 @@ fprintf('\n');
 
 %%%%% Iunsp
 % independent superpixels for each frame
-fprintf('Iunsp');
+fprintf('Iunsp:');
 if ~exist('tmp/Iunsp/','dir'), mkdir('tmp/Iunsp'); end
 Iunsplfile=sprintf('tmp/Iunsp/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K);
 try load(Iunsplfile)
@@ -62,7 +62,7 @@ fprintf('\n');
 
 %%%%% ISall
 % all info about superpixel in one single matrix
-fprintf('ISall');
+fprintf('ISall:');
 if ~exist('tmp/ISall/','dir'), mkdir('tmp/ISall'); end
 ISallfile=sprintf('tmp/ISall/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K);
 try load(ISallfile)
@@ -73,7 +73,7 @@ end
 fprintf('\n');
 
 %%%%%%%% concat sequence info into struct array
-fprintf('seqinfo');
+fprintf('seqinfo:');
 clear seqinfo SPPerFrame
 sifile=sprintf('tmp/seqinfo/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K);
 try load(sifile)
