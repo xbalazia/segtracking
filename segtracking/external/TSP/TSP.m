@@ -126,7 +126,7 @@ for f=frames
         vx = zeros(size(oim,1), size(oim,2));
         vy = zeros(size(oim,1), size(oim,2));
         % load the optical flow
-        load([tspDir flow_files(f-1).name]);
+        load(fullfile(tspDir,flow_files(f-1).name));
         
         vx = -flow.bvx;
         vy = -flow.bvy;
