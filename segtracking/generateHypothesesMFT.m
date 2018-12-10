@@ -93,7 +93,6 @@ for dd=1:maxMFT
 %     displayDetectionBBoxes(sceneInfo,detNew);
 
 %     pause
-    
-    fprintf('OK\n');
 end
 hypothesesMFTH=getHypsFromDP(MFTHyps,frames,F,sceneInfo,opt);
+fprintf('OK\n');

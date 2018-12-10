@@ -8,36 +8,40 @@ hypothesesMFTDP=[];
 hypothesesMFTH=[];
 
 hypsDir=fullfile(sceneInfo.tmpFolder,'hyps'); if ~exist(hypsDir,'dir'), mkdir(hypsDir); end
+
+fprintf('DPHyp:');
 hfile=sprintf('%s/DPHyp-%04d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end))
-fprintf('DPHyp');
 try load(hfile)
 catch
     pOpt=getPirOptions;
     opt.cutToTA=0;
     startPT=runDP(sceneInfo, detections,pOpt,opt);
-    if isfield(startPT,'stateVec'),     startPT=rmfield(startPT,'stateVec'); end
+    if isfield(startPT,'stateVec')
+        startPT=rmfield(startPT,'stateVec');
+    end
     startPT.opt=opt;    
-    
-    hypotheses=getHypsFromDP(startPT, frames,F,sceneInfo,opt);
+    hypotheses=getHypsFromDP(startPT,frames,F,sceneInfo,opt);
     DPHyp=hypotheses;
     save(hfile,'DPHyp','startPT');
 end
 
 fprintf('MFTHyp:');
-hfile=sprintf('%s/MFTHyp-%04d-%d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end),opt.maxMFTHyp)
+hfile=sprintf('%s/MFTHyp-%04d-%d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end),opt.maxMFTHyp);
 try load(hfile)
 catch err
-    generateHypothesesMFT;save(hfile,'hypothesesMFTH');
+    generateHypothesesMFT;
+    save(hfile,'hypothesesMFTH');
 end
 
 fprintf('MFTDPHyp:');
-hfile=sprintf('%s/MFTDPHyp-%04d-%d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end),opt.maxMFTDPHyp)
+hfile=sprintf('%s/MFTDPHyp-%04d-%d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end),opt.maxMFTDPHyp);
 try load(hfile)
 catch err
-    generateHypothesesMFTDP;save(hfile,'hypothesesMFTDP');
+    generateHypothesesMFTDP;
+    save(hfile,'hypothesesMFTDP');
 end
 
-hypotheses=DPHyp; length(hypotheses)
+hypotheses=DPHyp; %length(hypotheses) %%UNCOMMENT
 hypotheses=[hypotheses hypothesesMFTDP]; length(hypotheses)
 hypotheses=[hypotheses hypothesesMFTH]; length(hypotheses)
 
