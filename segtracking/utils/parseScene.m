@@ -25,6 +25,7 @@ det = ini.GetValues('Scene','det');
 trk = ini.GetValues('Scene','trk');
 vis = ini.GetValues('Scene','vis');
 database = ini.GetValues('Scene','database');
+detector = ini.GetValues('Scene','detector');
 
 sceneInfo.imgFolder = [img database '/'];
 sceneInfo.tmpFolder = [tmp database '/'];
