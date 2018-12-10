@@ -32,7 +32,6 @@ FF=length(allframeNums);
 fromframe=1; toframe=min(FF,opt.winSize);
 wincnt=0;allwins=[];
 allstInfo=[];
-FF
 while toframe<=FF
     wincnt=wincnt+1;
     fprintf('Working on subwindow... from %4d to %4d = %4d frames\n',fromframe,toframe,length(fromframe:toframe));
@@ -59,6 +58,7 @@ while toframe<=FF
     else
         toframe=newend;
     end
+    newend
 end
 
 %% finish up
