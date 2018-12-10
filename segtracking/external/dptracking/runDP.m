@@ -42,9 +42,6 @@ dres = build_graph(dres);
 %   dres = build_graph(dres);
 %   save (fname, 'dres');
 % end
-
-
-'E1'
     
 
 %%% setting parameters for tracking
@@ -72,13 +69,15 @@ if nargin>1
     thr_cost=opt.thr_cost;
 end
 
-'E2'
+'E0'
 
 %display('in DP tracking ...')
 tic
 dres_dp       = tracking_dp(dres, c_en, c_ex, c_ij, betta, thr_cost, max_it, 0);
 dres_dp.r     = -dres_dp.id;
 toc
+
+'E1'
 
 % tic
 % display('in DP tracking with nms in the loop...')
@@ -104,7 +103,7 @@ bboxes_tracked = dres2bboxes(dres_dp, fnum);  %% we are visualizing the "DP with
 % if scenario==72
 %     bboxes_tracked(201).bbox=[];
 % end
-'E3'
+'E2'
 
 %% pad rest
 if length(bboxes_tracked)<F
@@ -112,8 +111,6 @@ if length(bboxes_tracked)<F
         bboxes_tracked(pp).bbox=[];
     end
 end
-
-'E4'
 
 % bboxes_tracked
 % sceneInfo

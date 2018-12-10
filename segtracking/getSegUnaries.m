@@ -34,14 +34,17 @@ else
 %     end
 
     % mex replacement
+    'A1'
     W=hyps.W;H=hyps.H;Xi=hyps.Xi;Yi=hyps.Yi;
     insideany=insideAny(ISall,Xi,Yi,W,H);
+    'A2'
     insideany=logical(insideany);
 %     isequal(insideany,insideany2)
     
     inanyglob=insideany;
+    'A3'
 end
-'A1'
+'A4'
 
 % save('tmploop.mat','ISall','insideany','hyps','sp_labels','iminfo','Q','F','sPerFrame','hypotheses');
 % pause
@@ -53,5 +56,5 @@ lambda=opt.unaryOFFactor;
 
 Dcost=(1-lambda)*DcostCol + lambda*DcostOF;
 Dcost=DcostCol + lambda*DcostOF;
-'A2'
+
 % Dcost=DcostCol;
