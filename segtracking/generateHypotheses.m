@@ -7,9 +7,8 @@ DPHyp=[];
 hypothesesMFTDP=[];
 hypothesesMFTH=[];
 
-hypsDir='tmp/hyps/'; if ~exist(hypsDir,'dir'), mkdir(hypsDir); end
-
-hfile=sprintf('tmp/hyps/DPHyp-%04d-%d-%d.mat',scenario,frames(1),frames(end))
+hypsDir=fullfile(sceneInfo.tmpFolder,'hyps'); if ~exist(hypsDir,'dir'), mkdir(hypsDir); end
+hfile=sprintf('%s/DPHyp-%04d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end))
 fprintf('DPHyp');
 try load(hfile)
 catch
