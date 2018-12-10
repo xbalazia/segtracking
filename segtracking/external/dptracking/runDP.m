@@ -1,5 +1,4 @@
 function stateInfo=runDP(sceneInfo, detections, opt, myopt)
-'E0'
 % global sceneInfo
 
 % check if opt struct is what we want
@@ -73,6 +72,7 @@ if nargin>1
     thr_cost=opt.thr_cost;
 end
 
+'E2'
 
 %display('in DP tracking ...')
 tic
@@ -104,6 +104,8 @@ bboxes_tracked = dres2bboxes(dres_dp, fnum);  %% we are visualizing the "DP with
 % if scenario==72
 %     bboxes_tracked(201).bbox=[];
 % end
+'E3'
+
 %% pad rest
 if length(bboxes_tracked)<F
     for pp=length(bboxes_tracked)+1:F
@@ -111,7 +113,7 @@ if length(bboxes_tracked)<F
     end
 end
 
-'E2'
+'E4'
 
 % bboxes_tracked
 % sceneInfo
@@ -129,5 +131,4 @@ if isfield(myopt,'dataFunction')
   stateInfo.outlierLabel=length(stateInfo.splines)+1;
   stateInfo.opt = myopt;
 end
-'E3'
 

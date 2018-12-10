@@ -121,7 +121,7 @@ ISallglob=ISall; Qglob=Q;
 %% generate initial set of trajectory hypotheses
 generateHypotheses;
 
-'A(beg)'
+
 
 saveiters=0; smiter=0;
 
@@ -130,23 +130,25 @@ saveiters=0; smiter=0;
 %
 hyps=getBBoxesFromHyps(hypotheses,F);
 
-'A1'
+'A(beg)'
 
 % unaries
 totalNSegs=length(Q);
+'A0'
 tatalNDets=length(alldpoints.sp);
+'A1'
 DcostS=getSegUnaries(Q,hypotheses,hyps,sp_labels,iminfo,F,ISall,opt,sPerFrame);
+'A2'
 DcostD=getDetUnaries(detections,hypotheses,hyps,alldpoints,opt);
+'A3'
 Dcost=int32(opt.unaryFactor*[DcostS DcostD]);
 
-'A2'
+'A(end)'
 
 labdet=opt.labdet;
 
 uf=opt.unaryFactor;
 [nLabels,nVars]=size(DcostS);
-
-'A(end)'
 
 % construct pairwies potentials
 [Scost, SN, TN, DN, Nhood, NB]= ...
