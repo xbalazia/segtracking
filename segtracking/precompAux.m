@@ -3,25 +3,24 @@ function [flowinfo, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = ...
 % precomp auxiliary data
 %%%%%% superpixels
 
-%createTempFolders(sceneInfo.tmpFolder)
 F=length(frames);
-    spfile=sprintf('sp-K%d.mat',K);
-    try
-        load(fullfile(sceneInfo.imgFolder,spfile));
-        sp_labels=sp_labels(:,:,frames);
-    catch err
-        fprintf('Oops, we need superpixels. This may take a while...\n');
-        thisd=pwd;
-        TSPd=fullfile('external','TSP');
-        myTSP;
-    end
+try
+    load(sprintf('%ssp-K%d.mat',sceneInfo.tmpFolder,K));
+    sp_labels=sp_labels(:,:,frames);
+catch
+    err
+    fprintf('Oops, we need superpixels. This may take a while...\n');
+    thisd=pwd;
+    TSPd=fullfile('external','TSP');
+    myTSP;
+end
 
 %%%%%% optic flow
 % clear flowinfo iminfo
 fprintf('seqinfo/flowinfo:');
-seqInfoFolder = fullfile(sceneInfo.tmpFolder,'seqinfo');
-if ~exist(seqInfoFolder,'dir'), mkdir(seqInfoFolder); end
-fifile=fullfile(seqInfoFolder,sprintf('/flowinfo-%04d-%d-%d.mat',scenario,frames(1),frames(end)));
+seqInfoDir = fullfile(sceneInfo.tmpFolder,'seqinfo');
+if ~exist(seqInfoDir,'dir'), mkdir(seqInfoDir); end
+fifile=sprintf('%s/flowinfo-%04d-%d-%d.mat',seqInfoDir,scenario,frames(1),frames(end));
 try load(fifile)
 catch
     for t=2:F
@@ -31,11 +30,11 @@ catch
     end
     save(fifile,'flowinfo','-v7.3');
 end
-fprintf('\n');
+fprintf('OK\n');
 
 % all images in one array
 fprintf('seqinfo/iminfo:');
-iifile=fullfile(seqInfoFolder,sprintf('/iminfo-%04d-%d-%d.mat',scenario,frames(1),frames(end)));
+iifile=sprintf('%s/iminfo-%04d-%d-%d.mat',seqInfoDir,scenario,frames(1),frames(end));
 try load(iifile)
 catch
     for t=1:F
@@ -45,14 +44,14 @@ catch
     end
     save(iifile,'iminfo','-v7.3');
 end
-fprintf('\n');
+fprintf('OK\n');
 
 %%%%% Iunsp
 % independent superpixels for each frame
 fprintf('Iunsp:');
-iUnspFolder = fullfile(sceneInfo.tmpFolder,'Iunsp');
-if ~exist(iUnspFolder,'dir'), mkdir(iUnspFolder); end
-Iunsplfile=fullfile(iUnspFolder,sprintf('/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K));
+iUnspDir = fullfile(sceneInfo.tmpFolder,'Iunsp');
+if ~exist(iUnspDir,'dir'), mkdir(iUnspDir); end
+Iunsplfile=sprintf('%s/%04d-%d-%d-K%d.mat',iUnspDir,scenario,frames(1),frames(end),K);
 try load(Iunsplfile)
 catch
     Iunsp=unspliceSeg(sp_labels);
@@ -60,25 +59,25 @@ catch
     %     Iunsp=sp_labels;
     save(Iunsplfile,'Iunsp','-v7.3');
 end
-fprintf('\n');
+fprintf('OK\n');
 
 %%%%% ISall
 % all info about superpixel in one single matrix
 fprintf('ISall:');
-isAllFolder = fullfile(sceneInfo.tmpFolder,'ISall');
-if ~exist(isAllFolder,'dir'), mkdir(isAllFolder); end
-ISallfile=fullfile(isAllFolder,sprintf('/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K));
+isAllDir = fullfile(sceneInfo.tmpFolder,'ISall');
+if ~exist(isAllDir,'dir'), mkdir(isAllDir); end
+ISallfile=sprintf('%s/%04d-%d-%d-K%d.mat',isAllDir,scenario,frames(1),frames(end),K);
 try load(ISallfile)
 catch
     [ISall,IMIND]=combineAllIndices(sp_labels,Iunsp,sceneInfo,flowinfo,iminfo);
     save(ISallfile,'ISall','IMIND','-v7.3');
 end
-fprintf('\n');
+fprintf('OK\n');
 
 %%%%%%%% concat sequence info into struct array
 fprintf('seqinfo:');
 clear seqinfo SPPerFrame
-sifile=fullfile(seqInfoFolder,sprintf('/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K));
+sifile=sprintf('%s/%04d-%d-%d-K%d.mat',seqInfoDir,scenario,frames(1),frames(end),K);
 try load(sifile)
 catch
     for t=1:F
@@ -101,4 +100,4 @@ catch
     end
     save(sifile,'seqinfo','SPPerFrame','-v7.3');
 end
-fprintf('\n');
+fprintf('OK\n');

@@ -1,4 +1,4 @@
-function [sp_labels] = TSP(K, root, files, dispOn, frames)
+function [sp_labels] = TSP(K, tmpFolder, files, dispOn, frames)
 %TSP Temporal Superpixel Segmentation.
 %   SP_LABELS = TSP(K, ROOT, FILES) returns the label matrix in time and
 %   space for the video volume in UINT32. K is the (approximate) number of
