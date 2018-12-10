@@ -1,16 +1,17 @@
-function [sp_labels] = TSP(K, tmpFolder, files, dispOn, frames)
+function [sp_labels] = TSP(K, imgFolder, tmpFolder, files, dispOn, frames)
 %TSP Temporal Superpixel Segmentation.
-%   SP_LABELS = TSP(K, TMPFOLDER, FILES) returns the label matrix in time and
+%   SP_LABELS = TSP(K, IMGFOLDER, TMPFOLDER, FILES) returns the label matrix in time and
 %   space for the video volume in UINT32. K is the (approximate) number of
-%   superpixels per frame. TMPFOLDER is the directory to the frames. FILES is a
+%   superpixels per frame. IMGFOLDER is the directory to input frames.
+%   TMPFOLDER is the directory to output flows.  FILES is a
 %   list of the frame images, typically obtained using
-%      FILES = dir([TMPFOLDER '*.jpg']);
+%      FILES = dir([IMGFOLDER '*.jpg']);
 %
-%   SP_LABELS = TSP(K, TMPFOLDER, FILES, DISPON) supplies an additional flag to
+%   SP_LABELS = TSP(K, IMGFOLDER, TMPFOLDER, FILES, DISPON) supplies an additional flag to
 %   display the progress of the algorithm while processing. If omitted or
 %   empty, DISPON defaults to true.
 %
-%   SP_LABELS = TSP(K, TMPFOLDER, FILES, DISPON, FRAMES) supplies an additional
+%   SP_LABELS = TSP(K, IMGFOLDER, TMPFOLDER, FILES, DISPON, FRAMES) supplies an additional
 %   variable that indicates which frames to process. FRAMES should be in
 %   the format of STARTFRAME:ENDFRAME. If omitted or empty, FRAMES defaults
 %   to 1:NUMFRAMES.
@@ -75,8 +76,8 @@ if ~alldone
       for f=2:numel(files)
 	  outname = fullfile(tspDir,[files(f).name(1:end-4) '_flow.mat']);
 	  if exist(outname,'file'), continue; end
-	  im1 = imread(fullfile(tmpFolder,files(f-1).name));
-	  im2 = imread(fullfile(tmpFolder,files(f).name));
+	  im1 = imread(fullfile(imgFolder,files(f-1).name));
+	  im2 = imread(fullfile(imgFolder,files(f).name));
 	  disp([' -> ' outname]);
 	  compute_of(im1,im2,outname);
       end    
@@ -89,8 +90,8 @@ if ~alldone
       parfor f=2:numel(files)
 	  outname = fullfile(tspDir,[files(f).name(1:end-4) '_flow.mat']);
 	  if exist(outname,'file'), continue; end
-	  im1 = imread(fullfile(tmpFolder,files(f-1).name));
-	  im2 = imread(fullfile(tmpFolder,files(f).name));
+	  im1 = imread(fullfile(imgFolder,files(f-1).name));
+	  im2 = imread(fullfile(imgFolder,files(f).name));
 	  disp([' -> ' outname]);
 	  compute_of(im1,im2,outname);
       end    
@@ -107,8 +108,7 @@ if (~exist('frames','var') || isempty(frames))
 else
     frames(frames>numel(files)) = [];
 end
-tmpFolder
-oim = imread([tmpFolder files(1).name]);
+oim = imread([imgFolder files(1).name]);
 sp_labels = zeros(size(oim,1), size(oim,2), numel(frames), 'uint32');
 frame_it = 0;
 
