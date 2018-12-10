@@ -101,7 +101,7 @@ if ~alldone
     disp(' -> Optical flow calculations done');
 end
 
-flow_files = dir([tspDir '*_flow.mat']);
+flow_files = dir([tspDir '/*_flow.mat']);
 
 if (~exist('frames','var') || isempty(frames))
     frames = 1:numel(files);
