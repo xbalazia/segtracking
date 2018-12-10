@@ -2,12 +2,9 @@ function [flowinfo, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = prec
 % precomp auxiliary data
 
 %%%%%% superpixels
-try
-    load(sprintf('%ssp-K%d.mat',sceneInfo.tmpFolder,K));
+try load(sprintf('%ssp-K%d.mat',sceneInfo.tmpFolder,K));
 catch err
     fprintf('Oops, we need superpixels. This may take a while...\n');
-    %thisd=pwd;
-    %TSPd=fullfile('external','TSP');
     myTSP;
 end
 

@@ -10,7 +10,7 @@ hypothesesMFTH=[];
 hypsDir=fullfile(sceneInfo.tmpFolder,'hyps'); if ~exist(hypsDir,'dir'), mkdir(hypsDir); end
 
 fprintf('DPHyp:');
-hfile=sprintf('%s/DPHyp-%04d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end))
+hfile=sprintf('%s/DPHyp-%04d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end));
 try load(hfile)
 catch
     pOpt=getPirOptions;
@@ -41,9 +41,9 @@ catch err
     save(hfile,'hypothesesMFTDP');
 end
 
-hypotheses=DPHyp; %length(hypotheses) %%UNCOMMENT
-hypotheses=[hypotheses hypothesesMFTDP]; length(hypotheses)
-hypotheses=[hypotheses hypothesesMFTH]; length(hypotheses)
+hypotheses=DPHyp;
+hypotheses=[hypotheses hypothesesMFTDP];
+hypotheses=[hypotheses hypothesesMFTH];
 
 
 if opt.gthyp
