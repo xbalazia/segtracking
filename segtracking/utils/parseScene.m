@@ -63,7 +63,7 @@ end
 
 % sequence name and ID (scenario)
 [sceneInfo.sequence,s]=ini.GetValues('Scene','sequence');
-sceneInfo=getScenarioFromSequence(sceneInfo);
+sceneInfo.scenario=0; %getScenarioFromSequence(sceneInfo)
 
 %%%%%%%%%%%%%%%%%%%
 % old stuff, ignore
