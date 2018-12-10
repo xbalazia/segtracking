@@ -117,7 +117,7 @@ for f=frames
     disp([' -> Frame '  num2str(f) ' / ' num2str(numel(frames))]);
     
     frame_it = frame_it + 1;
-    oim1 = imread([tmpFolder files(f).name]);
+    oim1 = imread([imgFolder files(f).name]);
     
     if (frame_it==1)
         IMG = IMG_init(oim1, params);
