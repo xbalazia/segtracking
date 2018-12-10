@@ -25,14 +25,14 @@ catch
 
 end
 
-hfile=sprintf('tmp/hyps/MFTHyp-%04d-%d-%d-%d.mat',scenario,frames(1),frames(end),opt.maxMFTHyp)
+hfile=sprintf('%s/MFTHyp-%04d-%d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end),opt.maxMFTHyp)
 fprintf('MFTHyp');
 try load(hfile)
 catch err
     generateHypothesesMFT;save(hfile,'hypothesesMFTH');
 end
 
-hfile=sprintf('tmp/hyps/MFTDPHyp-%04d-%d-%d-%d.mat',scenario,frames(1),frames(end),opt.maxMFTDPHyp)
+hfile=sprintf('%s/MFTDPHyp-%04d-%d-%d-%d.mat',hypsDirscenario,frames(1),frames(end),opt.maxMFTDPHyp)
 fprintf('MFTDPHyp');
 try load(hfile)
 catch err
