@@ -37,6 +37,7 @@ if ~s
     imglisting=dir([sceneInfo.imgFolder, '*', fe]);
     sceneInfo.frameNums=1:length(imglisting);
 end
+sceneInfo.frameNums
 
 % image dimensions
 [sceneInfo.imgHeight, sceneInfo.imgWidth, ~]= size(imread([sceneInfo.imgFolder sprintf(sceneInfo.imgFileFormat,sceneInfo.frameNums(1))]));
