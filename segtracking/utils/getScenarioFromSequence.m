@@ -17,7 +17,7 @@ switch (sceneInfo.sequence)
     case 'TUD-Stadtmitte'
         scenario=42;        
     otherwise
-        fprintf('Unknown sequence\n');
+        %fprintf('Unknown sequence\n');
 end
 
 sceneInfo.scenario = scenario;
