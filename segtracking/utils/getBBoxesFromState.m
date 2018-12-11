@@ -35,7 +35,7 @@ for id=1:N
         
             alldist=sqrt(sum((repmat(xy,1,ndets)-dets).^2)); % distance to all        
             [mindist mindet]=min(alldist);
-            if mindist<=sceneInfo.targetSize/1
+            if mindist<=sceneInfo.targetSize
                 asscDet(t)=mindet;
                 widths(t)=detections(t).wd(mindet);
                 heights(t)=detections(t).ht(mindet);
