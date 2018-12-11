@@ -70,6 +70,7 @@ K=opt.nSP;
 load(sprintf('%ssp-K%d.mat',sceneInfo.tmpFolder,K));
 
 % parse detections
+fprintf('Parsing detections\n');
 detections=parseDetections(sceneInfo,opt);
 stateInfo=stitchTempWins(allstInfo,allwins,detections,sp_labels);
 stateInfo.frameNums=uint16(stateInfo.frameNums);
@@ -83,7 +84,8 @@ catch err
     fprintf('Evaluation skipped. %s\n',err.message);
 end
 
-% print to files
+% print tracks
+fprintf('Printing tracks\n');
 trkFolder = sceneInfo.trkFolder;
 if exist(trkFolder,'dir')
     rmdir(trkFolder,'s');

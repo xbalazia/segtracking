@@ -18,15 +18,17 @@ assert(ini.IsKeys('Scene','detFolder'),'Need detFolder');
 assert(ini.IsKeys('Scene','trkFolder'),'Need trkFolder');
 assert(ini.IsKeys('Scene','visFolder'),'Need visFolder');
 assert(ini.IsKeys('Scene','imgFileFormat'),'Need imgFileFormat');
+assert(ini.IsKeys('Scene','database'),'Need database');
 assert(ini.IsKeys('Scene','detector'),'Need detector');
 
-sceneInfo.imgFolder = ini.GetValues('Scene','imgFolder');
-sceneInfo.tmpFolder = ini.GetValues('Scene','tmpFolder');
-sceneInfo.detFolder = ini.GetValues('Scene','detFolder');
-sceneInfo.trkFolder = ini.GetValues('Scene','trkFolder');
-sceneInfo.visFolder = ini.GetValues('Scene','visFolder');
+database = ini.GetValues('Scene','database');
+detector = ini.GetValues('Scene','detector');
+sceneInfo.imgFolder = [ini.GetValues('Scene','imgFolder') database '/'];
+sceneInfo.tmpFolder = [ini.GetValues('Scene','tmpFolder') database '/'];
+sceneInfo.detFolder = [ini.GetValues('Scene','detFolder') database '/' detector '/'];
+sceneInfo.trkFolder = [ini.GetValues('Scene','trkFolder') database '/' detector '/'];
+sceneInfo.visFolder = [ini.GetValues('Scene','visFolder') database '/' detector '/'];
 sceneInfo.imgFileFormat = ini.GetValues('Scene','imgFileFormat');
-sceneInfo.detector = ini.GetValues('Scene','detector');
 
 % if no frame nums, determine from images
 [sceneInfo.frameNums,s]=ini.GetValues('Scene','frameNums');
