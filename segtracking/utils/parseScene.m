@@ -5,12 +5,10 @@ sceneInfo =[];
 
 ini=IniConfig();
 
-
 try ini.ReadFile(sceneFile);
 catch err
     fprintf('Error reading %s. %s',sceneFile,err.message);
 end
-
 
 % make sure ini contains all necessary fields
 assert(ini.IsKeys('Scene','imgFolder'),'Need imgFolder');
