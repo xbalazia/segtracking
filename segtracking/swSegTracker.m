@@ -64,20 +64,41 @@ end
 
 %% finish up
 sceneInfo=parseScene(sceneFile);
-detections=parseDetections(sceneInfo,opt);
 K=opt.nSP;
 
 % superpixel info
 load(sprintf('%ssp-K%d.mat',sceneInfo.tmpFolder,K));
 
+% parse detections
+detections=parseDetections(sceneInfo,opt);
 stateInfo=stitchTempWins(allstInfo,allwins,detections,sp_labels);
 stateInfo.frameNums=uint16(stateInfo.frameNums);
 stateInfo.splabeling=uint16(stateInfo.splabeling);
 stateInfo.detlabeling=uint16(stateInfo.detlabeling);
 
+% evaluation
 try gtInfo=convertTXTToStruct(sceneInfo.gtFile);
     printFinalEvaluation(stateInfo, gtInfo, sceneInfo, struct('track3d',char(howToTrack(sceneInfo.scenario))));
 catch err
     fprintf('Evaluation skipped. %s\n',err.message);
+end
+
+% print to files
+trkFolder = sceneInfo.trkFolder;
+if exist(trkFolder,'dir')
+    rmdir(trkFolder,'s');
+end
+mkdir(trkFolder);
+[nFrames, nSubjects] = size(stateInfo.Xi);
+for s=1:nSubjects
+    fileName = sprintf('%s/subject%d.txt',trkFolder,s);
+    file = fopen(fileName,'w');
+    for f=1:nFrames
+        if stateInfo.Xi(f,s)>0
+            % frame number, subject number, x, y, w, h, confidence (1), 3d coordinate x (0), 3d coordinate y (0)
+            fprintf(file, sprintf('%d,%d,%f,%f,%f,%f,%f,%f,%f\n',f,s,stateInfo.Xi(f,s),stateInfo.Yi(f,s),stateInfo.W(f,s),stateInfo.H(f,s),1,0,0));
+        end
+    end
+    fclose(file);
 end
 
