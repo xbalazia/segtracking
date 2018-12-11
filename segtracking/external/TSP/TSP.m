@@ -27,9 +27,9 @@ function [sp_labels] = TSP(K, root, files, dispOn, frames)
 %   Written by Jason Chang and Donglai Wei 2013/06/20
 
 % add the necessary paths
-addpath('gui/');
-addpath('mex/');
-addpath('util/');
+addpath('external/TSP/gui/');
+addpath('external/TSP/mex/');
+addpath('external/TSP/util/');
 
 
 params.cov_var_p = 1000;
