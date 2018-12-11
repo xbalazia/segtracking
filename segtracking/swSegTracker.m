@@ -97,12 +97,12 @@ for s=1:nSubjects
     file = fopen(fileName,'w');
     for f = 1:nFrames
         if stateInfo.Xi(f,s)>0
-            % frame number, subject number, x, y, w, h, confidence (1), 3d coordinate x (0), 3d coordinate y (0)
-            x = round(stateInfo.Xi(f,s));
-            y = round(stateInfo.Yi(f,s));
             w = round(stateInfo.W(f,s));
             h = round(stateInfo.H(f,s));
-            fprintf(file, sprintf('%d,%d,%d,%d,%d,%d,%d,%d,%d\n',f,s,x-w,y-h,w,h,1,0,0));
+            x = round(stateInfo.Xi(f,s)-w/2);
+            y = round(stateInfo.Yi(f,s)-h);
+            % frame number, subject number, x, y, w, h, confidence (1), 3d coordinate x (0), 3d coordinate y (0)
+            fprintf(file, sprintf('%d,%d,%d,%d,%d,%d,%d,%d,%d\n',f,s,x,y,w,h,1,0,0));
         end
     end
     fclose(file);
