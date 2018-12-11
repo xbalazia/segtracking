@@ -82,9 +82,8 @@ for dd=1:maxMFT
     
     remDets=rmOlDets(MFTHyps,remDets);
     
-%     [maxOL,bestFit]=evaluateHypothesesSet(MFTHyps,gtInfo);
     MFTHyps=trimHyp(MFTHyps,N,sceneInfo);    
-    [maxOL,bestFit]=evaluateHypothesesSet(MFTHyps,gtInfo);
+    %[maxOL,bestFit]=evaluateHypothesesSet(MFTHyps,gtInfo);
     
     
     [alldetscores, scidx]=sort(remDets.sp,'descend');
