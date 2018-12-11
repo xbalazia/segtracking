@@ -94,7 +94,7 @@ end
 mkdir(trkFolder);
 [nFrames, nSubjects] = size(stateInfo.Xi);
 for s=1:nSubjects
-    fileName = fullfile(trkFolder,sprintf('subj%d.txt',s));
+    fileName = fullfile(trkFolder,sprintf('subject%d.txt',s));
     file = fopen(fileName,'w');
     for f = 1:nFrames
         if stateInfo.Xi(f,s)>0
