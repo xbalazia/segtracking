@@ -1,9 +1,7 @@
-function hyps=getBBoxesFromHyps(hypotheses,F)
+function hyps=getBBoxesFromHyps(sceneInfo,hypotheses,F)
 % get bounding boxes (volumetric tubes)
 % from spline structs
 
-global sceneInfo
-%
 hyps.Xi=zeros(F,0);hyps.Yi=zeros(F,0);
 hyps.H=zeros(F,0);hyps.W=zeros(F,0);
 
@@ -16,3 +14,5 @@ hyps.H=zeros(F,0);hyps.W=zeros(F,0);
      hyps.W(fr,h)=xys(3,:);
      hyps.H(fr,h)=xys(4,:);
  end
+ 
+ hyps.frameNums=sceneInfo.frameNums;

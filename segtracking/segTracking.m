@@ -132,8 +132,7 @@ saveiters=0; smiter=0;
 % hypotheses=getHypStruct;
 
 %
-hyps=getBBoxesFromHyps(hypotheses,F);
-hyps.frameNums=sceneInfo.frameNums;
+hyps=getBBoxesFromHyps(sceneInfo,hypotheses,F);
 
 % unaries
 totalNSegs=length(Q);
@@ -368,14 +367,14 @@ stateInfo.F=length(stateInfo.frameNums);
 % startPT.F=F;
 % if isfield(startPT,'Xgp'), startPT=rmfield(startPT,'Xgp');startPT=rmfield(startPT,'Ygp'); end
 % stateInfo=getStateFromSplines(spl,startPT,1);
-% stateInfo=postProcessState(stateInfo);
+% stateInfo=postProcessState(sceneInfo,stateInfo);
 stateInfo.opt=opt;
 % stateInfo.labeling=labeling;
 stateInfo.splabeling=labeling(1:size(DcostS,2));
 stateInfo.bglabel=bglabel;
 stateInfo.hypotheses=hypotheses;
 stateInfo.detlabeling=newlab;
-stateInfo.sceneInfo = sceneInfo;
+stateInfo.sceneInfo=sceneInfo;
 
 % displayTrackingResult(sceneInfo,stateInfo);
 

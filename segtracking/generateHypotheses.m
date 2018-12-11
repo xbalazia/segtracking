@@ -18,12 +18,12 @@ try load(hfile);
 catch
     pOpt=getPirOptions;
     opt.cutToTA=0;
-    startPT=runDP(sceneInfo, detections,pOpt,opt);
+    startPT=runDP(sceneInfo,detections,pOpt,opt);
     if isfield(startPT,'stateVec')
         startPT=rmfield(startPT,'stateVec');
     end
     startPT.opt=opt;
-    hypotheses=getHypsFromDP(startPT, frames,F,sceneInfo,opt);
+    hypotheses=getHypsFromDP(startPT,frames,F,sceneInfo,opt);
     DPHyp=hypotheses;
     save(hfile,'DPHyp','startPT');
 end

@@ -29,7 +29,7 @@ else
 end
 
 %% get bounding boxes from corresponding detections
-stateInfo=getBBoxesFromState(stateInfo);
+stateInfo=getBBoxesFromState(sceneInfo,stateInfo);
 % YSHIFT
 if ~opt.track3d && sceneInfo.yshift
     stateInfo.Yi=stateInfo.Yi+stateInfo.H/2;

@@ -1,11 +1,11 @@
-function stateInfo=getBBoxesFromState(stateInfo)
+function stateInfo=getBBoxesFromState(sceneInfo,stateInfo)
 % for visualization and for 2D evaluation
 % we need the bounding boxes of the targets
 % To this end, we check for corresponding detections
 % and interpolate them to get the solution boxes
 
 
-global detections sceneInfo
+global detections
 % [~, N F targetsExist X Y]=getStateInfo(stateInfo);
 X=stateInfo.X; Y=stateInfo.Y;
 
@@ -35,7 +35,7 @@ for id=1:N
         
             alldist=sqrt(sum((repmat(xy,1,ndets)-dets).^2)); % distance to all        
             [mindist mindet]=min(alldist);
-            if mindist<=sceneInfo.targetSize
+            if mindist<=sceneInfo.targetSize/1
                 asscDet(t)=mindet;
                 widths(t)=detections(t).wd(mindet);
                 heights(t)=detections(t).ht(mindet);
