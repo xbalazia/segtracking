@@ -7,10 +7,13 @@ DPHyp=[];
 hypothesesMFTDP=[];
 hypothesesMFTH=[];
 
-hypsDir='tmp/hyps/'; if ~exist(hypsDir,'dir'), mkdir(hypsDir); end
+hypsFolder=[sceneInfo.tmpFolder 'hyps'];
+if ~exist(hypsFolder,'dir')
+    mkdir(hypsFolder);
+end
 
 fprintf('DPHyp:');
-hfile=sprintf('tmp/hyps/DPHyp-%04d-%d-%d.mat',scenario,frames(1),frames(end));
+hfile=sprintf('%s/DPHyp-%04d-%d-%d.mat',hypsFolder,scenario,frames(1),frames(end));
 try load(hfile);
 catch
     pOpt=getPirOptions;
@@ -27,7 +30,7 @@ end
 fprintf('OK\n');
 
 fprintf('MFTHyp:');
-hfile=sprintf('tmp/hyps/MFTHyp-%04d-%d-%d-%d.mat',scenario,frames(1),frames(end),opt.maxMFTHyp);
+hfile=sprintf('%s/MFTHyp-%04d-%d-%d-%d.mat',hypsFolder,scenario,frames(1),frames(end),opt.maxMFTHyp);
 try load(hfile)
 catch err
     generateHypothesesMFT;save(hfile,'hypothesesMFTH');
@@ -35,7 +38,7 @@ end
 fprintf('OK\n');
 
 fprintf('MFTDPHyp:');
-hfile=sprintf('tmp/hyps/MFTDPHyp-%04d-%d-%d-%d.mat',scenario,frames(1),frames(end),opt.maxMFTDPHyp);
+hfile=sprintf('%s/MFTDPHyp-%04d-%d-%d-%d.mat',hypsFolder,scenario,frames(1),frames(end),opt.maxMFTDPHyp);
 try load(hfile)
 catch err
     generateHypothesesMFTDP;save(hfile,'hypothesesMFTDP');

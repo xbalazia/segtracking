@@ -16,8 +16,9 @@ sp_labels=sp_labels(:,:,frames);
 %%%%%% optic flow
 % clear flowinfo iminfo
 fprintf('seqinfo/flowinfo:');
-if ~exist('tmp/seqinfo/','dir'), mkdir('tmp/seqinfo'); end
-fifile=sprintf('tmp/seqinfo/flowinfo-%04d-%d-%d.mat',scenario,frames(1),frames(end));
+seqInfoFolder=[sceneInfo.tmpFolder 'seqinfo'];
+if ~exist(seqInfoFolder,'dir'), mkdir(seqInfoFolder); end
+fifile=sprintf('%s/flowinfo-%04d-%d-%d.mat',seqInfoFolder,scenario,frames(1),frames(end));
 try load(fifile)
 catch
     for t=2:F
@@ -31,7 +32,7 @@ fprintf('OK\n')
 
 % all images in one array
 fprintf('seqinfo/iminfo:');
-iifile=sprintf('tmp/seqinfo/iminfo-%04d-%d-%d.mat',scenario,frames(1),frames(end));
+iifile=sprintf('%s/iminfo-%04d-%d-%d.mat',seqInfoFolder,scenario,frames(1),frames(end));
 try load(iifile)
 catch
     for t=1:F
@@ -46,8 +47,9 @@ fprintf('OK\n');
 %%%%% Iunsp
 % independent superpixels for each frame
 fprintf('Iunsp:');
-if ~exist('tmp/Iunsp/','dir'), mkdir('tmp/Iunsp'); end
-Iunsplfile=sprintf('tmp/Iunsp/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K);
+iUnspFolder=[sceneInfo.tmpFolder 'Iunsp'];
+if ~exist(iUnspFolder,'dir'), mkdir(iUnspFolder); end
+Iunsplfile=sprintf('%s/%04d-%d-%d-K%d.mat',iUnspFolder,scenario,frames(1),frames(end),K);
 try load(Iunsplfile)
 catch
     Iunsp=unspliceSeg(sp_labels);
@@ -60,8 +62,9 @@ fprintf('OK\n');
 %%%%% ISall
 % all info about superpixel in one single matrix
 fprintf('ISall:');
-if ~exist('tmp/ISall/','dir'), mkdir('tmp/ISall'); end
-ISallfile=sprintf('tmp/ISall/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K);
+isAllFolder=[sceneInfo.tmpFolder 'ISall'];
+if ~exist(isAllFolder,'dir'), mkdir(isAllFolder); end
+ISallfile=sprintf('%s/%04d-%d-%d-K%d.mat',isAllFolder,scenario,frames(1),frames(end),K);
 try load(ISallfile)
 catch
     [ISall,IMIND]=combineAllIndices(sp_labels,Iunsp, sceneInfo, flowinfo,iminfo);
@@ -72,7 +75,7 @@ fprintf('OK\n');
 %%%%%%%% concat sequence info into struct array
 fprintf('seqinfo:');
 clear seqinfo SPPerFrame
-sifile=sprintf('tmp/seqinfo/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K);
+sifile=sprintf('%s/%04d-%d-%d-K%d.mat',seqInfoFolder,scenario,frames(1),frames(end),K);
 try load(sifile)
 catch
     for t=1:F
