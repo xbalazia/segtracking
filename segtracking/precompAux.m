@@ -9,8 +9,8 @@ try load(fullfile(sceneInfo.imgFolder,spfile));
     sp_labels=sp_labels(:,:,frames);
 catch err
     fprintf('Oops, we need superpixels. This may take a while...\n');
-    %thisd=pwd;
-    %TSPd=fullfile('external','TSP');
+    thisd=pwd;
+    TSPd=fullfile('external','TSP');
     myTSP;
     sp_labels=sp_labels(:,:,frames);
 end
@@ -95,6 +95,6 @@ catch
         % how many superpixels in each frame?
         SPPerFrame(t)=numel(unique(sp_labels(:,:,t)));
     end
-    save(sifile,'seqinfo','SPPerFrame', '-v7.3');
+    save(sifile,'seqinfo','SPPerFrame','-v7.3');
 end
 fprintf('OK\n');

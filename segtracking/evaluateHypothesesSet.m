@@ -15,7 +15,7 @@ d=getTrackOverlap3(hyps,gtInfo);
 keepIDs=unique(bestFit);
 
 % fprintf('-----------------------\n');
-fprintf('Best Hyp Fit: %.1f %%\n',100*sum(maxOL)/Ngt);
+%fprintf('Best Hyp Fit: %.1f %%\n',100*sum(maxOL)/Ngt);
 
 fields={'X','Y','Xi','Yi','W','H','Xgp','Ygp'};
 for f=fields
