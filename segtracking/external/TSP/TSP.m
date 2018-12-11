@@ -1,16 +1,17 @@
-function [sp_labels] = TSP(K, root, files, dispOn, frames)
+function [sp_labels] = TSP(K, imgFolder, tmpFolder, files, dispOn, frames)
 %TSP Temporal Superpixel Segmentation.
-%   SP_LABELS = TSP(K, ROOT, FILES) returns the label matrix in time and
+%   SP_LABELS = TSP(K, IMGFOLDER, TMPFOLDER, FILES) returns the label matrix in time and
 %   space for the video volume in UINT32. K is the (approximate) number of
-%   superpixels per frame. ROOT is the directory to the frames. FILES is a
+%   superpixels per frame. IMGFOLDER is the directory to the input frames.
+%   TMPFOLDER is the directory to the output flows. FILES is a
 %   list of the frame images, typically obtained using
-%      FILES = dir([ROOT '*.jpg']);
+%      FILES = dir([IMGFOLDER '*.jpg']);
 %
-%   SP_LABELS = TSP(K, ROOT, FILES, DISPON) supplies an additional flag to
+%   SP_LABELS = TSP(K, IMGFOLDER, TMPFOLDER, FILES, DISPON) supplies an additional flag to
 %   display the progress of the algorithm while processing. If omitted or
 %   empty, DISPON defaults to true.
 %
-%   SP_LABELS = TSP(K, ROOT, FILES, DISPON, FRAMES) supplies an additional
+%   SP_LABELS = TSP(K, IMGFOLDER, TMPFOLDER, FILES, DISPON, FRAMES) supplies an additional
 %   variable that indicates which frames to process. FRAMES should be in
 %   the format of STARTFRAME:ENDFRAME. If omitted or empty, FRAMES defaults
 %   to 1:NUMFRAMES.
@@ -47,15 +48,15 @@ if (~exist('dispOn','var') || isempty(dispOn))
     dispOn = true;
 end
 
-root_flows = fullfile(root,'TSP_flows/');
-if (~exist(root_flows,'dir'))
-    mkdir(root_flows);
+tspFolder = fullfile(tmpFolder,'TSP_flows/');
+if (~exist(tspFolder,'dir'))
+    mkdir(tspFolder);
 end
 
 
 alldone=1;
 for f=2:numel(files)
-    outname = fullfile(root_flows,[files(f).name(1:end-4) '_flow.mat']);
+    outname = fullfile(tspFolder,[files(f).name(1:end-4) '_flow.mat']);
     if ~exist(outname,'file')
         alldone=0;
         break;
@@ -73,10 +74,10 @@ if ~alldone
     if strncmp(hname,'acvt',4)
       fprintf('We are on cluster. Do single thread\n');
       for f=2:numel(files)
-	  outname = fullfile(root_flows,[files(f).name(1:end-4) '_flow.mat']);
+	  outname = fullfile(tspFolder,[files(f).name(1:end-4) '_flow.mat']);
 	  if exist(outname,'file'), continue; end
-	  im1 = imread(fullfile(root,files(f-1).name));
-	  im2 = imread(fullfile(root,files(f).name));
+	  im1 = imread(fullfile(imgFolder,files(f-1).name));
+	  im2 = imread(fullfile(imgFolder,files(f).name));
 	  disp([' -> ' outname]);
 	  compute_of(im1,im2,outname);
       end    
@@ -87,10 +88,10 @@ if ~alldone
         parpool;
       end
       parfor f=2:numel(files)
-	  outname = fullfile(root_flows,[files(f).name(1:end-4) '_flow.mat']);
+	  outname = fullfile(tspFolder,[files(f).name(1:end-4) '_flow.mat']);
 	  if exist(outname,'file'), continue; end
-	  im1 = imread(fullfile(root,files(f-1).name));
-	  im2 = imread(fullfile(root,files(f).name));
+	  im1 = imread(fullfile(imgFolder,files(f-1).name));
+	  im2 = imread(fullfile(imgFolder,files(f).name));
 	  disp([' -> ' outname]);
 	  compute_of(im1,im2,outname);
       end    
@@ -100,14 +101,14 @@ if ~alldone
     disp(' -> Optical flow calculations done');
 end
 
-flow_files = dir([root_flows '*_flow.mat']);
+flow_files = dir([tspFolder '*_flow.mat']);
 
 if (~exist('frames','var') || isempty(frames))
     frames = 1:numel(files);
 else
     frames(frames>numel(files)) = [];
 end
-oim = imread([root files(1).name]);
+oim = imread([imgFolder files(1).name]);
 sp_labels = zeros(size(oim,1), size(oim,2), numel(frames), 'uint32');
 frame_it = 0;
 
@@ -116,7 +117,7 @@ for f=frames
     disp([' -> Frame '  num2str(f) ' / ' num2str(numel(frames))]);
     
     frame_it = frame_it + 1;
-    oim1 = imread([root files(f).name]);
+    oim1 = imread([imgFolder files(f).name]);
     
     if (frame_it==1)
         IMG = IMG_init(oim1, params);
@@ -125,7 +126,7 @@ for f=frames
         vx = zeros(size(oim,1), size(oim,2));
         vy = zeros(size(oim,1), size(oim,2));
         % load the optical flow
-        load([root_flows flow_files(f-1).name]);
+        load([tspFolder flow_files(f-1).name]);
         
         vx = -flow.bvx;
         vy = -flow.bvy;
