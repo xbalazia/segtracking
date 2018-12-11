@@ -12,9 +12,9 @@
 #define _abs(x) (x>=0)?x:-x
 #endif
 
-#ifndef PI
-#define PI 3.1415927
-#endif
+//#ifndef PI
+//#define PI 3.1415927
+//#endif
 
 enum SortType{SortAscending,SortDescending};
 
