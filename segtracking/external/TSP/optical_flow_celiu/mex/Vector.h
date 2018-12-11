@@ -449,7 +449,7 @@ void Vector<T>::readVector(const mxArray* prhs)
 template <class T>
 void Vector<T>::writeVector(mxArray*& plhs) const
 {
-	int dims[2];
+	mwSize dims[2];
 	dims[0]=nDim;dims[1]=1;
 	plhs=mxCreateNumericArray(2, dims,mxDOUBLE_CLASS, mxREAL);
 	double *ptr = (double*)mxGetData(plhs);
