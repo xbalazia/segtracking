@@ -1,5 +1,4 @@
 function visResult2(stateInfo, sp_labels, iminfo)
-
 %% vis result
 alphablend=0.5;
 cnt=0;

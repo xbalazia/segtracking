@@ -85,7 +85,6 @@ catch err
 end
 
 % print tracks
-stateInfo.Xi
 fprintf('Printing tracks\n');
 trkFolder = sceneInfo.trkFolder;
 if exist(trkFolder,'dir')
@@ -95,7 +94,7 @@ mkdir(trkFolder);
 [nFrames, nSubjects] = size(stateInfo.Xi);
 [nFrames nSubjects]
 for s=1:nSubjects
-    fileName = sprintf('%s/subject%d.txt',trkFolder,s);
+    fileName = fullfile(trkFolder,sprintf('subj%d.txt',s));
     file = fopen(fileName,'w');
     for f = 1:nFrames
         if stateInfo.Xi(f,s)>0
