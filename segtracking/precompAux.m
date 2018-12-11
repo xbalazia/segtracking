@@ -5,13 +5,14 @@ F=length(frames);
 
 %%%%%% superpixels
 try load(sprintf('%ssp-K%d.mat',sceneInfo.tmpFolder,K));
-    sp_labels=sp_labels(:,:,frames);
 catch err
     fprintf('Oops, we need superpixels. This may take a while...\n');
     thisd=pwd;
     TSPd=fullfile('external','TSP');
     myTSP;
 end
+
+sp_labels=sp_labels(:,:,frames);
 
 
 %%%%%% optic flow
