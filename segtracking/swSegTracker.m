@@ -63,7 +63,7 @@ end
 %% finish up
 sceneInfo=parseScene(sceneFile);
 detections=parseDetections(sceneInfo,opt);
-K= opt.nSP;
+K=opt.nSP;
 
 % superpixel info
 spfile=sprintf('sp-K%d.mat',K);
@@ -74,10 +74,9 @@ stateInfo.frameNums=uint16(stateInfo.frameNums);
 stateInfo.splabeling=uint16(stateInfo.splabeling);
 stateInfo.detlabeling=uint16(stateInfo.detlabeling);
 
-try
-    gtInfo=convertTXTToStruct(sceneInfo.gtFile);
+try gtInfo=convertTXTToStruct(sceneInfo.gtFile);
     printFinalEvaluation(stateInfo, gtInfo, sceneInfo, struct('track3d',char(howToTrack(sceneInfo.scenario))));
 catch err
-    fprintf('Evaluation failed. %s\n',err.message);
+    fprintf('Evaluation skipped. %s\n',err.message);
 end
 

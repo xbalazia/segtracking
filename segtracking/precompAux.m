@@ -12,6 +12,7 @@ catch err
     %thisd=pwd;
     %TSPd=fullfile('external','TSP');
     myTSP;
+    sp_labels=sp_labels(:,:,frames);
 end
 
 %%%%%% optic flow

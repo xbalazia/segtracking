@@ -12,7 +12,6 @@ function stateInfo=segTracking(sceneFile,opt)
 addpath(genpath('./mex'))
 
 
-
 % global scenario gtInfo opt detections stStartTime htobj labdet
 global sceneInfo detections gtInfo glopt scenario
 
@@ -389,18 +388,11 @@ if howToTrack(scenario)
     stateInfo.X=stateInfo.Xgp;stateInfo.Y=stateInfo.Ygp;    
 end
 
-
-try
-    [metrics2d, metrics3d, addInfo2d, addInfo3d]= ...
-        printFinalEvaluation(stateInfo, gtInfo, sceneInfo, struct('track3d',char(howToTrack(scenario))));
-catch err
-    fprintf('Evaluation failed: %s\n', err.message);
-end
-
 %% vis
 % bglabel=nLabels;
 
 % uncoment to visualize
+fprintf('Visualization\n')
 visResult2(stateInfo,sp_labels,iminfo)
 
 
