@@ -22,7 +22,7 @@ addpath(genpath('./external'))
 
 % get scene information and parameters
 sceneFile = p.Results.scene;
-sceneInfo = parseScene(sceneFile);
+sceneInfo = parseScene(sceneFile);%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 opt=parseOptions(p.Results.params);
 
 stateInfo = [];
@@ -41,7 +41,7 @@ while toframe<=FF
     opt.frames=fromframe:toframe;
     
     % DO TRACKING ON SUBWINDOW HERE
-    stateInfo=segTracking(sceneFile,opt);
+    stateInfo=segTracking(sceneInfo,opt);
     
     allstInfo=[allstInfo stateInfo];
     allwins(wincnt,:)=[fromframe, toframe];

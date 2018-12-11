@@ -1,4 +1,4 @@
-function stateInfo=segTracking(sceneFile,opt)
+function stateInfo=segTracking(sceneInfo,opt)
 % This code accompanies the publication
 %
 % Joint Tracking and Segmentation of Multiple Targets
@@ -37,7 +37,7 @@ F=length(frames);
 rng(1); 
 
 % get info about sequence
-sceneInfo=parseScene(sceneFile);%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%sceneInfo=parseScene(sceneFile);%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 scenario=sceneInfo.scenario;
 
 sceneInfo.frameNums=sceneInfo.frameNums(frames);
