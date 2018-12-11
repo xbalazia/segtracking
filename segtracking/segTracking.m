@@ -116,8 +116,6 @@ ISallglob=ISall; Qglob=Q;
 %% generate initial set of trajectory hypotheses
 generateHypotheses;
 
-
-
 saveiters=0; smiter=0;
 
 % hypotheses=getHypStruct;
