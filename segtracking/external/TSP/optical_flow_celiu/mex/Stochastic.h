@@ -8,9 +8,9 @@
 
 #define _Release_2DArray(X,i,length) for(i=0;i<length;i++) if(X[i]!=NULL) delete X[i]; delete []X
 
-#ifndef _abs(x)
-#define _abs(x) (x>=0)?x:-x
-#endif
+//#ifndef _abs(x)
+//#define _abs(x) (x>=0)?x:-x
+//#endif
 
 //#ifndef PI
 //#define PI 3.1415927
