@@ -21,8 +21,10 @@ detcnt=0;
 for t=1:F
     fileName=sprintf(visFileFormat,sceneInfo.frameNums(t));
     thisF=sp_labels(:,:,t);
+    
     im=getFrame(sceneInfo,t);
     %im=iminfo(t).img;
+    
     npix=size(im,1)*size(im,2);
     segs=unique(thisF(:))';
     Itmp=zeros(size(im));
