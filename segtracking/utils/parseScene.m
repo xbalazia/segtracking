@@ -43,7 +43,7 @@ end
     size(imread([sceneInfo.imgFolder sprintf(sceneInfo.imgFileFormat,sceneInfo.frameNums(1))]));
 
 % generic target size, will be determined based on detections
-sceneInfo.targetSize=10; 
+sceneInfo.targetSize=20; 
 
 
 % ground truth available?
