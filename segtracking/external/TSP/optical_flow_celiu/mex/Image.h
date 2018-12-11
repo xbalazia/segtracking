@@ -2815,7 +2815,7 @@ void Image<T>::OutputToMatlab(mxArray *&matrix) const
 	dims[0]=imHeight;
 	dims[1]=imWidth;
 	dims[2]=nChannels;
-	int nDims;
+	mwSize nDims;
 	nDims = (nChannels ==1)? 2:3;
 	if(typeid(T) == typeid(unsigned char))
 		matrix=mxCreateNumericArray(nDims, dims,mxUINT8_CLASS, mxREAL);
