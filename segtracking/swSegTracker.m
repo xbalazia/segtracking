@@ -6,6 +6,8 @@ function stateInfo=swSegTracker(varargin)
 % CVPR 2015
 %
 
+fprintf('-------------------------------------------------------------------------------------\n');
+
 % parse input parameters
 p = inputParser;
 addOptional(p,'scene','config/scene.ini');
