@@ -12,19 +12,12 @@ end
 
 % make sure ini contains all necessary fields
 assert(ini.IsKeys('Scene','imgFolder'),'Need imgFolder');
-assert(ini.IsKeys('Scene','frameRate'),'Need frame rate');
-assert(ini.IsKeys('Scene','frameRate'),'Need detections file');
-
+assert(ini.IsKeys('Scene','detFile'),'Need detections file');
+assert(ini.IsKeys('Scene','imgFileFormat'),'Need imgFileFormat');
 
 sceneInfo.imgFolder = ini.GetValues('Scene','imgFolder');
-sceneInfo.frameRate = ini.GetValues('Scene','frameRate');
-sceneInfo.detFile   = ini.GetValues('Scene','detFile');
-
-
-% Default file format: %06d.jpg
-[sceneInfo.imgFileFormat,s]=ini.GetValues('Scene','imgFileFormat');
-if ~s, sceneInfo.imgFileFormat='%06d.jpg'; end
-
+sceneInfo.detFile = ini.GetValues('Scene','detFile');
+sceneInfo.imgFileFormat = ini.GetValues('Scene','imgFileFormat');
 
 % if no frame nums, determine from images
 [sceneInfo.frameNums,s]=ini.GetValues('Scene','frameNums');
