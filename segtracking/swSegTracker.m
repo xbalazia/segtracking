@@ -14,6 +14,10 @@ addOptional(p,'params','config/params.ini');
 parse(p,varargin{:});
 
 
+% global scenario gtInfo opt detections stStartTime htobj labdet
+global sceneInfo detections gtInfo glopt scenario
+
+
 % add paths
 addpath(genpath('./utils'))
 addpath(genpath('./external'))
@@ -39,7 +43,7 @@ while toframe<=FF
     opt.frames=fromframe:toframe;
     
     % DO TRACKING ON SUBWINDOW HERE
-    stateInfo=segTracking(sceneFile,opt);
+    stateInfo=segTracking(sceneInfo,opt);
     
     allstInfo=[allstInfo stateInfo];
     allwins(wincnt,:)=[fromframe, toframe];

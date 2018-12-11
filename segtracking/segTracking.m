@@ -1,4 +1,4 @@
-function stateInfo=segTracking(sceneFile,opt)
+function stateInfo=segTracking(sceneInfo,opt)
 % This code accompanies the publication
 %
 % Joint Tracking and Segmentation of Multiple Targets
@@ -13,8 +13,7 @@ addpath(genpath('./mex'))
 
 
 
-% global scenario gtInfo opt detections stStartTime htobj labdet
-global sceneInfo detections gtInfo glopt scenario
+
 
 %% prepare
 stStartTime=tic;
