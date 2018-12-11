@@ -97,7 +97,6 @@ for t=1:F
     
     
 end
-fprintf('\n');
 
 %%% EXPERIMENTAL
 % spBoxFeatures;
