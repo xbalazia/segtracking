@@ -13,7 +13,8 @@ addpath(genpath('./mex'))
 
 
 % global scenario gtInfo opt detections stStartTime htobj labdet
-global sceneInfo detections gtInfo glopt scenario
+%global sceneInfo detections gtInfo glopt scenario
+global detections gtInfo glopt scenario
 
 %% prepare
 stStartTime=tic;
