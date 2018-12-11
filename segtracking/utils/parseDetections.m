@@ -5,7 +5,7 @@ function [detections, nDets]=parseDetections(sceneInfo, opt, confthr)
 
 nDets=0;
 
-detFile=fullfile(sceneInfo.detFolder,sceneInfo.detector,'detections.txt');
+detFile=fullfile(sceneInfo.detFolder,'detections.txt');
 % first determine the type
 [pathstr, filename, fileext]=fileparts(detFile);
 % is there a .mat file available?
