@@ -17,14 +17,14 @@ assert(ini.IsKeys('Scene','tmp'),'Need tmp');
 assert(ini.IsKeys('Scene','det'),'Need det');
 assert(ini.IsKeys('Scene','trk'),'Need trk');
 assert(ini.IsKeys('Scene','vis'),'Need vis');
-assert(ini.IsKeys('Scene','database'),'Need database');
 assert(ini.IsKeys('Scene','detector'),'Need detector');
 
+detector = ini.GetValues('Scene','detector')
 sceneInfo.imgFolder = ini.GetValues('Scene','img');
 sceneInfo.tmpFolder = ini.GetValues('Scene','tmp');
-sceneInfo.detFolder = [ini.GetValues('Scene','det') ini.GetValues('Scene','detector') '/'];
-sceneInfo.trkFolder = [ini.GetValues('Scene','trk') ini.GetValues('Scene','detector') '/'];
-sceneInfo.visFolder = [ini.GetValues('Scene','vis') ini.GetValues('Scene','detector') '/'];
+sceneInfo.detFolder = [ini.GetValues('Scene','det') detector '/'];
+sceneInfo.trkFolder = [ini.GetValues('Scene','trk') detector '/'];
+sceneInfo.visFolder = [ini.GetValues('Scene','vis') detector '/'];
 
 % Default file format: %06d.jpg
 [sceneInfo.imgFileFormat,s]=ini.GetValues('Scene','imgFileFormat');
