@@ -36,7 +36,6 @@ assert(imCoord || worldCoord, ...
 
 % go through all lines
 for l=1:numLines
-    % frame number, subject number, x, y, w, h, confidence, 3DcoordX, 3DcoordY
     lineData=allData(l,:);
     
     % ignore 0-marked GT

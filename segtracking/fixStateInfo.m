@@ -23,7 +23,9 @@ if isfield(stateInfo,'X')
     stateInfo.X(rmb)=0;stateInfo.Y(rmb)=0;
 end
 
-[sIX, sIY, sI] = cleanState(stateInfo.X, stateInfo.Y, stateInfo);
-stateInfo.X = sIX;
-stateInfo.Y = sIY;
-stateInfo = sI;  
+
+
+
+
+[stateInfo.X, stateInfo.Y, stateInfo]= ...
+    cleanState(stateInfo.X, stateInfo.Y,stateInfo);

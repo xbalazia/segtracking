@@ -1,4 +1,4 @@
-function stateInfo=segTracking(sceneInfo,opt)
+function stateInfo=segTracking(sceneFile,opt)
 % This code accompanies the publication
 %
 % Joint Tracking and Segmentation of Multiple Targets
@@ -11,9 +11,10 @@ function stateInfo=segTracking(sceneInfo,opt)
 % addpath(genpath('./opengm'))
 addpath(genpath('./mex'))
 
-global detections gtInfo
 
 
+% global scenario gtInfo opt detections stStartTime htobj labdet
+global sceneInfo detections gtInfo glopt scenario
 
 %% prepare
 stStartTime=tic;
@@ -26,12 +27,19 @@ stStartTime=tic;
 
 if ~isfield(opt,'frames'), opt.frames = 1:length(sceneInfo.frameNums); end
 frames=opt.frames;
+
+
+
 F=length(frames);
 % opt.maxRemove=0;
 % opt.canvel=3;
 
 % set random seed for deterministic results
-rng(1);
+rng(1); 
+
+% get info about sequence
+sceneInfo = parseScene(sceneFile);
+scenario=sceneInfo.scenario;
 
 sceneInfo.frameNums=sceneInfo.frameNums(frames);
 
@@ -66,8 +74,12 @@ avgMinDetDistF=avgMinDetDist(detections);
 
 %% all ims, all flows
 fprintf('Precomputing helper structures\n');
-[~, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = precompAux(sceneInfo,K,frames);
+[~, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = ...
+    precompAux(scenario,sceneInfo,K,frames);
+
+% TODO: MOVO TO PRECOMP
 sPerFrame=segsPerFrame(sp_labels);
+
 
 meanFlow=mean(sqrt(ISall(:,9).^2 + ISall(:,10).^2),1);
 
@@ -77,6 +89,7 @@ if isfield(opt,'ucostpar')
     ufac=1/avgMinDetDistF; ufac=min(ufac,10); ufac=max(ufac,0.1);
     opt.unaryFactor = opt.unaryFactor * ufac;
 end
+
 
 
 opt.objMaskFile='objMask.mat';
@@ -101,7 +114,7 @@ end
 glopt=opt;
 
 %% print initial infos
-printHeader(sceneInfo,1);
+printHeader(sceneInfo,scenario,1);
 printParams(opt);
 
 
@@ -374,6 +387,14 @@ stateInfo.X=stateInfo.Xi;stateInfo.Y=stateInfo.Yi;
 if howToTrack(scenario)
     [stateInfo.Xgp, stateInfo.Ygp]=projectToGroundPlane(stateInfo.Xi, stateInfo.Yi, sceneInfo);
     stateInfo.X=stateInfo.Xgp;stateInfo.Y=stateInfo.Ygp;    
+end
+
+
+try
+    [metrics2d, metrics3d, addInfo2d, addInfo3d]= ...
+        printFinalEvaluation(stateInfo, gtInfo, sceneInfo, struct('track3d',char(howToTrack(scenario))));
+catch err
+    fprintf('Evaluation failed: %s\n', err.message);
 end
 
 %% vis

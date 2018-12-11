@@ -20,25 +20,25 @@
 
 % parameters for TSPs
 K = 800;
-imgFolder = sceneInfo.imgFolder; 
-tmpFolder = sceneInfo.tmpFolder; 
+root = sceneInfo.imgFolder; 
 [~, fe]=strtok(sceneInfo.imgFileFormat,'.');
-files = dir([imgFolder '*' fe]);
+files = dir([root '*' fe]);
 % frames=1:20;files=files(frames);
 dispOn = false;
 
 % infer the TSPs
-[sp_labels] = TSP(K, imgFolder, tmpFolder, files, dispOn);
+[sp_labels] = TSP(K, root, files, dispOn);
 
 % save the results
-save(sprintf('%s/sp-K%d.mat',tmpFolder,K), 'sp_labels','-v7.3');
+outfile=sprintf('sp-K%d.mat',K);
+save(fullfile(sceneInfo.imgFolder,outfile), 'sp_labels','-v7.3');
 
 
 %% view the results
 % load('results/sp_labels_girl.mat');
 % load('results/sp_labels_girl_demo.mat'); % precomputed one
 % 
-% % tmpFolder = 'sequences/girl/';
+% % root = 'sequences/girl/';
 % 
 % % view the TSPs
-% view_sp_gui(sp_labels, tmpFolder);
+% view_sp_gui(sp_labels, root);

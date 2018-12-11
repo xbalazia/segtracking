@@ -1,30 +1,25 @@
 function sceneInfo = parseScene(sceneFile)
 % read .ini file containing essential scene information
 
-sceneInfo=[];
+sceneInfo =[];
 
 ini=IniConfig();
 
 
 try ini.ReadFile(sceneFile);
-catch err
-    fprintf('Error reading %s. %s',sceneFile,err.message);
+catch err,    fprintf('Error reading %s. %s',sceneFile,err.message);
 end
 
 % make sure ini contains all necessary fields
-assert(ini.IsKeys('Scene','img'),'Need img');
-assert(ini.IsKeys('Scene','tmp'),'Need tmp');
-assert(ini.IsKeys('Scene','det'),'Need det');
-assert(ini.IsKeys('Scene','trk'),'Need trk');
-assert(ini.IsKeys('Scene','vis'),'Need vis');
-assert(ini.IsKeys('Scene','detector'),'Need detector');
+assert(ini.IsKeys('Scene','imgFolder'),'Need imgFolder');
+assert(ini.IsKeys('Scene','frameRate'),'Need frame rate');
+assert(ini.IsKeys('Scene','frameRate'),'Need detections file');
 
-detector = ini.GetValues('Scene','detector');
-sceneInfo.imgFolder = [ini.GetValues('Scene','img') '/'];
-sceneInfo.tmpFolder = [ini.GetValues('Scene','tmp') '/'];
-sceneInfo.detFolder = [ini.GetValues('Scene','det') '/' detector '/'];
-sceneInfo.trkFolder = [ini.GetValues('Scene','trk') '/' detector '/'];
-sceneInfo.visFolder = [ini.GetValues('Scene','vis') '/' detector '/'];
+
+sceneInfo.imgFolder = ini.GetValues('Scene','imgFolder');
+sceneInfo.frameRate = ini.GetValues('Scene','frameRate');
+sceneInfo.detFile   = ini.GetValues('Scene','detFile');
+
 
 % Default file format: %06d.jpg
 [sceneInfo.imgFileFormat,s]=ini.GetValues('Scene','imgFileFormat');
@@ -56,7 +51,7 @@ end
 
 % sequence name and ID (scenario)
 [sceneInfo.sequence,s]=ini.GetValues('Scene','sequence');
-sceneInfo.scenario=0; %getScenarioFromSequence(sceneInfo)
+sceneInfo=getScenarioFromSequence(sceneInfo);
 
 %%%%%%%%%%%%%%%%%%%
 % old stuff, ignore

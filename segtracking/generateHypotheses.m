@@ -1,51 +1,48 @@
 %%
+% initsolfile=sprintf('/home/amilan/research/projects/dctracking/data/init/dptracking/startPT-pir-s%04d.mat',scenario);
+% load(initsolfile);
 
 % global opt detections
 DPHyp=[];
 hypothesesMFTDP=[];
 hypothesesMFTH=[];
 
-hypsDir=fullfile(sceneInfo.tmpFolder,'hyps'); if ~exist(hypsDir,'dir'), mkdir(hypsDir); end
-scenario=sceneInfo.scenario;
+hypsDir='tmp/hyps/'; if ~exist(hypsDir,'dir'), mkdir(hypsDir); end
 
-fprintf('DPHyp:');
-hfile=sprintf('%s/DPHyp-%04d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end));
+hfile=sprintf('tmp/hyps/DPHyp-%04d-%d-%d.mat',scenario,frames(1),frames(end))
+fprintf('DPHyp');
 try load(hfile)
 catch
+    
     pOpt=getPirOptions;
     opt.cutToTA=0;
     startPT=runDP(sceneInfo, detections,pOpt,opt);
-    if isfield(startPT,'stateVec')
-        startPT=rmfield(startPT,'stateVec');
-    end
-    startPT.opt=opt;   
-    hypotheses=getHypsFromDP(startPT,frames,F,sceneInfo,opt);
+    if isfield(startPT,'stateVec'),     startPT=rmfield(startPT,'stateVec'); end
+    startPT.opt=opt;    
+    
+    hypotheses=getHypsFromDP(startPT, frames,F,sceneInfo,opt);
     DPHyp=hypotheses;
     save(hfile,'DPHyp','startPT');
-end
-fprintf('OK\n');
 
-fprintf('MFTHyp:');
-hfile=sprintf('%s/MFTHyp-%04d-%d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end),opt.maxMFTHyp);
+end
+
+hfile=sprintf('tmp/hyps/MFTHyp-%04d-%d-%d-%d.mat',scenario,frames(1),frames(end),opt.maxMFTHyp)
+fprintf('MFTHyp');
 try load(hfile)
 catch err
-    generateHypothesesMFT;
-    save(hfile,'hypothesesMFTH');
+    generateHypothesesMFT;save(hfile,'hypothesesMFTH');
 end
-fprintf('OK\n');
 
-fprintf('MFTDPHyp:');
-hfile=sprintf('%s/MFTDPHyp-%04d-%d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end),opt.maxMFTDPHyp);
+hfile=sprintf('tmp/hyps/MFTDPHyp-%04d-%d-%d-%d.mat',scenario,frames(1),frames(end),opt.maxMFTDPHyp)
+fprintf('MFTDPHyp');
 try load(hfile)
 catch err
-    generateHypothesesMFTDP;
-    save(hfile,'hypothesesMFTDP');
+    generateHypothesesMFTDP;save(hfile,'hypothesesMFTDP');
 end
-fprintf('OK\n');
 
-hypotheses=DPHyp;
-hypotheses=[hypotheses hypothesesMFTDP];
-hypotheses=[hypotheses hypothesesMFTH];
+hypotheses=DPHyp; length(hypotheses)
+hypotheses=[hypotheses hypothesesMFTDP]; length(hypotheses)
+hypotheses=[hypotheses hypothesesMFTH]; length(hypotheses)
 
 
 if opt.gthyp

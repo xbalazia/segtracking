@@ -1,6 +1,6 @@
-function [ISall,IMIND]=combineAllIndices(sp_labels,Iunsp,sceneInfo,flowinfo,iminfo)
+function [ISall,IMIND]=combineAllIndices(TSP,Iunsp,sceneInfo,flowinfo,iminfo)
 % a helper lookup table
-% ISall(k,1) = sp_labels
+% ISall(k,1) = TSP
 % ISall(k,2) = Iunsp
 % ISall(k,3) = frame
 % ISall(k,4) = mean x (v)
@@ -14,11 +14,11 @@ function [ISall,IMIND]=combineAllIndices(sp_labels,Iunsp,sceneInfo,flowinfo,imin
 % ISall(k,12-20) = LabBB
 % where k is the k-th variable (super-pixel)
 
-[imh, imw, F]=size(sp_labels);
+[imh, imw, F]=size(TSP);
 npix=imw*imh;
 nVars=0;
 for t=1:F
-    nVars=nVars+numel(unique(sp_labels(:,:,t)));
+    nVars=nVars+numel(unique(TSP(:,:,t)));
 end
 ISall=zeros(nVars,11);
 IMIND=zeros(nVars,0,'uint32'); % size of largest SP unknown
@@ -30,7 +30,7 @@ scnt=0;
 for t=1:F
     fprintf('.');
     
-    thisF1=sp_labels(:,:,t);
+    thisF1=TSP(:,:,t);
     exseg=unique(thisF1(:));
     exseg=reshape(exseg,1,length(exseg));
 
@@ -92,10 +92,12 @@ for t=1:F
         ISall(scnt,10)=mean(meanflowY(imind1));
         
         ISall(scnt,11)=numel(imind1);
+
     end
     
     
 end
+fprintf('\n');
 
 %%% EXPERIMENTAL
 % spBoxFeatures;

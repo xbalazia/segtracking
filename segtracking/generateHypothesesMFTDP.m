@@ -30,8 +30,7 @@ for d=1:size(startPT.Xi,2)
         
         %% augment with visual tracker
         bb=bb(2:end,:);
-        wt=bb(:,3);
-        ht=bb(:,4);
+        wt=bb(:,3);    ht=bb(:,4);
         xt=bb(:,1)+wt/2;
         yt=bb(:,2)+ht;
         
@@ -63,7 +62,10 @@ for d=1:size(startPT.Xi,2)
         
         [maxOL,bestFit]=evaluateHypothesesSet(MFTHypsDP,gtInfo);
     end
-
+    
+    
+    
 end
+
 
 hypothesesMFTDP=getHypsFromDP(MFTHypsDP,frames,F,sceneInfo,opt);

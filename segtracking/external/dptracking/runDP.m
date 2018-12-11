@@ -1,4 +1,5 @@
 function stateInfo=runDP(sceneInfo, detections, opt, myopt)
+
 % global sceneInfo
 
 % check if opt struct is what we want
@@ -32,7 +33,7 @@ vid_name = sceneInfo.sequence;
 
 
 %%% Adding transition links to the graph by fiding overlapping detections in consequent frames.
-%display('in building the graph...')
+display('in building the graph...')
 % fname = [cachedir vid_name '_graph_res.mat'];
 dres = build_graph(dres);
 
@@ -42,7 +43,9 @@ dres = build_graph(dres);
 %   dres = build_graph(dres);
 %   save (fname, 'dres');
 % end
-    
+
+
+
 
 %%% setting parameters for tracking
 c_en      = .1;     %% birth cost
@@ -69,11 +72,12 @@ if nargin>1
     thr_cost=opt.thr_cost;
 end
 
-%display('in DP tracking ...')
-%tic;
+
+display('in DP tracking ...')
+tic
 dres_dp       = tracking_dp(dres, c_en, c_ex, c_ij, betta, thr_cost, max_it, 0);
 dres_dp.r     = -dres_dp.id;
-%toc;
+toc
 
 % tic
 % display('in DP tracking with nms in the loop...')
@@ -99,13 +103,13 @@ bboxes_tracked = dres2bboxes(dres_dp, fnum);  %% we are visualizing the "DP with
 % if scenario==72
 %     bboxes_tracked(201).bbox=[];
 % end
-
 %% pad rest
 if length(bboxes_tracked)<F
     for pp=length(bboxes_tracked)+1:F
         bboxes_tracked(pp).bbox=[];
     end
 end
+
 
 % bboxes_tracked
 % sceneInfo

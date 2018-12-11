@@ -82,15 +82,18 @@ for dd=1:maxMFT
     
     remDets=rmOlDets(MFTHyps,remDets);
     
+%     [maxOL,bestFit]=evaluateHypothesesSet(MFTHyps,gtInfo);
     MFTHyps=trimHyp(MFTHyps,N,sceneInfo);    
-    %[maxOL,bestFit]=evaluateHypothesesSet(MFTHyps,gtInfo);
+    [maxOL,bestFit]=evaluateHypothesesSet(MFTHyps,gtInfo);
     
     
     [alldetscores, scidx]=sort(remDets.sp,'descend');
-    %fprintf('Dets left: %d\n',length(remDets.xp));
+    fprintf('Dets left: %d\n',length(remDets.xp));
     detNew=detStructToArray(remDets,F);
 %     displayDetectionBBoxes(sceneInfo,detNew);
 
 %     pause
+    
+
 end
 hypothesesMFTH=getHypsFromDP(MFTHyps,frames,F,sceneInfo,opt);

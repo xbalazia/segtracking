@@ -1,9 +1,10 @@
 function visResult2(stateInfo, sp_labels, iminfo)
-
 %% vis result
 alphablend=0.5;
 cnt=0;
 if usejava('desktop'), clf; end
+
+
 
 F=size(stateInfo.Xi,1);
 labeling=stateInfo.splabeling;
@@ -11,15 +12,8 @@ bglabel=stateInfo.bglabel;
 finallab=setdiff(labeling,bglabel);
 sceneInfo=stateInfo.sceneInfo;
 
-visFolder = sceneInfo.visFolder;
-if ~exist(visFolder,'dir')
-    mkdir(visFolder);
-end
-visFileFormat = strcat(visFolder,sceneInfo.imgFileFormat);
-
 detcnt=0;
 for t=1:F
-    fileName=sprintf(visFileFormat,sceneInfo.frameNums(t));
     thisF=sp_labels(:,:,t);
     %     im=getFrame(sceneInfo,t);
     im=iminfo(t).img;
@@ -32,20 +26,18 @@ for t=1:F
     Io=zeros(size(im(:,:,1)));
     for s=segs
         cnt=cnt+1;
-        if ~cnt>length(labeling)
-            l=labeling(cnt);
-            col=getColorFromID(l);
-            if l==bglabel, continue; end
+        l=labeling(cnt);
+        col=getColorFromID(l);
+        if l==bglabel, continue; end
         
-            [u,v]=find(thisF==s);
-            imind=sub2ind(size(thisF),u,v);
-            Io(imind)=l;
+        [u,v]=find(thisF==s);
+        imind=sub2ind(size(thisF),u,v);
+        Io(imind)=l;
         
-            Itmp(imind)=col(1);        Itmp(imind+npix)=col(2);        Itmp(imind+npix*2)=col(3);
+        Itmp(imind)=col(1);        Itmp(imind+npix)=col(2);        Itmp(imind+npix*2)=col(3);
         
-            %         tpos(seg,1)=mean(v);
-            %         tpos(seg,2)=mean(u);
-        end
+        %         tpos(seg,1)=mean(v);
+        %         tpos(seg,2)=mean(u);
     end
     
     edges=getEdges(Io,1);
@@ -126,7 +118,7 @@ for t=1:F
         im2save=im2save.cdata;
         if t==1, im2save(1:50,1:50,:)=0; end % new batch
         if t==F, im2save(1:50,1:50,:)=255; end % end batch
-        imwrite(im2save,fileName);
+        imwrite(im2save,sprintf('tmp/res/s%02d-f%04d.jpg',sceneInfo.scenario,sceneInfo.frameNums(t)));
         %     end
     else
         lw=0; % in each dir
@@ -160,7 +152,7 @@ for t=1:F
         end
         if t==1, Ifin(1:50,1:50,:)=0; end % new batch
         if t==F, Ifin(1:50,1:50,:)=1; end % end batch
-        imwrite(Ifin,fileName);
+        imwrite(Ifin,sprintf('tmp/res/s%02d-f%04d.jpg',sceneInfo.scenario,sceneInfo.frameNums(t)));
     end
     pause(.01);
 end

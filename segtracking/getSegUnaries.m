@@ -1,4 +1,5 @@
 function Dcost=getSegUnaries(Q,hypotheses,hyps,sp_labels,iminfo,F,ISall,opt,sPerFrame)
+
 % precomp
 % whether a superpixel is inside hypotheses box
 
@@ -33,7 +34,7 @@ else
 %     end
 
     % mex replacement
-    Xi=hyps.Xi;Yi=hyps.Yi;W=hyps.W;H=hyps.H;
+    W=hyps.W;H=hyps.H;Xi=hyps.Xi;Yi=hyps.Yi;
     insideany=insideAny(ISall,Xi,Yi,W,H);
     insideany=logical(insideany);
 %     isequal(insideany,insideany2)
