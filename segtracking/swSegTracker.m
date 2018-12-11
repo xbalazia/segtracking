@@ -85,6 +85,10 @@ catch err
 end
 
 % print tracks
+stateInfo.Xi
+stateInfo.Yi
+stateInfo.X
+stateInfo.Y
 fprintf('Printing tracks\n');
 trkFolder = sceneInfo.trkFolder;
 if exist(trkFolder,'dir')
@@ -98,7 +102,7 @@ for s=1:nSubjects
     for f=1:nFrames
         if stateInfo.Xi(f,s)>0
             % frame number, subject number, x, y, w, h, confidence (1), 3d coordinate x (0), 3d coordinate y (0)
-            fprintf(file, sprintf('%d,%d,%f,%f,%f,%f,%f,%f,%f\n',f,s,stateInfo.Xi(f,s),stateInfo.Yi(f,s),stateInfo.W(f,s),stateInfo.H(f,s),1,0,0));
+            fprintf(file, sprintf('%d,%d,%d,%d,%d,%d,%d,%d,%d\n',f,s,round(stateInfo.Xi(f,s)),round(stateInfo.Yi(f,s)),stateInfo.W(f,s),stateInfo.H(f,s),1,0,0));
         end
     end
     fclose(file);
