@@ -11,7 +11,7 @@ function stateInfo=segTracking(sceneInfo,opt)
 % addpath(genpath('./opengm'))
 addpath(genpath('./mex'))
 
-
+global detections gtInfo
 
 
 
