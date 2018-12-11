@@ -33,7 +33,7 @@ vid_name = sceneInfo.sequence;
 
 
 %%% Adding transition links to the graph by fiding overlapping detections in consequent frames.
-display('in building the graph...')
+%display('in building the graph...')
 % fname = [cachedir vid_name '_graph_res.mat'];
 dres = build_graph(dres);
 
@@ -73,11 +73,11 @@ if nargin>1
 end
 
 
-display('in DP tracking ...')
-tic
+%display('in DP tracking ...')
+%tic
 dres_dp       = tracking_dp(dres, c_en, c_ex, c_ij, betta, thr_cost, max_it, 0);
 dres_dp.r     = -dres_dp.id;
-toc
+%toc
 
 % tic
 % display('in DP tracking with nms in the loop...')

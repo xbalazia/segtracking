@@ -2,7 +2,7 @@ function stateInfo=swSegTracker(varargin)
 % This code accompanies the publication
 %
 % Joint Tracking and Segmentation of Multiple Targets
-% A. Milan, L. Leal-Taixé, K. Schindler and I. Reid
+% A. Milan, L. Leal-Taixe, K. Schindler and I. Reid
 % CVPR 2015
 %
 
@@ -61,7 +61,7 @@ while toframe<=FF
 end
 
 %% finish up
-sceneInfo = parseScene(sceneFile);
+sceneInfo=parseScene(sceneFile);
 detections=parseDetections(sceneInfo,opt);
 K= opt.nSP;
 
