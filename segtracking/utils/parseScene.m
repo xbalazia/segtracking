@@ -13,11 +13,13 @@ end
 
 % make sure ini contains all necessary fields
 assert(ini.IsKeys('Scene','imgFolder'),'Need imgFolder');
-assert(ini.IsKeys('Scene','detFile'),'Need detections file');
+assert(ini.IsKeys('Scene','detFile'),'Need detFile');
+assert(ini.IsKeys('Scene','visFolder'),'Need visFolder');
 assert(ini.IsKeys('Scene','imgFileFormat'),'Need imgFileFormat');
 
 sceneInfo.imgFolder = ini.GetValues('Scene','imgFolder');
 sceneInfo.detFile = ini.GetValues('Scene','detFile');
+sceneInfo.visFolder = ini.GetValues('Scene','visFolder');
 sceneInfo.imgFileFormat = ini.GetValues('Scene','imgFileFormat');
 
 % if no frame nums, determine from images

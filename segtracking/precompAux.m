@@ -47,7 +47,7 @@ fprintf('OK\n');
 
 %%%%% Iunsp
 % independent superpixels for each frame
-fprintf('Iunsp');
+fprintf('Iunsp:');
 if ~exist('tmp/Iunsp/','dir'), mkdir('tmp/Iunsp'); end
 Iunsplfile=sprintf('tmp/Iunsp/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K);
 try load(Iunsplfile)
@@ -61,7 +61,7 @@ fprintf('OK\n');
 
 %%%%% ISall
 % all info about superpixel in one single matrix
-fprintf('ISall');
+fprintf('ISall:');
 if ~exist('tmp/ISall/','dir'), mkdir('tmp/ISall'); end
 ISallfile=sprintf('tmp/ISall/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K);
 try load(ISallfile)
@@ -72,7 +72,7 @@ end
 fprintf('OK\n');
 
 %%%%%%%% concat sequence info into struct array
-fprintf('seqinfo');
+fprintf('seqinfo:');
 clear seqinfo SPPerFrame
 sifile=sprintf('tmp/seqinfo/%04d-%d-%d-K%d.mat',scenario,frames(1),frames(end),K);
 try load(sifile)
