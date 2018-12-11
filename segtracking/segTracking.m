@@ -35,8 +35,7 @@ F=length(frames);
 rng(1); 
 
 % get info about sequence
-'PS-segTracking'
-sceneInfo = parseScene(sceneFile);
+%sceneInfo = parseScene(sceneFile);%%%
 scenario=sceneInfo.scenario;
 
 sceneInfo.frameNums=sceneInfo.frameNums(frames);
