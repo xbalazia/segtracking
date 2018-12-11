@@ -13,9 +13,7 @@ addOptional(p,'params','config/params.ini');
 
 parse(p,varargin{:});
 
-
-% global scenario gtInfo opt detections stStartTime htobj labdet
-global sceneInfo detections gtInfo glopt scenario
+global sceneInfo detections gtInfo
 
 
 % add paths
@@ -101,3 +99,4 @@ for s=1:nSubjects
     end
     fclose(file);
 end
+fprintf('-------------------------------------------------------------------------------------');

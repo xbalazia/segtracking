@@ -1,6 +1,4 @@
 %%
-% initsolfile=sprintf('/home/amilan/research/projects/dctracking/data/init/dptracking/startPT-pir-s%04d.mat',scenario);
-% load(initsolfile);
 
 % global opt detections
 DPHyp=[];
@@ -8,6 +6,7 @@ hypothesesMFTDP=[];
 hypothesesMFTH=[];
 
 hypsDir=fullfile(sceneInfo.tmpFolder,'hyps'); if ~exist(hypsDir,'dir'), mkdir(hypsDir); end
+scenario=sceneInfo.scenario;
 
 fprintf('DPHyp:');
 hfile=sprintf('%s/DPHyp-%04d-%d-%d.mat',hypsDir,scenario,frames(1),frames(end));
