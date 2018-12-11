@@ -63,7 +63,7 @@ while toframe<=FF
 end
 
 %% finish up
-sceneInfo=parseScene(sceneFile);
+%sceneInfo=parseScene(sceneFile);%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 K=opt.nSP;
 
 % superpixel info

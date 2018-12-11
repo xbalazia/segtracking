@@ -37,7 +37,8 @@ F=length(frames);
 rng(1); 
 
 % get info about sequence
-sceneInfo = parseScene(sceneFile);
+%sceneInfo =
+%parseScene(sceneFile);%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 scenario=sceneInfo.scenario;
 
 sceneInfo.frameNums=sceneInfo.frameNums(frames);
