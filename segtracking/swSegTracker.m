@@ -41,7 +41,7 @@ while toframe<=FF
     opt.frames=fromframe:toframe;
     
     % DO TRACKING ON SUBWINDOW HERE
-    stateInfo=segTracking(sceneInfo,opt);
+    stateInfo=segTracking(sceneFile,opt);
     
     allstInfo=[allstInfo stateInfo];
     allwins(wincnt,:)=[fromframe, toframe];
@@ -63,13 +63,13 @@ while toframe<=FF
 end
 
 %% finish up
+sceneInfo=parseScene(sceneFile);
+K=opt.nSP;
 
 % superpixel info
-K=opt.nSP;
 load(sprintf('%ssp-K%d.mat',sceneInfo.tmpFolder,K));
 
 % parse detections
-fprintf('Parsing detections\n');
 detections=parseDetections(sceneInfo,opt);
 stateInfo=stitchTempWins(allstInfo,allwins,detections,sp_labels);
 stateInfo.frameNums=uint16(stateInfo.frameNums);
@@ -83,8 +83,7 @@ catch err
     fprintf('Evaluation skipped. %s\n',err.message);
 end
 
-% print tracks
-fprintf('Printing tracks\n');
+% print to files
 trkFolder = sceneInfo.trkFolder;
 if exist(trkFolder,'dir')
     rmdir(trkFolder,'s');

@@ -1,11 +1,11 @@
-function stateInfo=getBBoxesFromState(sceneInfo,stateInfo)
+function stateInfo=getBBoxesFromState(stateInfo)
 % for visualization and for 2D evaluation
 % we need the bounding boxes of the targets
 % To this end, we check for corresponding detections
 % and interpolate them to get the solution boxes
 
 
-global detections
+global detections sceneInfo
 % [~, N F targetsExist X Y]=getStateInfo(stateInfo);
 X=stateInfo.X; Y=stateInfo.Y;
 

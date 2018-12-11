@@ -5,7 +5,7 @@ function [detections, nDets]=parseDetections(sceneInfo, opt, confthr)
 
 nDets=0;
 
-detFile=fullfile(sceneInfo.detFolder,'detections.txt');
+detFile=fullfile(sceneInfo.detFolder,sceneInfo.detector,'detections.txt');
 % first determine the type
 [pathstr, filename, fileext]=fileparts(detFile);
 % is there a .mat file available?
@@ -50,17 +50,15 @@ if detFileType==3
             continue;
         end
         
-        bx=detRaw(d,3);
-        by=detRaw(d,4);
         w=detRaw(d,5);
         h=detRaw(d,6);
-        
-        sc=detRaw(d,7);
-        %sc(:)=1./(1+exp(-sc));;
-        
+        bx=detRaw(d,3);
+        by=detRaw(d,4);
         xi=detRaw(d,3)+w/2;
         yi=detRaw(d,4)+h;
-
+        sc=detRaw(d,7);
+%         sc(:)=1./(1+exp(-sc));
+% sc
 	% scale to 0-1
         sc=(sc-min(detRaw(:,7))) / (max(detRaw(:,7)-min(detRaw(:,7))));
 

@@ -20,7 +20,7 @@ ISall=ISallglob;
 Q=Qglob;
 
 % get boxes from splines
-hyps=getBBoxesFromHyps(sceneInfo,H,F);
+hyps=getBBoxesFromHyps(H,F);
 
 %% constant label cost (psi reg)
 nC=1; % component id

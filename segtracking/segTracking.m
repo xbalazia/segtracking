@@ -1,4 +1,4 @@
-function stateInfo=segTracking(sceneInfo,opt)
+function stateInfo=segTracking(sceneFile,opt)
 % This code accompanies the publication
 %
 % Joint Tracking and Segmentation of Multiple Targets
@@ -13,8 +13,7 @@ addpath(genpath('./mex'))
 
 
 % global scenario gtInfo opt detections stStartTime htobj labdet
-%global sceneInfo detections gtInfo glopt scenario
-global detections gtInfo glopt scenario
+global sceneInfo detections gtInfo glopt scenario
 
 %% prepare
 stStartTime=tic;
@@ -38,7 +37,9 @@ F=length(frames);
 rng(1); 
 
 % get info about sequence
+sceneInfo = parseScene(sceneFile);
 scenario=sceneInfo.scenario;
+
 sceneInfo.frameNums=sceneInfo.frameNums(frames);
 
 
@@ -132,7 +133,7 @@ saveiters=0; smiter=0;
 % hypotheses=getHypStruct;
 
 %
-hyps=getBBoxesFromHyps(sceneInfo,hypotheses,F);
+hyps=getBBoxesFromHyps(hypotheses,F);
 
 % unaries
 totalNSegs=length(Q);
@@ -367,14 +368,14 @@ stateInfo.F=length(stateInfo.frameNums);
 % startPT.F=F;
 % if isfield(startPT,'Xgp'), startPT=rmfield(startPT,'Xgp');startPT=rmfield(startPT,'Ygp'); end
 % stateInfo=getStateFromSplines(spl,startPT,1);
-% stateInfo=postProcessState(sceneInfo,stateInfo);
+% stateInfo=postProcessState(stateInfo);
 stateInfo.opt=opt;
 % stateInfo.labeling=labeling;
 stateInfo.splabeling=labeling(1:size(DcostS,2));
 stateInfo.bglabel=bglabel;
 stateInfo.hypotheses=hypotheses;
 stateInfo.detlabeling=newlab;
-stateInfo.sceneInfo=sceneInfo;
+stateInfo.sceneInfo = sceneInfo;
 
 % displayTrackingResult(sceneInfo,stateInfo);
 
