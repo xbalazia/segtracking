@@ -22,7 +22,7 @@ addpath(genpath('./external'))
 
 % get scene information and parameters
 sceneFile = p.Results.scene;
-sceneInfo = parseScene(sceneFile);%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sceneInfo = parseScene(sceneFile);
 opt=parseOptions(p.Results.params);
 
 stateInfo = [];
@@ -63,10 +63,9 @@ while toframe<=FF
 end
 
 %% finish up
-%sceneInfo=parseScene(sceneFile);%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-K=opt.nSP;
 
 % superpixel info
+K=opt.nSP;
 load(sprintf('%ssp-K%d.mat',sceneInfo.tmpFolder,K));
 
 % parse detections

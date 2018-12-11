@@ -1,7 +1,6 @@
 function sceneInfo = parseScene(sceneFile)
 % read .ini file containing essential scene information
 
-'a'
 sceneInfo =[];
 
 ini=IniConfig();
