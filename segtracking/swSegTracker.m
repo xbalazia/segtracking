@@ -93,6 +93,10 @@ if exist(trkFolder,'dir')
 end
 mkdir(trkFolder);
 [nFrames, nSubjects] = size(stateInfo.Xi);
+<<<<<<< HEAD
+=======
+[nFrames nSubjects]
+>>>>>>> d9cf0eeb8deca49509debb2fc085278709195342
 for s=1:nSubjects
     fileName = sprintf('%s/subject%d.txt',trkFolder,s);
     file = fopen(fileName,'w');
