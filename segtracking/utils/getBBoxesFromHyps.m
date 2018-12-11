@@ -16,5 +16,3 @@ hyps.H=zeros(F,0);hyps.W=zeros(F,0);
      hyps.W(fr,h)=xys(3,:);
      hyps.H(fr,h)=xys(4,:);
  end
- sceneInfo.frameNums
- hyps.frameNums=sceneInfo.frameNums;

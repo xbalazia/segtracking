@@ -133,6 +133,7 @@ saveiters=0; smiter=0;
 
 %
 hyps=getBBoxesFromHyps(hypotheses,F);
+hyps.frameNums=sceneInfo.frameNums;
 
 % unaries
 totalNSegs=length(Q);
