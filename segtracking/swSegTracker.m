@@ -87,8 +87,8 @@ end
 % print tracks
 stateInfo.Xi
 stateInfo.Yi
-stateInfo.X
-stateInfo.Y
+stateInfo.W
+stateInfo.H
 fprintf('Printing tracks\n');
 trkFolder = sceneInfo.trkFolder;
 if exist(trkFolder,'dir')
