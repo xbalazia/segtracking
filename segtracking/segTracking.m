@@ -31,11 +31,7 @@ F=length(frames);
 % opt.canvel=3;
 
 % set random seed for deterministic results
-rng(1); 
-
-% get info about sequence
-%sceneInfo = parseScene(sceneFile);%%%
-scenario=sceneInfo.scenario;
+rng(1);
 
 sceneInfo.frameNums=sceneInfo.frameNums(frames);
 
@@ -70,7 +66,7 @@ avgMinDetDistF=avgMinDetDist(detections);
 
 %% all ims, all flows
 fprintf('Precomputing helper structures\n');
-[~, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = precompAux(scenario,sceneInfo,K,frames);
+[~, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = precompAux(sceneInfo,K,frames);
 sPerFrame=segsPerFrame(sp_labels);
 
 meanFlow=mean(sqrt(ISall(:,9).^2 + ISall(:,10).^2),1);
@@ -105,7 +101,7 @@ end
 glopt=opt;
 
 %% print initial infos
-printHeader(sceneInfo,scenario,1);
+printHeader(sceneInfo,1);
 printParams(opt);
 
 
@@ -380,14 +376,6 @@ stateInfo.X=stateInfo.Xi;stateInfo.Y=stateInfo.Yi;
 if howToTrack(scenario)
     [stateInfo.Xgp, stateInfo.Ygp]=projectToGroundPlane(stateInfo.Xi, stateInfo.Yi, sceneInfo);
     stateInfo.X=stateInfo.Xgp;stateInfo.Y=stateInfo.Ygp;    
-end
-
-
-try
-    [metrics2d, metrics3d, addInfo2d, addInfo3d]= ...
-        printFinalEvaluation(stateInfo, gtInfo, sceneInfo, struct('track3d',char(howToTrack(scenario))));
-catch err
-    fprintf('Evaluation failed: %s\n', err.message);
 end
 
 %% vis

@@ -1,4 +1,4 @@
-function [flowinfo, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = precompAux(scenario,sceneInfo,K,frames)
+function [flowinfo, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = precompAux(sceneInfo,K,frames)
 % precomp auxiliary data
 
 %%%%%% superpixels
@@ -10,6 +10,7 @@ end
 
 F=length(frames);
 sp_labels=sp_labels(:,:,frames);
+scenario=sceneInfo.scenario;
 
 %%%%%% optic flow
 % clear flowinfo iminfo

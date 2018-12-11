@@ -65,7 +65,6 @@ while toframe<=FF
 end
 
 %% finish up
-%sceneInfo = parseScene(sceneFile);%%%
 detections=parseDetections(sceneInfo,opt);
 K= opt.nSP;
 
