@@ -13,12 +13,14 @@ end
 
 % make sure ini contains all necessary fields
 assert(ini.IsKeys('Scene','imgFolder'),'Need imgFolder');
+assert(ini.IsKeys('Scene','tmpFolder'),'Need tmpFolder');
 assert(ini.IsKeys('Scene','detFolder'),'Need detFolder');
 assert(ini.IsKeys('Scene','visFolder'),'Need visFolder');
 assert(ini.IsKeys('Scene','imgFileFormat'),'Need imgFileFormat');
 assert(ini.IsKeys('Scene','detector'),'Need detector');
 
 sceneInfo.imgFolder = ini.GetValues('Scene','imgFolder');
+sceneInfo.tmpFolder = ini.GetValues('Scene','tmpFolder');
 sceneInfo.detFolder = ini.GetValues('Scene','detFolder');
 sceneInfo.visFolder = ini.GetValues('Scene','visFolder');
 sceneInfo.imgFileFormat = ini.GetValues('Scene','imgFileFormat');

@@ -2,18 +2,16 @@ function [flowinfo, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = prec
 % precomp auxiliary data
 %%%%%% superpixels
 
-%createTempFolders()
-F=length(frames);
-spfile=sprintf('sp-K%d.mat',K);
-try load(fullfile(sceneInfo.imgFolder,spfile));
-    sp_labels=sp_labels(:,:,frames);
+try load(sprintf('%ssp-K%d.mat',sceneInfo.tmpFolder,K));
 catch err
     fprintf('Oops, we need superpixels. This may take a while...\n');
     thisd=pwd;
     TSPd=fullfile('external','TSP');
     myTSP;
-    sp_labels=sp_labels(:,:,frames);
 end
+
+F=length(frames);
+sp_labels=sp_labels(:,:,frames);
 
 %%%%%% optic flow
 % clear flowinfo iminfo

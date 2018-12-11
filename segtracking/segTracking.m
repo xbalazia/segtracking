@@ -389,13 +389,5 @@ if howToTrack(scenario)
 end
 
 %% vis
-% bglabel=nLabels;
-
-% uncoment to visualize
-fprintf('Visualization\n')
-visResult2(stateInfo,sp_labels,iminfo)
-
-
-% allens=0;
-
-% end
+fprintf('Visualization\n');
+visResult2(stateInfo,sp_labels,iminfo);
