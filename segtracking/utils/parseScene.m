@@ -19,7 +19,7 @@ assert(ini.IsKeys('Scene','trk'),'Need trk');
 assert(ini.IsKeys('Scene','vis'),'Need vis');
 assert(ini.IsKeys('Scene','detector'),'Need detector');
 
-detector = ini.GetValues('Scene','detector')
+detector = ini.GetValues('Scene','detector');
 sceneInfo.imgFolder = ini.GetValues('Scene','img');
 sceneInfo.tmpFolder = ini.GetValues('Scene','tmp');
 sceneInfo.detFolder = [ini.GetValues('Scene','det') detector '/'];

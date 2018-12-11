@@ -61,6 +61,7 @@ while toframe<=FF
 end
 
 %% finish up
+'PS-swSegTracker'
 sceneInfo = parseScene(sceneFile);
 detections=parseDetections(sceneInfo,opt);
 K= opt.nSP;
