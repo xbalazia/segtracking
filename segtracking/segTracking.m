@@ -230,7 +230,9 @@ while 1
     LCost=[LCost, 0]; % background
     Scost=1-1*eye(nLabels);
 %     [Enew, D, S, L, labeling]=doAlphaExpansion(uf*Dcost, Scost, LCost, NB);
-    [Dcost Scost LCost]
+    Dcost 
+    Scost
+    LCost
     [Enew, labeling]= alphaExpansion(Dcost,Scost,LCost, labelingBeforeDO, Nhood, hypotheses, sceneInfo, opt);
     
     labeling=double(labeling);
