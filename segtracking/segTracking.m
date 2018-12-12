@@ -132,12 +132,7 @@ saveiters=0; smiter=0;
 
 % hypotheses=getHypStruct;
 
-%
 hyps=getBBoxesFromHyps(hypotheses,F);
-
-hyps.Xi
-hyps.Xi=hyps.Xi-hyps.W/2
-hyps.Xi
 
 % unaries
 totalNSegs=length(Q);
@@ -395,4 +390,3 @@ end
 %% vis
 fprintf('Visualization\n');
 visResult2(stateInfo,sp_labels,iminfo);
-size(stateInfo.X) %%%%
