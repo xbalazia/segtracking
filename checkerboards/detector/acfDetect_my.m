@@ -51,7 +51,8 @@ end
 if(isempty(fileName)), return; end
 d=fileparts(fileName); if(~isempty(d)&&~exist(d,'dir')), mkdir(d); end
 if( multiple ) % add image index to each bb and flatten result
-  bbs{1,5}
+  bbs{1}
+  bbs{1,1}
   for i=1:n
       x = round(bbs{i}(1));
       y = round(bbs{i}(2));
