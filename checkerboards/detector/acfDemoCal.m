@@ -92,10 +92,6 @@ end
 if(1)
     imgNms = bbGt('getFiles',{ImagesPath});
     tic, bbs = acfDetect_my(imgNms,detector,DetectionsFile); toc
-    % visualize detection results on one single image
-    %k=48;
-    %I=imread(imgNms{k});
-    %figure(1); im(I); bbApply('draw',bbs{k}); pause(.1);
 end
 
 %% optionally show top false positives ('type' can be 'fp','fn','tp','dt')
