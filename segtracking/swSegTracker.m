@@ -85,7 +85,6 @@ catch err
 end
 
 % print tracks
-stateInfo.Xi
 fprintf('Printing tracks\n');
 trkFolder = sceneInfo.trkFolder;
 if exist(trkFolder,'dir')
