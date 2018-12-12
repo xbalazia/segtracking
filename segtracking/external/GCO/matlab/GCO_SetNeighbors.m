@@ -24,7 +24,7 @@ if (~issparse(Weights))
     end
     Weights = sparse(Weights);
 end
-Weights = cellfun(@replace_nan, Weights, repmat( {value}, size(Weights,1), size(Weights,2)) , 'UniformOutput', 0);
+Weights = cellfun(@replace_nan, Weights, repmat( {0}, size(Weights,1), size(Weights,2)) , 'UniformOutput', 0);
 gco_matlab('gco_setneighbors',Handle,Weights);
 end
 
