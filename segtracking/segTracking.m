@@ -135,7 +135,7 @@ saveiters=0; smiter=0;
 %
 hyps=getBBoxesFromHyps(hypotheses,F);
 
-hyps
+hyps.Xi
 
 % unaries
 totalNSegs=length(Q);
