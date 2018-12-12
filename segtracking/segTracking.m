@@ -391,3 +391,4 @@ end
 %% vis
 fprintf('Visualization\n');
 visResult2(stateInfo,sp_labels,iminfo);
+size(stateInfo.X)

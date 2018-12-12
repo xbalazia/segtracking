@@ -1,8 +1,11 @@
 function [flowinfo, iminfo, sp_labels, ISall, IMIND, seqinfo, SPPerFrame] = precompAux(scenario,sceneInfo,K,frames)
 % precomp auxiliary data
 
+F=length(frames);
+
 %%%%%% superpixels
 try load(sprintf('%ssp-K%d.mat',sceneInfo.tmpFolder,K));
+    sp_labels=sp_labels(:,:,frames);
 catch err
     fprintf('Oops, we need superpixels. This may take a while...\n');
     thisd=pwd;
@@ -10,8 +13,6 @@ catch err
     myTSP;
 end
 
-F=length(frames);
-sp_labels=sp_labels(:,:,frames);
 
 %%%%%% optic flow
 % clear flowinfo iminfo
