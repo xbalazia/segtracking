@@ -24,6 +24,9 @@ if (~issparse(Weights))
     if (~isa(Weights,'double'))
         error('Neighbors matrix must be of type double, but with integral values');
     end
+    if (~isa(Weights,'NaN'))
+        error('NaN');
+    end
     Weights = sparse(Weights);
 end
 gco_matlab('gco_setneighbors',Handle,Weights);
