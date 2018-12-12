@@ -28,7 +28,7 @@ sceneInfo.imgFolder = [dataFolder ini.GetValues('Scene','imgFolder') database '/
 sceneInfo.tmpFolder = [dataFolder ini.GetValues('Scene','tmpFolder') database '/'];
 sceneInfo.detFolder = [dataFolder ini.GetValues('Scene','detFolder') database '/' detector '/'];
 sceneInfo.trkFolder = [dataFolder ini.GetValues('Scene','trkFolder') database '/' detector '/'];
-sceneInfo.visFolder = [dataFolder ini.GetValues('Scene','visFolder') database '/' detector '/'];
+sceneInfo.visFolder = [sceneInfo.trkFolder database '/' detector '/' ini.GetValues('Scene','visFolder')];
 sceneInfo.imgFileFormat = ini.GetValues('Scene','imgFileFormat');
 
 % if no frame nums, determine from images
