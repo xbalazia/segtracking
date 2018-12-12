@@ -24,10 +24,6 @@ if (~issparse(Weights))
     end
     Weights = sparse(Weights);
 end
-for w=1:length(Weights)
-    if (~isa(Weights(w,2),'int'))
-        Weights(w,2)
-    end
-end    
+Weights(cellfun(@(Weights) any(isnan(Weights)),Weights)) = [];
 gco_matlab('gco_setneighbors',Handle,Weights);
 end
