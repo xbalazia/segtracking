@@ -87,10 +87,11 @@ end
 % print tracks
 fprintf('Printing tracks\n');
 trkFolder = sceneInfo.trkFolder;
-if exist(trkFolder,'dir')
-    rmdir(trkFolder,'s');
+if ~exist(trkFolder,'dir')
+    mkdir(trkFolder);
 end
-mkdir(trkFolder);
+delete([trkFolder '*.txt']);
+
 [nFrames, nSubjects] = size(stateInfo.Xi);
 for s=1:nSubjects
     fileName = fullfile(trkFolder,sprintf('subject%d.txt',s));
