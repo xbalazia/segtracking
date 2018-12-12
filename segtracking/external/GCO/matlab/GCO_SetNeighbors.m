@@ -25,7 +25,7 @@ if (~issparse(Weights))
     Weights = sparse(Weights);
 end
 for w=1:length(Weights)
-    if (int(Weights(2))~=Weights(2))
+    if (~isa(Weights(2),'int'))
         Weights(2)
     end
 end    
