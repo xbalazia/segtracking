@@ -62,6 +62,8 @@ while toframe<=FF
     end
 end
 
+allstInfo
+
 %% finish up
 sceneInfo=parseScene(sceneFile);
 K=opt.nSP;
