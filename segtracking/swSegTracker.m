@@ -100,8 +100,6 @@ for s=1:nSubjects
         if stateInfo.Xi(f,s)>0
             w = round(stateInfo.W(f,s));
             h = round(stateInfo.H(f,s));
-            %x = round(stateInfo.Xi(f,s)-w/2);
-            %y = round(stateInfo.Yi(f,s)-h);
             x = round(stateInfo.X(f,s)-w/2);
             y = round(stateInfo.Y(f,s)-h);
             % frame number, subject number, x, y, w, h, confidence (1), 3d coordinate x (0), 3d coordinate y (0)
