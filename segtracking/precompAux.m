@@ -13,7 +13,6 @@ catch err
     myTSP;
 end
 
-
 %%%%%% optic flow
 % clear flowinfo iminfo
 fprintf('seqinfo/flowinfo:');
