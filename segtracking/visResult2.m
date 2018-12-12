@@ -14,7 +14,6 @@ visFolder = sceneInfo.visFolder;
 if ~exist(visFolder,'dir')
     mkdir(visFolder);
 end
-
 visFileFormat = strcat(visFolder,sceneInfo.imgFileFormat);
 
 detcnt=0;
