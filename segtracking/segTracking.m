@@ -135,6 +135,8 @@ saveiters=0; smiter=0;
 %
 hyps=getBBoxesFromHyps(hypotheses,F);
 
+hyps
+
 % unaries
 totalNSegs=length(Q);
 tatalNDets=length(alldpoints.sp);
@@ -356,8 +358,6 @@ hyps=getBBoxesFromHyps(hypotheses,F);
 %% vis boxes
 finallab=setdiff(labeling,bglabel);
 newlab=labeling(end-size(DcostD,2)+1:end);
-
-hyps %%%%%%%%%%%
 
 stateInfo=hyps;
 stateInfo.Xi=stateInfo.Xi(:,finallab);
