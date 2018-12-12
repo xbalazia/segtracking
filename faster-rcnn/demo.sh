@@ -2,6 +2,12 @@
 
 export CUDA_VISIBLE_DEVICES=5
 
-python3 demo.py --data_dir data/ --images_dir data/images-caltech --detections_file data/detections-caltech-frcnn.txt --visualizations_dir data/visualizations-caltech \
-				--models_dir data/models --net vgg16 --cfg cfgs/vgg16.yml --checksession 1 --checkepoch 6 --checkpoint 10021 \
+DATADIR = /home/balazia/pedtrack/_data
+DATABASE = tud
+
+python3 demo.py --images_dir $DATADIR/images/$DATABASE \
+				--detections_file $DATADIR/detections/$DATABASE/detections.txt \
+				--visualizations_dir $DATADIR/detections/$DATABASE/visualizations \
+				--models_dir models --net vgg16 --cfg cfgs/vgg16.yml \
+				--checksession 1 --checkepoch 6 --checkpoint 10021 \
 				--cuda

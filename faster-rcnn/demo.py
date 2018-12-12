@@ -56,9 +56,6 @@ def parse_args():
 	parser.add_argument('--set', dest='set_cfgs',
 											help='set config keys', default=None,
 											nargs=argparse.REMAINDER)
-	parser.add_argument('--data_dir', dest='data_dir',
-											help='directory to load data',
-											default="data")
 	parser.add_argument('--images_dir', dest='images_dir',
 											help='directory to load images',
 											default="images")
