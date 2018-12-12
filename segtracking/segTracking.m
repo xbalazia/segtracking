@@ -357,6 +357,8 @@ hyps=getBBoxesFromHyps(hypotheses,F);
 finallab=setdiff(labeling,bglabel);
 newlab=labeling(end-size(DcostD,2)+1:end);
 
+hyps %%%%%%%%%%%
+
 stateInfo=hyps;
 stateInfo.Xi=stateInfo.Xi(:,finallab);
 stateInfo.Yi=stateInfo.Yi(:,finallab);
@@ -391,4 +393,4 @@ end
 %% vis
 fprintf('Visualization\n');
 visResult2(stateInfo,sp_labels,iminfo);
-size(stateInfo.X)
+size(stateInfo.X) %%%%
