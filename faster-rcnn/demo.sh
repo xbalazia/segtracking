@@ -2,8 +2,8 @@
 
 export CUDA_VISIBLE_DEVICES=5
 
-DATADIR = /home/balazia/pedtrack/_data
-DATABASE = tud
+DATADIR=/home/balazia/pedtrack/_data
+DATABASE=tud
 
 python3 demo.py --images_dir $DATADIR/images/$DATABASE \
 				--detections_file $DATADIR/detections/$DATABASE/detections.txt \
