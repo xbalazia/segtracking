@@ -102,8 +102,8 @@ for s=1:nSubjects
             h = round(stateInfo.H(f,s));
             %x = round(stateInfo.Xi(f,s)-w/2);
             %y = round(stateInfo.Yi(f,s)-h);
-            x = round(stateInfo.X(f,s));
-            y = round(stateInfo.Y(f,s));
+            x = round(stateInfo.X(f,s)-w/2);
+            y = round(stateInfo.Y(f,s)-h);
             % frame number, subject number, x, y, w, h, confidence (1), 3d coordinate x (0), 3d coordinate y (0)
             fprintf(file, sprintf('%d,%d,%d,%d,%d,%d,%d,%d,%d\n',f,s,x,y,w,h,1,0,0));
         end
