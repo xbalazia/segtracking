@@ -24,6 +24,5 @@ if (~issparse(Weights))
     end
     Weights = sparse(Weights);
 end
-Weights(isnan(Weights)) = 0;
 gco_matlab('gco_setneighbors',Handle,Weights);
 end
