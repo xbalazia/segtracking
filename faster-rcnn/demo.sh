@@ -3,7 +3,7 @@
 export CUDA_VISIBLE_DEVICES=5
 
 DATADIR=/home/balazia/pedtrack/_data
-DATABASE=caltech
+DATABASE=virat500
 DETECTOR=faster-rcnn
 
 python3 demo.py --images_dir $DATADIR/images/$DATABASE \
