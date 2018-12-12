@@ -24,6 +24,10 @@ if (~issparse(Weights))
     end
     Weights = sparse(Weights);
 end
-Weights(cellfun(@(Weights) any(isnan(Weights)),Weights)) = [];
+Weights = cellfun(@replace_nan, Weights, repmat( {value}, size(Weights,1), size(Weights,2)) , 'UniformOutput', 0);
 gco_matlab('gco_setneighbors',Handle,Weights);
+end
+
+function matrix = replace_nan(matrix, value)
+    matrix(isnan(matrix)) = value;
 end
