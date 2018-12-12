@@ -226,14 +226,12 @@ while 1
     Dcost=int32(opt.unaryFactor*[DcostS DcostD]);
 
 
-    LCost=getHypLabelCost2(hypotheses, sceneInfo, opt);
-    LCost=[LCost, 0]; % background
+    LCost=getHypLabelCost2(hypotheses,sceneInfo,opt);
+    LCost=[LCost,0]; % background
     Scost=1-1*eye(nLabels);
 %     [Enew, D, S, L, labeling]=doAlphaExpansion(uf*Dcost, Scost, LCost, NB);
-    Dcost 
-    Scost
     LCost
-    [Enew, labeling]= alphaExpansion(Dcost,Scost,LCost, labelingBeforeDO, Nhood, hypotheses, sceneInfo, opt);
+    [Enew,labeling]=alphaExpansion(Dcost,Scost,LCost,labelingBeforeDO,Nhood,hypotheses,sceneInfo,opt);
     
     labeling=double(labeling);
     
