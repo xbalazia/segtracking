@@ -26,7 +26,7 @@ if (~issparse(Weights))
 end
 for w=1:length(Weights)
     if (~isa(Weights(w,2),'int'))
-        Weights{w,2}
+        Weights(w,2)
     end
 end    
 gco_matlab('gco_setneighbors',Handle,Weights);
