@@ -22,6 +22,10 @@ clc;
 CodePath = '/home/balazia/pedtrack/checkerboards/';
 addpath(genpath(CodePath));
 ModelPath = [CodePath 'data/models/Checkerboards/'];
+database = 'caltech';
+DataPath = '/home/balazia/pedtrack/_data/';
+ImagesPath = [DataPath 'images/' database '/'];
+DetectionsFile = [DataPath 'detections/' database '/checkerboards/detections.txt'];
 
 %% set up parameters for training detector (see acfTrain_my)
 opts = acfTrain_my();
@@ -87,7 +91,7 @@ end
 %% run detector on a set of images without evaluation
 if(1)
     imgNms = bbGt('getFiles',{[CodePath 'data/images/test']});
-    tic, bbs = acfDetect_my(imgNms,detector,[ModelPath 'detections-caltech-chkb.txt']); toc
+    tic, bbs = acfDetect_my(imgNms,detector,DetectionsFile); toc
     % visualize detection results on one single image
     %k=48;
     %I=imread(imgNms{k});

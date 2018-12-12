@@ -10,7 +10,7 @@ bglabel=stateInfo.bglabel;
 finallab=setdiff(labeling,bglabel);
 sceneInfo=stateInfo.sceneInfo;
 
-visFolder = sceneInfo.visFolder
+visFolder = sceneInfo.visFolder;
 if ~exist(visFolder,'dir')
     mkdir(visFolder);
 end
