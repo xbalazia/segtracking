@@ -359,7 +359,7 @@ if __name__ == '__main__':
 									y = int(bb_list[1])
 									w = int(bb_list[2]-x)
 									h = int(bb_list[3]-y)
-									c = bb_list[4]
+									c = round(bb_list[4],4)
 									# frame number, subject number (0), x, y, w, h, confidence, 3d coordinate x (0), 3d coordinate y (0)
 									detections[num_images].append(str(num_images)+',0,'+str(x)+','+str(y)+','+str(w)+','+str(h)+','+str(c)+',0,0')
 									ndet += 1
