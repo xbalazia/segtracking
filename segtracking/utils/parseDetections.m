@@ -50,10 +50,10 @@ if detFileType==3
             continue;
         end
         
-        bx=detRaw(d,3);
-        by=detRaw(d,4);
         w=detRaw(d,5);
         h=detRaw(d,6);
+        bx=detRaw(d,3)+w/2;
+        by=detRaw(d,4)+h;
         
         sc=detRaw(d,7);
         %sc(:)=1./(1+exp(-sc));
