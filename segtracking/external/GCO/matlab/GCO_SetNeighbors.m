@@ -10,6 +10,8 @@ function GCO_SetNeighbors(Handle,Weights)
 %     Note: only the upper-triangular area of Weights is consulted 
 %           because the connectivity is undirected. 
 
+Weights
+
 GCO_LoadLib();
 NumSites = gco_matlab('gco_getnumsites',Handle);
 if (size(Weights) ~= [ NumSites NumSites ])
