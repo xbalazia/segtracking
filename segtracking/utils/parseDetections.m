@@ -58,8 +58,8 @@ if detFileType==3
         sc=detRaw(d,7);
         %sc(:)=1./(1+exp(-sc));
 
-        xi=detRaw(d,3)+w/2;
-        yi=detRaw(d,4)+h/2;
+        xi=detRaw(d,3);
+        yi=detRaw(d,4);
 
 	% scale to 0-1
         sc=(sc-min(detRaw(:,7))) / (max(detRaw(:,7)-min(detRaw(:,7))));
