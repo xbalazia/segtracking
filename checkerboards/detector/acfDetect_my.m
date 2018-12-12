@@ -51,13 +51,15 @@ end
 if(isempty(fileName)), return; end
 d=fileparts(fileName); if(~isempty(d)&&~exist(d,'dir')), mkdir(d); end
 if( multiple ) % add image index to each bb and flatten result
-  % frame number, subject number (0), x, y, w, h, confidence, 3d coordinate x (0), 3d coordinate y (0)
-  x = round(bbs{i,1});
-  y = round(bbs{i,2});
-  w = round(bbs{i,3});
-  h = round(bbs{i,4});
-  c = round(bbs{i,5},4);
-  for i=1:n, bbs{i}=[ones(size(bbs{i},1),1)*i zeros(size(bbs{i},1),1) x y w h c zeros(size(bbs{i},1),2)]; end
+  for i=1:n
+      x = round(bbs{i,1});
+      y = round(bbs{i,2});
+      w = round(bbs{i,3});
+      h = round(bbs{i,4});
+      c = round(bbs{i,5},4);
+      % frame number, subject number (0), x, y, w, h, confidence, 3d coordinate x (0), 3d coordinate y (0)
+      bbs{i}=[ones(size(bbs{i},1),1)*i zeros(size(bbs{i},1),1) x y w h c zeros(size(bbs{i},1),2)];
+  end
   bbs=cell2mat(bbs);
 end
 dlmwrite(fileName,bbs); bbs=1;
