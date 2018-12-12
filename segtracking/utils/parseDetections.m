@@ -56,7 +56,7 @@ if detFileType==3
         h=detRaw(d,6);
         
         sc=detRaw(d,7);
-        %sc(:)=1./(1+exp(-sc));
+        sc(:)=1./(1+exp(-sc));
 
         xi=detRaw(d,3)+w/2;
         yi=detRaw(d,4)+h;
