@@ -10,8 +10,6 @@ function GCO_SetNeighbors(Handle,Weights)
 %     Note: only the upper-triangular area of Weights is consulted 
 %           because the connectivity is undirected. 
 
-Weights
-
 GCO_LoadLib();
 NumSites = gco_matlab('gco_getnumsites',Handle);
 if (size(Weights) ~= [ NumSites NumSites ])
@@ -24,10 +22,12 @@ if (~issparse(Weights))
     if (~isa(Weights,'double'))
         error('Neighbors matrix must be of type double, but with integral values');
     end
-    if (~isa(Weights,'NaN'))
-        error('NaN');
-    end
     Weights = sparse(Weights);
 end
+for w=1:length(Weights)
+    if (int(Weights(2))~=Weights(2))
+        Weights(2)
+    end
+end    
 gco_matlab('gco_setneighbors',Handle,Weights);
 end
