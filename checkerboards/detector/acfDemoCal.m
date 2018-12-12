@@ -90,7 +90,7 @@ end
 
 %% run detector on a set of images without evaluation
 if(1)
-    imgNms = bbGt('getFiles',{[CodePath 'data/images/test']});
+    imgNms = bbGt('getFiles',{ImagesPath});
     tic, bbs = acfDetect_my(imgNms,detector,DetectionsFile); toc
     % visualize detection results on one single image
     %k=48;
