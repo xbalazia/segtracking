@@ -51,14 +51,13 @@ end
 if(isempty(fileName)), return; end
 d=fileparts(fileName); if(~isempty(d)&&~exist(d,'dir')), mkdir(d); end
 if( multiple ) % add image index to each bb and flatten result
-  bbs{1}
-  bbs{1,1}
   for i=1:n
-      x = round(bbs{i}(1));
-      y = round(bbs{i}(2));
-      w = round(bbs{i}(3));
-      h = round(bbs{i}(4));
-      c = round(bbs{i}(5),4);
+      bb = cell2mat(bbs{i});
+      x = round(bb(1));
+      y = round(bb(2));
+      w = round(bb(3));
+      h = round(bb(4));
+      c = round(bb(5),4);
       % frame number, subject number (0), x, y, w, h, confidence, 3d coordinate x (0), 3d coordinate y (0)
       bbs{i}=[ones(size(bbs{i},1),1)*i zeros(size(bbs{i},1),1) x y w h c zeros(size(bbs{i},1),2)];
   end
