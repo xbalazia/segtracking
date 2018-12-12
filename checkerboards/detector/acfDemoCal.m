@@ -22,7 +22,7 @@ clc;
 CodePath = '/home/balazia/pedtrack/checkerboards/';
 addpath(genpath(CodePath));
 ModelPath = [CodePath 'data/models/Checkerboards/'];
-database = 'virat10';
+database = 'tud';
 DataPath = '/home/balazia/pedtrack/_data/';
 ImagesPath = [DataPath 'images/' database '/'];
 DetectionsFile = [DataPath 'detections/' database '/checkerboards/detections.txt'];
