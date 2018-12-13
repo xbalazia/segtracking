@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export CUDA_VISIBLE_DEVICES=5
+export CUDA_VISIBLE_DEVICES=$1
 
 DATADIR=/home/balazia/pedtrack/_data
 DATABASE=virat10
