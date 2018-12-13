@@ -169,7 +169,6 @@ nCurModels=length(hypotheses); nLabels=nCurModels+1; bglabel=nLabels;
 % energy=printEnergies(0,labeling, hypotheses, Dcost, Nhood, sceneInfo, opt);
 labeling=bglabel*ones(1,size(Dcost,2)); used=[];
 energy=evaluateEnergy(labeling, hypotheses, Dcost, Nhood, sceneInfo, opt);
-energy(isnan(energy)) = 0;
 [metrics2d, metrics3d]= ...
     printSTUpdate(0,stStartTime,energy,sceneInfo,opt,hypotheses,used,0,0);
 
