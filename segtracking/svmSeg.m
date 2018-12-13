@@ -224,10 +224,12 @@ for t=1
 %         Q(cnt)
 %         pause
     end
-    figure(1);
+    %figure(1); %uncomment to visualize
     imtight(Itmp,[0 1]);
+    hypFolder = [sceneInfo.tmpFolder 'hyp'];
+    if ~exist(hypFolder,'dir'), mkdir(hypFolder); end
 %     imwrite(Itmpc,sprintf('tmp/hyp/s%02d-f%04d-lhco.jpg',scenario,sceneInfo.frameNums(t)));
-    imwrite(Itmp,sprintf('tmp/hyp/s%02d-f%04d-lh.jpg',scenario,t));
+    imwrite(Itmp,sprintf('%s/s%02d-f%04d-lh.jpg',hypFolder,scenario,t));
 
     pause(.01);
 end

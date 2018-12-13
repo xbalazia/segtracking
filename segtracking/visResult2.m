@@ -1,5 +1,9 @@
 function visResult2(stateInfo, sp_labels, iminfo)
 %% vis result
+
+%set visibility
+visible = true;
+
 alphablend=0.5;
 cnt=0;
 if usejava('desktop'), clf; end
@@ -57,7 +61,7 @@ for t=1:F
     %         text(tpos(seg,1),tpos(seg,2),sprintf('%d',seg-1),'color','w','FontSize',14,'FontWeight','bold','HorizontalAlignment','center');
     %     end
     
-    if usejava('desktop')
+    if usejava('desktop') && visible
         %         clf;
         imtight(Ifin);
         
